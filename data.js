@@ -42,13 +42,15 @@ areas: [
   { id: "piscina",  nombre: "Piscina",
     intro: "Piscina de cloro de unos 20 m², con depuradora y lona de invierno. El agua de Novés es muy dura: tendencia a cal, agua turbia y pH alto. Para dar cantidades de producto hacen falta el volumen (largo, ancho y profundidades) y las fotos de los productos que dejó el dueño: hasta entonces, nada a ojo.",
     ficha: [
-      ["Pendiente", "Medidas y profundidades, tipo de filtro, potencia de la bomba y fotos de los productos."],
+      ["Pendiente", "Medidas: largo, ancho, profundidad mínima y máxima. Con eso, dosis exactas."],
+      ["Tu equipo", "Filtro de arena con manómetro y válvula selectora de 6 posiciones, bomba con prefiltro, reloj programador en el cuadro naranja y 3 llaves rojas: skimmer, fondo y limpiafondos."],
+      ["Regla de oro", "Nunca mover la válvula selectora con la bomba en marcha. Siempre: bomba OFF, mover, bomba ON."],
       ["Limpiafondos", "Lo tienes. Falta la manguera flotante de 38 mm: se compra en primavera."],
       ["La depuradora", "Es la aspiradora: la bomba chupa por el skimmer, el filtro atrapa la suciedad y el agua vuelve limpia."],
       ["Perros", "Más demanda de cloro y pelo en skimmers y prefiltro. Revisar los cestillos más a menudo en verano."]
     ]},
   { id: "riego",    nombre: "Riego",
-    intro: "Riego automático con programador. En invierno se apaga, pero \"no se riega\" significa \"no se riega si llueve\". El calendario fino por sectores lo haremos con una foto del programador y de qué riega cada sector.",
+    intro: "Riego automático con un solo programa: todo se riega a la vez y con la misma frecuencia (césped, árboles y huerto). Por eso lo que necesita más agua de forma puntual (calvas recién sembradas, plantones nuevos) se riega a mano. En invierno se apaga, pero \"no se riega\" significa \"no se riega si llueve\".",
     ficha: [
       ["Otoño", "Césped 2 días por semana; árboles y goteos 1 vez. Temprano por la mañana."],
       ["Invierno", "Apagado. Un riego profundo si pasan 3 semanas sin llover."],
@@ -64,7 +66,7 @@ areas: [
 tareas: [
 
 /* ---------- GENERAL ---------- */
-{ id: "ronda-invierno", area: "cesped", titulo: "Ronda semanal de jardín", prioridad: "mantenimiento",
+{ id: "ronda-invierno", area: "cesped", tipo: "revisar", titulo: "Ronda semanal de jardín", prioridad: "mantenimiento",
   semanal: { desde: "2026-10-10", hasta: "2027-02-27" }, duracion: "30-45 min", material: ["escoba-hojas", "bolsas"],
   que: "Un repaso rápido cada sábado para que nada se acumule.",
   pasos: [
@@ -77,7 +79,7 @@ tareas: [
   porque: "Las hojas grandes de la higuera tapan la luz y pudren el césped en pocos días. La fruta fermentada atrae avispas y los huesos son peligrosos para los perros. Los inviernos de Toledo pueden ser secos: el césped no se seca por frío, sí por semanas sin agua.",
   sinoSe: "Calvas y hongos en primavera."
 },
-{ id: "ronda-verano", area: "cesped", titulo: "Ronda semanal de primavera y verano", prioridad: "mantenimiento",
+{ id: "ronda-verano", area: "cesped", tipo: "revisar", titulo: "Ronda semanal de primavera y verano", prioridad: "mantenimiento",
   semanal: { desde: "2027-03-06", hasta: "2027-09-25" }, duracion: "45-60 min",
   que: "El repaso semanal de la temporada de crecimiento.",
   pasos: [
@@ -92,7 +94,7 @@ tareas: [
 },
 
 /* ---------- CÉSPED ---------- */
-{ id: "c-medir", area: "cesped", titulo: "Medir los m² de césped", prioridad: "importante", fecha: "2026-10-10", duracion: "10 min",
+{ id: "c-medir", area: "cesped", tipo: "revisar", titulo: "Medir los m² de césped", prioridad: "importante", fecha: "2026-10-10", duracion: "10 min",
   que: "Saber cuánto césped hay para calcular abono y semilla.",
   pasos: [
     "Divide el césped en rectángulos (más o menos).",
@@ -102,22 +104,22 @@ tareas: [
   porque: "La dosis de abono va por m². Sin ese dato se compra de más o de menos.",
   sinoSe: "Abonar a ojo: o se quema el césped o no hace nada."
 },
-{ id: "c-resiembra", area: "cesped", titulo: "Resembrar las calvas", prioridad: "importante", fecha: "2026-10-10", duracion: "1 h",
+{ id: "c-resiembra", area: "cesped", tipo: "hacer", titulo: "Resembrar las calvas", prioridad: "importante", fecha: "2026-10-10", duracion: "1 h",
   que: "Rellenar las zonas peladas aprovechando la última ventana templada del año.",
-  material: ["semillas", "mantillo", "rastrillo", "guantes"],
+  material: ["semillas", "mantillo", "rastrillo", "manguera-jardin", "guantes"],
   pasos: [
     "Rastrillar fuerte cada calva: quitar hierba muerta y soltar 1-2 cm de tierra.",
     "Repartir la semilla a la dosis de la caja (unos 30 g/m²; en una calva, un puñado pequeño por palmo cuadrado).",
     "Tapar con medio centímetro de mantillo.",
     "Apretar con el dorso del rastrillo para que la semilla toque la tierra.",
-    "Regar suave a diario (o cada dos días si llueve) 2-3 semanas, sin encharcar.",
+    "Regar las calvas a mano, suave (lluvia fina, no chorro), cada día 2-3 semanas, sin encharcar. Si llueve, ese día no.",
     "Nace en 7-14 días. No pisar ni segar esas zonas hasta que la hierba mida unos 8 cm."
   ],
   porque: "La semilla necesita la tierra por encima de unos 10 °C para germinar; en Novés eso dura hasta finales de octubre. Sembrada ahora, tiene todo el invierno y la primavera para enraizar antes del calor.",
   sinoSe: "Calvas todo el invierno, con hueco para malas hierbas. Habría que esperar a marzo.",
-  importante: "Si no da tiempo antes del 25 de octubre, no sembrar en noviembre: se pasa a marzo-abril. No echar abono encima de la semilla recién sembrada."
+  importante: "Si no da tiempo antes del 25 de octubre, no sembrar en noviembre: se pasa a marzo-abril. No echar abono encima de la semilla recién sembrada. El riego automático no vale para esto: va todo junto y regar todo el jardín a diario encharcaría árboles y huerto."
 },
-{ id: "c-abono-otono", area: "cesped", titulo: "Abono de otoño del césped", prioridad: "mantenimiento", fecha: "2026-10-10", duracion: "20 min",
+{ id: "c-abono-otono", area: "cesped", tipo: "hacer", titulo: "Abono de otoño del césped", prioridad: "mantenimiento", fecha: "2026-10-10", duracion: "20 min",
   que: "Fortalecer la raíz y preparar el césped para el frío.",
   material: ["abono-otono"],
   pasos: [
@@ -130,7 +132,7 @@ tareas: [
   porque: "En otoño el césped crece hacia abajo: echa raíz y guarda reservas. El abono de otoño lleva más potasio (K), que refuerza raíz y resistencia al frío, y poco nitrógeno (N), que solo daría hoja tierna justo antes de las heladas.",
   sinoSe: "Poca cosa: césped algo menos fuerte en primavera. Es recomendable, no obligatorio."
 },
-{ id: "c-ultima-siega", area: "cesped", titulo: "Última siega del otoño", prioridad: "mantenimiento", fecha: "2026-11-28", duracion: "30 min",
+{ id: "c-ultima-siega", area: "cesped", tipo: "hacer", titulo: "Última siega del otoño", prioridad: "mantenimiento", fecha: "2026-11-28", duracion: "30 min",
   que: "Dejar el césped a la altura buena para el invierno.",
   pasos: [
     "Segar a 5-6 cm (algo más alto que en octubre).",
@@ -140,9 +142,9 @@ tareas: [
   porque: "Un poco más de altura protege la base de la planta de las heladas y le da más hoja para seguir haciendo reservas.",
   sinoSe: "Césped demasiado alto (se apelmaza y salen hongos) o demasiado bajo (sufre con el frío)."
 },
-{ id: "c-escarificar", area: "cesped", titulo: "Escarificar, resembrar y abonar", prioridad: "importante", fecha: "2027-03-20", duracion: "2-3 h",
+{ id: "c-escarificar", area: "cesped", tipo: "hacer", titulo: "Escarificar, resembrar y abonar", prioridad: "importante", fecha: "2027-03-20", duracion: "2-3 h",
   que: "La puesta a punto anual del césped. La máquina que pasaba el dueño en abril es un escarificador.",
-  material: ["abono-primavera", "semillas", "mantillo", "rastrillo"],
+  material: ["escarificador", "abono-primavera", "semillas", "mantillo", "rastrillo"],
   pasos: [
     "Esperar a que el césped ya crezca con ganas (mediados de marzo a abril).",
     "Segar a 4 cm.",
@@ -154,22 +156,22 @@ tareas: [
   ],
   porque: "Con los años se acumula abajo un \"fieltro\" de hierba muerta y raíces que impide que agua y abono lleguen a la raíz. Quitarlo una vez al año hace el césped más denso, y los surcos son el sitio perfecto para la semilla.",
   sinoSe: "Césped cada año más ralo y con más musgo y malas hierbas.",
-  importante: "Una vez al año, no más. En otoño no: el césped queda muy castigado y no le da tiempo a recuperarse antes del frío. Si la máquina roja del garaje es el escarificador, foto a Claude antes de usarla."
+  importante: "Una vez al año, no más. En otoño no: el césped queda muy castigado y no le da tiempo a recuperarse antes del frío. Antes, foto de la máquina roja del garaje y de su etiqueta a Claude (por el buzón) para confirmar que es un escarificador y cómo se ajusta la altura."
 },
-{ id: "c-abono-mayo", area: "cesped", titulo: "Segundo abono de césped", prioridad: "mantenimiento", fecha: "2027-05-29", duracion: "20 min",
+{ id: "c-abono-mayo", area: "cesped", tipo: "hacer", titulo: "Segundo abono de césped", prioridad: "mantenimiento", fecha: "2027-05-29", duracion: "20 min",
   que: "Llegar fuerte al verano.",
   material: ["abono-primavera"],
   pasos: ["Mismo abono de primavera, a dosis algo menor que la de la etiqueta.", "Regar después."],
   porque: "La reserva de primavera se agota a finales de mayo; este aporte sostiene el césped antes del calor.",
   sinoSe: "Césped más débil en julio, más amarillo con el calor."
 },
-{ id: "c-altura-verano", area: "cesped", titulo: "Subir la altura de corte para el verano", prioridad: "mantenimiento", fecha: "2027-06-05", duracion: "5 min",
+{ id: "c-altura-verano", area: "cesped", tipo: "hacer", titulo: "Subir la altura de corte para el verano", prioridad: "mantenimiento", fecha: "2027-06-05", duracion: "5 min",
   que: "Pasar a cortar a 5-6 cm.",
   pasos: ["Subir una o dos posiciones la altura del cortacésped.", "Mantenerla hasta septiembre."],
   porque: "La hierba más alta da sombra a su propia raíz y al suelo: aguanta mucho mejor el calor y necesita menos agua.",
   sinoSe: "Césped quemado y amarillo en julio."
 },
-{ id: "c-resiembra-2027", area: "cesped", titulo: "Resiembra de otoño", prioridad: "importante", fecha: "2027-09-18", duracion: "1 h",
+{ id: "c-resiembra-2027", area: "cesped", tipo: "hacer", titulo: "Resiembra de otoño", prioridad: "importante", fecha: "2027-09-18", duracion: "1 h",
   que: "Repasar las calvas que haya dejado el verano.",
   material: ["semillas", "mantillo"],
   pasos: ["Mismo método que la resiembra de octubre de 2026.", "Mediados de septiembre es el mejor momento del año."],
@@ -178,7 +180,7 @@ tareas: [
 },
 
 /* ---------- FRUTALES ---------- */
-{ id: "f-podador", area: "frutales", titulo: "Contratar podador para los frutales", prioridad: "importante", fecha: "2026-11-14", duracion: "Unas llamadas",
+{ id: "f-podador", area: "frutales", tipo: "hacer", titulo: "Contratar podador para los frutales", prioridad: "importante", fecha: "2026-11-14", duracion: "Unas llamadas",
   que: "Tener a alguien reservado para podar entre mediados de diciembre y febrero.",
   pasos: [
     "Preguntar a vecinos o en el vivero o la cooperativa de Torrijos o Novés.",
@@ -189,7 +191,7 @@ tareas: [
   porque: "La poda de frutales es la tarea donde un error se paga con años de mala cosecha. Y los buenos podadores se llenan pronto.",
   sinoSe: "Árboles sin podar (menos fruta y más enfermedades) o podados mal."
 },
-{ id: "f-trat1", area: "frutales", titulo: "Tratamiento de invierno 1/2: caída de la hoja", prioridad: "urgente", fecha: "2026-11-21", duracion: "1 h",
+{ id: "f-trat1", area: "frutales", tipo: "hacer", titulo: "Tratamiento de invierno 1/2: caída de la hoja", prioridad: "urgente", fecha: "2026-11-21", duracion: "1 h",
   que: "Pulverizar los frutales cuando ya han perdido casi toda la hoja.",
   material: ["pack-sipcam", "pulverizador", "epi"],
   pasos: [
@@ -205,7 +207,7 @@ tareas: [
   sinoSe: "Melocotoneros con lepra en primavera: hojas deformadas y rojizas y la cosecha perdida.",
   importante: "Nada de azufre 3-4 semanas antes o después: azufre y aceite juntos queman el árbol."
 },
-{ id: "f-estiercol", area: "frutales", titulo: "Estiércol o compost a los frutales", prioridad: "mantenimiento", fecha: "2026-12-12", duracion: "45 min",
+{ id: "f-estiercol", area: "frutales", tipo: "hacer", titulo: "Estiércol o compost a los frutales", prioridad: "mantenimiento", fecha: "2026-12-12", duracion: "45 min",
   que: "El único abono del invierno, orgánico y de acción lenta.",
   material: ["estiercol"],
   pasos: [
@@ -217,7 +219,7 @@ tareas: [
   porque: "Se descompone despacio en invierno y está listo cuando el árbol arranca en primavera. Un abono químico ahora lo lavaría la lluvia sin que el árbol lo use.",
   sinoSe: "Menos vigor en primavera, nada grave."
 },
-{ id: "f-poda", area: "frutales", titulo: "Poda de invierno (con el podador)", prioridad: "importante", fecha: "2027-01-16", duracion: "Una mañana", material: ["tijeras", "bolsas"],
+{ id: "f-poda", area: "frutales", tipo: "hacer", titulo: "Poda de invierno (con el podador)", prioridad: "importante", fecha: "2027-01-16", duracion: "Una mañana", material: ["tijeras", "bolsas"],
   que: "Podar con el árbol dormido. Este año lo hace el podador y tú miras.",
   pasos: [
     "Fecha a cuadrar con el podador: de mediados de diciembre a principios de febrero.",
@@ -227,7 +229,7 @@ tareas: [
   porque: "Sin hoja se ve la estructura del árbol y la savia está parada: los cortes cicatrizan mejor y se pierde menos energía.",
   sinoSe: "Ramas que se cruzan, menos luz, más enfermedades y fruta más pequeña."
 },
-{ id: "f-trat2", area: "frutales", titulo: "Tratamiento de invierno 2/2: antes de brotar", prioridad: "urgente", fecha: "2027-02-13", duracion: "1 h",
+{ id: "f-trat2", area: "frutales", tipo: "hacer", titulo: "Tratamiento de invierno 2/2: antes de brotar", prioridad: "urgente", fecha: "2027-02-13", duracion: "1 h",
   que: "La segunda pasada, la más importante del año para los melocotoneros.",
   material: ["pack-sipcam", "pack-masso", "pulverizador", "epi"],
   pasos: [
@@ -239,7 +241,7 @@ tareas: [
   porque: "La lepra infecta justo cuando se abren las yemas. También protege los cortes de la poda.",
   sinoSe: "Melocotoneros con lepra en primavera."
 },
-{ id: "f-abono-yemas", area: "frutales", titulo: "Abono al suelo al hinchar las yemas", prioridad: "mantenimiento", fecha: "2027-03-06", duracion: "30 min", material: ["abono-frutales"],
+{ id: "f-abono-yemas", area: "frutales", tipo: "hacer", titulo: "Abono al suelo al hinchar las yemas", prioridad: "mantenimiento", fecha: "2027-03-06", duracion: "30 min", material: ["abono-frutales"],
   que: "Abono granulado alrededor de cada frutal cuando arrancan.",
   pasos: [
     "Abono para frutales (o universal) a la dosis de la etiqueta por árbol.",
@@ -249,7 +251,7 @@ tareas: [
   porque: "Es cuando el árbol empieza a gastar reservas en flor y hoja. Lo recoge la hoja del vivero que dejó el dueño.",
   sinoSe: "Arranque más flojo y fruta más pequeña."
 },
-{ id: "f-floracion", area: "frutales", titulo: "Floración: vigilar, sin insecticidas", prioridad: "mantenimiento", fecha: "2027-03-15", duracion: "5 min",
+{ id: "f-floracion", area: "frutales", tipo: "revisar", titulo: "Floración: vigilar, sin insecticidas", prioridad: "mantenimiento", fecha: "2027-03-15", duracion: "5 min",
   que: "Disfrutar la flor y no tocar nada.",
   pasos: [
     "No usar insecticidas (la hoja del vivero lo recomienda; no hacerlo).",
@@ -259,7 +261,7 @@ tareas: [
   porque: "Los insecticidas en flor matan a las abejas, y sin polinización no hay fruta.",
   sinoSe: "-"
 },
-{ id: "f-caida-flor", area: "frutales", titulo: "Fungicida a la caída de la flor", prioridad: "importante", fecha: "2027-04-10", duracion: "45 min",
+{ id: "f-caida-flor", area: "frutales", tipo: "hacer", titulo: "Fungicida a la caída de la flor", prioridad: "importante", fecha: "2027-04-10", duracion: "45 min",
   que: "Proteger la hoja nueva y el fruto recién cuajado.",
   material: ["duaxo", "pulverizador", "epi"],
   pasos: [
@@ -270,13 +272,13 @@ tareas: [
   porque: "Es el último momento sensible para la lepra y el moteado.",
   sinoSe: "Más riesgo de manchas y hojas deformadas, sobre todo si la primavera es lluviosa."
 },
-{ id: "f-aclareo", area: "frutales", titulo: "Aclarar frutos del melocotonero", prioridad: "opcional", fecha: "2027-05-08", duracion: "30 min",
+{ id: "f-aclareo", area: "frutales", tipo: "hacer", titulo: "Aclarar frutos del melocotonero", prioridad: "opcional", fecha: "2027-05-08", duracion: "30 min",
   que: "Quitar frutitos para que los que quedan crezcan grandes.",
   pasos: ["Cuando los melocotones tengan tamaño de nuez.", "Dejar uno cada 15-20 cm de rama y quitar el resto."],
   porque: "Un melocotonero cargado da fruta pequeña y puede romper ramas.",
   sinoSe: "Muchos melocotones pequeños y ramas que se parten."
 },
-{ id: "f-revision-verano", area: "frutales", titulo: "Revisar plagas de verano", prioridad: "mantenimiento", fecha: "2027-06-05", duracion: "15 min",
+{ id: "f-revision-verano", area: "frutales", tipo: "revisar", titulo: "Revisar plagas de verano", prioridad: "mantenimiento", fecha: "2027-06-05", duracion: "15 min",
   que: "Mirar hojas y frutos en busca de problemas.",
   material: ["azufre", "insecticida-orugas"],
   pasos: [
@@ -287,7 +289,7 @@ tareas: [
   porque: "En verano se trata solo lo que aparece. Tratar \"por si acaso\" cada mes es gastar dinero y matar fauna útil.",
   sinoSe: "Una plaga que crece sin control."
 },
-{ id: "f-poda-albaricoque", area: "frutales", titulo: "Poda ligera del albaricoquero", prioridad: "mantenimiento", fecha: "2027-07-10", duracion: "30 min",
+{ id: "f-poda-albaricoque", area: "frutales", tipo: "hacer", titulo: "Poda ligera del albaricoquero", prioridad: "mantenimiento", fecha: "2027-07-10", duracion: "30 min",
   que: "Aclarar ramas tras la cosecha.",
   pasos: ["Quitar ramas secas, cruzadas o que crecen hacia dentro.", "Poco y limpio: en verano se poda suave."],
   porque: "El albaricoquero cicatriza mal en invierno y es propenso a la goma; en verano cierra mejor las heridas.",
@@ -295,7 +297,7 @@ tareas: [
 },
 
 /* ---------- LIMONERO Y PLANTAS ---------- */
-{ id: "l-heladas", area: "limonero", titulo: "¿Heladas esta semana? Tapar el limonero", prioridad: "urgente",
+{ id: "l-heladas", area: "limonero", tipo: "revisar", titulo: "¿Heladas esta semana? Tapar el limonero", prioridad: "urgente",
   semanal: { desde: "2026-12-04", hasta: "2027-02-26" }, duracion: "2 min",
   material: ["manta"],
   que: "Mirar la previsión de Novés y tapar el limonero si hace falta.",
@@ -308,32 +310,162 @@ tareas: [
   porque: "El limonero es el cítrico más sensible al frío. La manta guarda el calor del suelo y gana 2-4 grados.",
   sinoSe: "Limonero quemado o muerto tras una noche de helada fuerte."
 },
-{ id: "l-aromaticas", area: "limonero", titulo: "Recortar las aromáticas", prioridad: "opcional", fecha: "2027-03-13", duracion: "20 min",
+{ id: "l-aromaticas", area: "limonero", tipo: "hacer", titulo: "Recortar las aromáticas", prioridad: "opcional", fecha: "2027-03-13", duracion: "20 min",
   que: "Recortar romero, lavanda, tomillo y similares para que no se queden leñosas.",
   pasos: ["Recortar un tercio de lo que creció el año anterior.", "Nunca cortar hasta la madera vieja sin hojas."],
   porque: "Recortadas en primavera rebrotan compactas; si no, se abren y se quedan feas por dentro.",
   sinoSe: "Matas desgarbadas y peladas por el centro."
 },
-{ id: "l-abono", area: "limonero", titulo: "Abono para cítricos", prioridad: "mantenimiento", fecha: "2027-03-27", duracion: "10 min",
+{ id: "l-abono", area: "limonero", tipo: "hacer", titulo: "Abono para cítricos", prioridad: "mantenimiento", fecha: "2027-03-27", duracion: "10 min",
   que: "Primer abono del año del limonero.",
   material: ["abono-citricos"],
   pasos: ["Dosis de la etiqueta, repartida alrededor del tronco bajo la copa.", "Regar después.", "Repetir a principios de junio."],
   porque: "Los cítricos son exigentes y en suelos calizos como los de Toledo amarillean con facilidad.",
   sinoSe: "Hojas amarillas y poca fruta."
 },
-{ id: "l-poda", area: "limonero", titulo: "Poda ligera del limonero", prioridad: "opcional", fecha: "2027-04-17", duracion: "20 min",
+{ id: "l-poda", area: "limonero", tipo: "hacer", titulo: "Poda ligera del limonero", prioridad: "opcional", fecha: "2027-04-17", duracion: "20 min",
   que: "Quitar ramas secas, dañadas por el frío o mal orientadas.",
   pasos: ["Cuando ya no haya riesgo de helada.", "Poco: el limonero no necesita poda fuerte."],
   porque: "Así se ve qué ha dañado el invierno y se poda lo justo.",
   sinoSe: "Ramas secas que atraen plagas."
 },
 
+/* ---------- COSECHAS ---------- */
+{ id: "f-cosecha-otono", area: "frutales", tipo: "cosecha", titulo: "Recoger la fruta que quede y la del suelo", prioridad: "mantenimiento", fecha: "2026-10-17", duracion: "30 min",
+  ventana: "Octubre",
+  que: "Al llegar, mirar si quedan manzanas, peras o higos tardíos y limpiar lo caído.",
+  material: ["guantes", "bolsas"],
+  pasos: [
+    "Manzanas: si al levantarla y girarla un poco se suelta sola, está lista. Si hay que tirar, aún no.",
+    "Peras: igual que la manzana, pero se cogen duras y maduran en casa (ver la cosecha de agosto).",
+    "Higos: solo los blandos y colgando. Los duros ya no maduran con el frío.",
+    "Recoger toda la fruta del suelo y la que esté seca o podrida en el árbol (\"momias\"). A la basura, no al compost."
+  ],
+  porque: "La fruta podrida en el árbol o en el suelo es donde pasan el invierno los hongos (monilia) y los gusanos de la fruta. Quitarla ahora es el mejor tratamiento gratis para el año que viene.",
+  importante: "Perros: recoger la fruta caída cada día. Los huesos pueden atascarse en el intestino y la fruta podrida les sienta mal y atrae avispas."
+},
+{ id: "l-cosecha", area: "limonero", tipo: "cosecha", titulo: "Empiezan los limones", prioridad: "mantenimiento", fecha: "2026-11-14", duracion: "Cuando haga falta",
+  ventana: "Noviembre a marzo",
+  que: "Los limones maduran despacio en otoño-invierno y aguantan semanas en el árbol: se cogen según se van necesitando.",
+  material: ["tijeras"],
+  pasos: [
+    "Listo cuando está amarillo entero y cede un poco al apretar.",
+    "Cortar con tijera dejando un trocito de rabito. Arrancarlo tirando desgarra la piel y se pudre antes.",
+    "No hace falta cogerlos todos: en el árbol se conservan mejor que en la nevera.",
+    "Si anuncian helada fuerte (menos de -2 °C), coger antes los que estén maduros."
+  ],
+  porque: "El árbol es la mejor despensa: un limón maduro aguanta colgado semanas. Con -3 °C el fruto se hiela por dentro y se echa a perder."
+},
+{ id: "f-cosecha-albaricoque", area: "frutales", tipo: "cosecha", titulo: "Cosecha del albaricoque", prioridad: "mantenimiento", fecha: "2027-06-12", duracion: "Varios días",
+  ventana: "Mediados de junio a principios de julio",
+  que: "El primero del año. Madura casi todo en 2-3 semanas.",
+  
+  pasos: [
+    "Listo cuando es naranja entero, sin verde junto al rabito, y cede un poco al apretar.",
+    "Pasar cada 2-3 días: no madura todo a la vez.",
+    "Se conserva poco (3-5 días en nevera). Lo que sobre, mermelada o congelado sin hueso.",
+    "Recoger cada día lo que caiga."
+  ],
+  porque: "Cogido en su punto tiene todo el azúcar. Demasiado pronto queda ácido y harinoso; demasiado tarde cae y se pudre.",
+  importante: "Perros: recoger la fruta caída cada día. Los huesos pueden atascarse en el intestino y la fruta podrida les sienta mal y atrae avispas."
+},
+{ id: "f-cosecha-melocoton", area: "frutales", tipo: "cosecha", titulo: "Cosecha de los melocotones", prioridad: "mantenimiento", fecha: "2027-07-03", duracion: "Varios días",
+  ventana: "Julio a agosto según la variedad",
+  que: "Los dos melocotoneros pueden ir con semanas de diferencia.",
+  
+  pasos: [
+    "No fiarse del rojo de la piel: lo que manda es el color de fondo, que pasa de verde a amarillo o crema.",
+    "Cede al apretar suave junto al rabito y se suelta girándolo.",
+    "Cogerlos con la palma de la mano, sin apretar con los dedos: se marcan enseguida.",
+    "Pasar cada 2-3 días y recoger la caída a diario."
+  ],
+  porque: "El melocotón apenas madura fuera del árbol: si se coge verde, se ablanda pero no endulza.",
+  importante: "Perros: recoger la fruta caída cada día. Los huesos pueden atascarse en el intestino y la fruta podrida les sienta mal y atrae avispas."
+},
+{ id: "f-cosecha-ciruela", area: "frutales", tipo: "cosecha", titulo: "Cosecha de ciruelas", prioridad: "mantenimiento", fecha: "2027-07-17", duracion: "Varios días",
+  ventana: "Julio a agosto",
+  que: "Madura escalonada durante unas semanas.",
+  
+  pasos: [
+    "Lista cuando tiene su color final, ese polvillo blanco por encima y cede un poco.",
+    "Si al tocar la rama caen solas, está en su punto.",
+    "Se pueden coger un poco firmes: terminan en casa en 1-2 días.",
+    "Recoger la caída a diario."
+  ],
+  porque: "La ciruela muy madura se raja con el calor o el riego y atrae avispas.",
+  importante: "Perros: recoger la fruta caída cada día. Los huesos pueden atascarse en el intestino y la fruta podrida les sienta mal y atrae avispas."
+},
+{ id: "f-cosecha-higos", area: "frutales", tipo: "cosecha", titulo: "Cosecha de higos", prioridad: "mantenimiento", fecha: "2027-08-07", duracion: "Varios días",
+  ventana: "Agosto a septiembre (si la higuera es breval, brevas a finales de junio)",
+  que: "Higos maduros cada pocos días durante semanas.",
+  
+  pasos: [
+    "Listo cuando cuelga hacia abajo, está blando y a veces con la piel agrietada o una gotita en el \"ojo\".",
+    "Fuera del árbol no madura: solo coger los que estén en su punto.",
+    "Manga larga y guantes: la leche de la higuera irrita la piel con el sol.",
+    "Comer o guardar en nevera en 2-3 días. Recoger los caídos."
+  ],
+  porque: "El higo es de los pocos frutos que no sigue madurando una vez cogido.",
+  importante: "La leche de tallos y hojas irrita la piel (de personas y perros). Perros: recoger la fruta caída cada día. Los huesos pueden atascarse en el intestino y la fruta podrida les sienta mal y atrae avispas."
+},
+{ id: "f-cosecha-peras", area: "frutales", tipo: "cosecha", titulo: "Cosecha de peras", prioridad: "mantenimiento", fecha: "2027-08-14", duracion: "Varios días",
+  ventana: "Agosto a septiembre según la variedad",
+  que: "La pera se coge dura y madura en casa.",
+  
+  pasos: [
+    "Levantar la pera hasta ponerla horizontal: si el rabito se separa solo de la rama, está lista.",
+    "Madurar en casa a temperatura ambiente 3-7 días, hasta que ceda junto al rabito.",
+    "Para guardar más tiempo: en la nevera duras y sacar las que se vayan a comer.",
+    "Recoger la caída."
+  ],
+  porque: "Si la pera madura en el árbol, se pone arenosa y se pudre por dentro aunque por fuera parezca buena.",
+  importante: "Perros: recoger la fruta caída cada día. Los huesos pueden atascarse en el intestino y la fruta podrida les sienta mal y atrae avispas."
+},
+{ id: "f-cosecha-manzanas", area: "frutales", tipo: "cosecha", titulo: "Cosecha de manzanas", prioridad: "mantenimiento", fecha: "2027-09-04", duracion: "Varios días",
+  ventana: "Septiembre a octubre",
+  que: "La última del año. Aguanta bien guardada.",
+  
+  pasos: [
+    "Levantar y girar un poco: si se suelta, está lista. Las primeras caídas sanas son la señal.",
+    "Las pepitas de dentro, marrones.",
+    "Guardar en sitio fresco y oscuro, sin que se toquen, revisando que no haya ninguna podrida.",
+    "Recoger la caída."
+  ],
+  porque: "Bien cogidas y guardadas en fresco duran semanas o meses según la variedad.",
+  importante: "Perros: recoger la fruta caída cada día. Los huesos pueden atascarse en el intestino y la fruta podrida les sienta mal y atrae avispas."
+},
+{ id: "h-cosecha-verano", area: "huerto", tipo: "cosecha", titulo: "Cosechar el huerto de verano (si lo plantaste)", prioridad: "opcional", fecha: "2027-07-10", duracion: "Varios días",
+  ventana: "Julio a septiembre",
+  que: "Tomates, pimientos y lo que se plante en abril.",
+  
+  pasos: [
+    "Tomate: con el color final y cediendo un poco. Si se coge pintón, termina en casa.",
+    "Pimiento: verde cuando tiene buen tamaño, o esperar a que se ponga rojo (más dulce, tarda más).",
+    "Coger cada 2-3 días: la planta produce más si no se le deja fruta madura colgando."
+  ],
+  porque: "Recoger a menudo estimula a la planta a seguir dando fruto."
+},
+
 /* ---------- HUERTO ---------- */
-{ id: "h-ajos-habas", area: "huerto", titulo: "Plantar ajos y habas", prioridad: "opcional", fecha: "2026-10-17", duracion: "1-2 h",
+{ id: "h-limpiar", area: "huerto", tipo: "hacer", titulo: "Recoger lo aprovechable y limpiar el huerto de verano", prioridad: "importante", fecha: "2026-10-17", duracion: "1 h",
+  que: "Tomateras y pimientos ya han terminado: se aprovecha lo que quede y se quitan. Las acelgas se quedan.",
+  material: ["guantes", "bolsas"],
+  pasos: [
+    "Recoger los tomates que tengan algo de color y los pimientos sanos. Los tomates verdes y duros maduran en casa en una caja con una manzana o un plátano en 1-2 semanas.",
+    "Arrancar tomateras y pimientos con su raíz.",
+    "Si tienen manchas negras o marrones en hojas o tallos (hongos), a la bolsa de basura, no al compost ni enterrados.",
+    "Las acelgas se quedan: aguantan el frío y dan hojas todo el invierno. Se cortan las de fuera a ras de la base y se deja el centro, que vuelve a sacar.",
+    "Quitar malas hierbas y soltar la tierra con la azada. Queda listo para ajos y habas."
+  ],
+  porque: "Tomate y pimiento son de verano: en octubre ya no cuajan fruta nueva y la primera helada los mata. Esperar a ver qué sale no da nada más. Dejarlos pudrirse deja hongos y plagas pasando el invierno justo donde van ajos y habas.",
+  sinoSe: "No hay sitio para plantar y los hongos pasan al año siguiente.",
+  importante: "Perros: las hojas y los tomates verdes son tóxicos para ellos. Que no queden restos por el suelo."
+},
+{ id: "h-ajos-habas", area: "huerto", tipo: "hacer", titulo: "Plantar ajos y habas", prioridad: "opcional", fecha: "2026-10-17", duracion: "1-2 h",
   que: "Huerto de invierno que se cuida casi solo.",
   material: ["ajo", "habas", "estiercol", "guantes"],
   pasos: [
-    "Limpiar restos del verano y echar una capa de estiércol o compost de 3-5 cm; mezclar con la azada.",
+    "Con el huerto ya limpio (tarea anterior), echar una capa de estiércol o compost de 3-5 cm donde vayan ajos y habas y mezclar con la azada.",
     "Ajos: dientes sueltos, punta hacia arriba, a 3-4 cm de profundidad y 10-15 cm entre sí.",
     "Habas: 2-3 semillas por hoyo, a 4-5 cm de profundidad, hoyos a 25-30 cm.",
     "Un riego tras plantar. Después, la lluvia suele bastar."
@@ -341,42 +473,64 @@ tareas: [
   porque: "Aguantan las heladas y el ajo necesita frío para formar cabeza. Las habas, además, enriquecen la tierra para el huerto de verano.",
   sinoSe: "Nada: el huerto descansa. Cualquier fin de semana hasta mediados de noviembre vale."
 },
-{ id: "h-escardar", area: "huerto", titulo: "Quitar hierbas del huerto", prioridad: "opcional", fecha: "2027-01-09", duracion: "30 min",
+{ id: "h-escardar", area: "huerto", tipo: "hacer", titulo: "Quitar hierbas del huerto", prioridad: "opcional", fecha: "2027-01-09", duracion: "30 min",
   que: "Arrancar las hierbas que compiten con ajos y habas.",
   pasos: ["A mano o con azadilla, con la tierra húmeda (sale la raíz entera)."],
   porque: "Las malas hierbas roban agua y luz a los cultivos pequeños.",
   sinoSe: "Ajos más pequeños."
 },
-{ id: "h-verano", area: "huerto", titulo: "Decidir el huerto de verano", prioridad: "opcional", fecha: "2027-04-03", duracion: "Charla con Claude",
+{ id: "h-verano", area: "huerto", tipo: "hacer", titulo: "Decidir el huerto de verano", prioridad: "opcional", fecha: "2027-04-03", duracion: "Charla con Claude",
   que: "Elegir qué plantar en mayo (tomate, pimiento, calabacín...) o dejarlo en barbecho.",
   pasos: ["Decidir cuánto tiempo apetece dedicarle en verano.", "Pedir a Claude el plan de plantación y riego."],
   porque: "El huerto de verano es lo que más trabajo da de todo el jardín: mejor decidirlo con calma.",
   sinoSe: "-"
 },
-{ id: "h-cosecha-habas", area: "huerto", titulo: "Cosechar habas", prioridad: "opcional", fecha: "2027-04-24", duracion: "Ratos",
+{ id: "h-cosecha-habas", area: "huerto", tipo: "cosecha", titulo: "Cosechar habas", prioridad: "opcional", fecha: "2027-04-24", duracion: "Ratos",
   que: "Recoger las vainas cuando estén llenas pero tiernas.",
   pasos: ["Ir recogiendo cada pocos días durante 3-4 semanas."],
   porque: "Pasadas, se ponen duras y harinosas.", sinoSe: "Habas duras."
 },
-{ id: "h-cosecha-ajos", area: "huerto", titulo: "Cosechar ajos", prioridad: "opcional", fecha: "2027-06-12", duracion: "30 min",
+{ id: "h-cosecha-ajos", area: "huerto", tipo: "cosecha", titulo: "Cosechar ajos", prioridad: "opcional", fecha: "2027-06-12", duracion: "30 min",
   que: "Arrancar los ajos cuando la mitad de las hojas estén secas.",
   pasos: ["Dejar de regar 2 semanas antes.", "Arrancar, dejarlos secar a la sombra unos días y guardarlos en sitio seco."],
   porque: "Si se arrancan tarde, las cabezas se abren y se conservan peor.", sinoSe: "Ajos que se pudren o se abren."
 },
 
 /* ---------- PISCINA ---------- */
-{ id: "p-revisar", area: "piscina", titulo: "Revisar piscina, depuradora y productos", prioridad: "urgente", fecha: "2026-10-10", duracion: "20 min",
-  que: "Diagnóstico inicial para poder invernar bien.",
+{ id: "p-revisar", area: "piscina", tipo: "revisar", titulo: "Arrancar la depuradora y medir el agua", prioridad: "urgente", fecha: "2026-10-10", duracion: "30 min",
+  que: "Poner a filtrar y saber de dónde partimos. El agua está verde y turbia: principio de algas.",
+  material: ["kit-agua"],
   pasos: [
-    "Fotos del agua (aunque esté sucia), de la depuradora (bomba, filtro, válvula) y de los productos de piscina que haya.",
-    "Medidas: largo, ancho, profundidad mínima y máxima (preguntar al dueño si no se pueden medir).",
-    "Mirar si hay charcos o humedad junto a la depuradora (posible fuga).",
-    "Mandarlo todo a Claude."
+    "Quitar la toalla de encima del filtro (guarda humedad y tapa el manómetro).",
+    "Llaves rojas de skimmer y fondo abiertas; la de limpiafondos cerrada (se abre solo para aspirar).",
+    "Con la bomba apagada, la maneta negra de encima del filtro: apretar hacia abajo y girar hasta FILTRACIÓN.",
+    "Vaciar el cestillo de cada skimmer y el del prefiltro de la bomba (tapa transparente). Bomba apagada para abrir el prefiltro.",
+    "Bomba en manual (interruptor del cuadro naranja) y dejarla encendida día y noche: la depuradora solo limpia mientras la bomba funciona.",
+    "A los 5 minutos, apuntar lo que marca el manómetro: es tu presión de referencia con el filtro limpio.",
+    "Medir pH y cloro con una tira: a la altura del codo 1-2 s, esperar 15 s y comparar con la tabla del bote. Ideal: pH 7,2-7,6 y cloro libre 1-3.",
+    "Medir largo, ancho y profundidad mínima y máxima. Pasárselo a Claude (por el buzón)."
   ],
-  porque: "Sin volumen ni productos no se puede calcular cuánto cloro ni invernador echar. A ojo se estropea el agua o el revestimiento.",
-  sinoSe: "Invernaje mal hecho y primavera con agua verde."
+  porque: "El agua verde es cloro a cero o que no actúa. Sin filtrar y sin saber el pH, cualquier producto que eches se desperdicia.",
+  sinoSe: "El verde va a más y cuesta el doble de producto recuperarla.",
+  importante: "Si al encender la bomba hace ruido raro, no saca agua o gotea algo en la caseta: apagar y foto a Claude."
 },
-{ id: "p-grieta", area: "piscina", titulo: "Revisar las grietas de la playa", prioridad: "importante", fecha: "2026-10-10", duracion: "10 min",
+{ id: "p-choque", area: "piscina", tipo: "hacer", titulo: "Recuperar el agua: pH y cloración de choque", prioridad: "urgente", fecha: "2026-10-10", duracion: "45 min",
+  que: "Matar las algas antes de invernar. Primero el pH, luego el choque, nunca a la vez.",
+  material: ["minorador-ph", "cloro-choque", "kit-agua", "guantes"],
+  pendiente: "Dosis exacta cuando Claude tenga las medidas. Mientras, la de la etiqueta calculando unos 25-30 m³.",
+  pasos: [
+    "Cepillar paredes y fondo para despegar las algas (con el cepillo curvo del garaje).",
+    "Si el pH pasa de 7,6: echar minorador de pH disuelto en un cubo de agua, repartido por el borde, con la bomba en marcha.",
+    "Esperar 4-6 horas y volver a medir. Objetivo: pH 7,2-7,4.",
+    "Al anochecer, cloro de choque: disolver en un cubo (siempre el producto sobre el agua, nunca al revés) y repartir por todo el borde con la bomba en marcha.",
+    "Filtrar 24 h seguidas durante 2-3 días.",
+    "Perros fuera del agua y de la playa mientras tanto."
+  ],
+  porque: "Con el pH alto (tu agua dura lo sube sola) el cloro pierde casi toda su fuerza. Al anochecer, porque el sol destruye el cloro en pocas horas. El cepillado deja las algas sueltas para que el cloro y el filtro acaben con ellas.",
+  sinoSe: "No se puede invernar: con algas debajo de la lona, en marzo hay una charca.",
+  importante: "No mezclar nunca productos entre sí ni en el mismo cubo. Guantes y gafas. Dicloro, no hipoclorito cálcico: con agua tan dura mete más cal."
+},
+{ id: "p-grieta", area: "piscina", tipo: "revisar", titulo: "Revisar las grietas de la playa", prioridad: "importante", fecha: "2026-10-10", duracion: "10 min",
   que: "Ver si las fisuras del pavimento llegan al borde del vaso.",
   pasos: [
     "Pasar el dedo: si hay hueco o escalón, es grieta.",
@@ -387,27 +541,42 @@ tareas: [
   porque: "Por una grieta junto al borde entra agua; al helar, se expande y la abre más.",
   sinoSe: "Reparación más cara en primavera."
 },
-{ id: "p-invernaje", area: "piscina", titulo: "Invernar la piscina", prioridad: "urgente", fecha: "2026-10-24", duracion: "1-2 h",
-  que: "Dejar el agua protegida para todo el invierno. Cantidades pendientes de los datos de la piscina.",
-  material: ["kit-agua", "productos-piscina"],
-  pendiente: "Faltan volumen y fotos de productos. Claude completará cantidades.",
+{ id: "p-aclarar", area: "piscina", tipo: "revisar", titulo: "Revisar el agua tras el choque", prioridad: "importante", fecha: "2026-10-14", duracion: "30 min",
+  que: "Ver si el choque ha funcionado y rematar.",
+  material: ["floculante", "kit-agua", "manguera"],
+  pasos: [
+    "Mirar el manómetro: si marca 0,3-0,5 bar más que tu referencia, contralavado (paso siguiente). Si no, saltarlo.",
+    "Contralavado: bomba OFF, selector en LAVADO, bomba ON 2-3 min (hasta que el agua del visor salga limpia), bomba OFF, ENJUAGUE 30 s, bomba OFF, FILTRACIÓN, bomba ON.",
+    "Si el agua está azul y se ve el fondo: perfecto. Medir cloro (1-3 ppm) y pH (7,2-7,6) y listo para invernar.",
+    "Si sigue verde: segundo choque igual que el primero.",
+    "Si está turbia gris o blanquecina (algas muertas en suspensión): floculante según etiqueta, bomba parada toda la noche.",
+    "Al día siguiente, aspirar el fondo con el limpiafondos con el selector en DESAGÜE (o VACIADO), para tirar la suciedad sin pasar por el filtro. Baja el nivel: rellenar con manguera."
+  ],
+  porque: "Las algas muertas son polvo fino que el filtro de arena no atrapa bien. El floculante las junta en el fondo y se tiran directamente al desagüe.",
+  sinoSe: "Invernar con agua turbia: el invernador no hace bien su trabajo."
+},
+{ id: "p-invernaje", area: "piscina", tipo: "hacer", titulo: "Invernar la piscina", prioridad: "urgente", fecha: "2026-10-24", duracion: "1-2 h",
+  que: "Dejar el agua protegida para todo el invierno. Solo con el agua ya transparente.",
+  material: ["kit-agua", "invernador", "cloro-choque"],
+  pendiente: "Faltan las medidas para la dosis exacta de invernador.",
   pasos: [
     "Limpiar fondo, paredes y cestillos.",
     "Ajustar el pH (7,2-7,6).",
     "Choque de cloro.",
-    "Al día siguiente, producto invernador.",
+    "Al día siguiente, invernador repartido por el borde con la bomba en marcha.",
+    "Quitar el dosificador flotante de pastillas: en invierno no hace falta.",
     "Si vivís allí: depuradora 2 horas al día, mejor de madrugada para que el agua en movimiento no hiele.",
     "Poner la lona bien tensa."
   ],
   porque: "Con el agua por debajo de 15 °C las algas casi no crecen. Bien invernada, en primavera basta con limpiar y ajustar.",
   sinoSe: "Agua verde en primavera: semanas de trabajo y mucho producto."
 },
-{ id: "p-primavera", area: "piscina", titulo: "Puesta a punto de primavera", prioridad: "importante", fecha: "2027-04-10", duracion: "Medio día",
+{ id: "p-primavera", area: "piscina", tipo: "hacer", titulo: "Puesta a punto de primavera", prioridad: "importante", fecha: "2027-04-10", duracion: "Medio día",
   que: "Quitar la lona y dejar la piscina lista para la temporada.",
-  material: ["manguera", "placa-skimmer"],
+  material: ["manguera"],
   pasos: [
     "Limpiar y secar la lona antes de guardarla.",
-    "Limpiar fondo con el limpiafondos (manguera llena de agua antes de conectarla).",
+    "Limpiar fondo con el limpiafondos conectado a la toma de la pared (manguera llena de agua antes de conectarla).",
     "Lavar el filtro, revisar bomba y prefiltro.",
     "Ajustar pH y cloro: Claude dará cantidades con el volumen.",
     "Limpiar la playa (los hongos negros del suelo)."
@@ -417,17 +586,20 @@ tareas: [
 },
 
 /* ---------- RIEGO ---------- */
-{ id: "r-reducir", area: "riego", titulo: "Reducir el riego de otoño", prioridad: "importante", fecha: "2026-10-10", duracion: "15 min",
-  que: "Pasar el programador al ritmo de otoño.",
+{ id: "r-reducir", area: "riego", tipo: "hacer", titulo: "Reducir el riego de otoño", prioridad: "importante", fecha: "2026-10-10", duracion: "15 min",
+  que: "Pasar el programador al ritmo de otoño. Como todo va junto, se programa para lo que menos agua necesita.",
+  material: ["manguera-jardin"],
   pasos: [
-    "Césped 2 días por semana (las calvas sembradas, a diario y poco). Árboles y goteos 1 vez por semana.",
-    "Riego temprano por la mañana.",
-    "Foto del programador y de qué riega cada sector. A Claude."
+    "Dejarlo en 2 días por semana (por ejemplo martes y sábado), a primera hora de la mañana.",
+    "Tiempo de cada riego: la mitad que en verano. Si no sabes cuánto tenía, foto del programador a Claude.",
+    "Si llueve más de un día en la semana, saltar el siguiente riego (botón de pausa o lluvia, si lo tiene).",
+    "Las calvas recién sembradas, a mano a diario (no con el automático).",
+    "Mirar en el programador si hay varias zonas o \"estaciones\" (números 1, 2, 3…). Aunque se rieguen el mismo día, a veces se puede dar más tiempo a una que a otra. Foto a Claude."
   ],
-  porque: "Con menos calor el suelo apenas pierde agua. Regar como en verano encharca, da hongos y deja la raíz perezosa en superficie.",
-  sinoSe: "Hongos en el césped y gasto de agua."
+  porque: "Con menos calor el suelo apenas pierde agua. Regar como en verano encharca, da hongos y deja la raíz perezosa en superficie. Los frutales, además, tienen que ir frenando para entrar en reposo.",
+  sinoSe: "Hongos en el césped, árboles que no se preparan para el frío y gasto de agua."
 },
-{ id: "r-apagar", area: "riego", titulo: "Apagar el riego para el invierno", prioridad: "urgente", fecha: "2026-11-07", duracion: "20 min",
+{ id: "r-apagar", area: "riego", tipo: "hacer", titulo: "Apagar el riego para el invierno", prioridad: "urgente", fecha: "2026-11-07", duracion: "20 min",
   que: "Poner el programador en reposo y proteger lo que pueda helar.",
   pasos: [
     "Programador en OFF (o modo \"lluvia\"). No quitar la pila: no pierde la programación.",
@@ -439,7 +611,7 @@ tareas: [
   porque: "El agua que se queda en tramos al aire se congela, se expande y revienta tubos y válvulas.",
   sinoSe: "Riego innecesario en invierno y averías en marzo."
 },
-{ id: "r-encender", area: "riego", titulo: "Encender y revisar el riego", prioridad: "importante", fecha: "2027-03-27", duracion: "45 min",
+{ id: "r-encender", area: "riego", tipo: "hacer", titulo: "Encender y revisar el riego", prioridad: "importante", fecha: "2027-03-27", duracion: "45 min",
   que: "Volver a ponerlo en marcha comprobando que todo funciona.",
   pasos: [
     "Abrir la llave general y poner el programador en automático.",
@@ -449,7 +621,7 @@ tareas: [
   porque: "Las averías del invierno se descubren mejor ahora que en julio, con el césped ya sufriendo.",
   sinoSe: "Zonas secas en verano por un aspersor roto."
 },
-{ id: "r-verano", area: "riego", titulo: "Programa de verano", prioridad: "importante", fecha: "2027-06-01", duracion: "15 min",
+{ id: "r-verano", area: "riego", tipo: "hacer", titulo: "Programa de verano", prioridad: "importante", fecha: "2027-06-01", duracion: "15 min",
   que: "Ajustar el riego al calor.",
   pasos: ["Riego de madrugada (antes de las 8).", "Mejor riegos más largos y menos frecuentes que cortos a diario.", "Claude ajusta tiempos por sector."],
   porque: "Regar profundo y espaciado hace que la raíz baje y aguante mejor el calor. De madrugada se evapora menos.",
@@ -457,7 +629,7 @@ tareas: [
 },
 
 /* ---------- EXTERIOR / MÁQUINAS ---------- */
-{ id: "g-cortacesped", area: "cesped", titulo: "Vaciar y guardar el cortacésped", prioridad: "mantenimiento", fecha: "2026-12-05", duracion: "20 min",
+{ id: "g-cortacesped", area: "cesped", tipo: "hacer", titulo: "Vaciar y guardar el cortacésped", prioridad: "mantenimiento", fecha: "2026-12-05", duracion: "20 min",
   que: "Prepararlo para el invierno.",
   material: ["gasolina"],
   pasos: [
@@ -469,7 +641,7 @@ tareas: [
   porque: "La gasolina vieja se degrada y atasca el carburador: es la avería típica de primavera.",
   sinoSe: "El cortacésped no arranca en marzo."
 },
-{ id: "g-cortacesped-prim", area: "cesped", titulo: "Revisar el cortacésped", prioridad: "mantenimiento", fecha: "2027-03-06", duracion: "30 min",
+{ id: "g-cortacesped-prim", area: "cesped", tipo: "hacer", titulo: "Revisar el cortacésped", prioridad: "mantenimiento", fecha: "2027-03-06", duracion: "30 min",
   que: "Dejarlo listo para la primera siega.",
   material: ["gasolina-nueva"],
   pasos: ["Gasolina nueva.", "Revisar el nivel de aceite del motor.", "Afilar la cuchilla (o llevarla a afilar)."],
@@ -502,6 +674,11 @@ material: [
   { id: "limpiafondos", cat: "piscina", nombre: "Limpiafondos manual y cepillo de paredes", garaje: true,
     queEs: "El de ruedas aspira el fondo conectado a la depuradora con una manguera; el curvo frota paredes.", uso: "Primavera y verano." },
 
+  { id: "escarificador", cat: "cesped", nombre: "Máquina roja del garaje (escarificador, por confirmar)", garaje: true,
+    queEs: "Por lo que contó el dueño (una vez al año, en primavera, para \"limpiar\" el césped), casi seguro es un escarificador: cuchillas que arañan el césped y sacan la hierba muerta y el musgo. No arranca malas hierbas de raíz.",
+    uso: "Una vez al año, en marzo-abril.",
+    nota: "Foto de la máquina y de su etiqueta a Claude por el buzón. Podría ser también un aireador (pincha agujeros). Ahora, en otoño, no se usa." },
+
   /* ---- No usar ---- */
   { id: "kestrel", cat: "frutales", nombre: "Kestrel (insecticida)", noUsar: true,
     queEs: "Uso reservado a profesionales con carné de aplicador y muy tóxico para las abejas.", uso: "No usar. Punto limpio." },
@@ -523,6 +700,14 @@ material: [
     queEs: "Rastrillo rígido de dientes cortos para soltar la tierra de las calvas. No es lo mismo que la escoba de hojas.",
     cantidad: "1 (solo si no hay en el garaje).", precio: "10-15 €",
     links: [ { t: "Ejemplo: Rastrillo 14 púas Jardinor (Leroy Merlin)", u: "https://www.leroymerlin.es/productos/rastrillo-con-mango-14-puas-de-acero-34-cm-jardinor-12110966.html" } ] },
+  { id: "manguera-jardin", cat: "herramientas", nombre: "Manguera de jardín con pistola (o regadera)", aviso: "2026-10-09", tenerAntes: "2026-10-10",
+    queEs: "Para regar a mano lo que el riego automático no puede tratar aparte: las calvas recién sembradas (a diario 2-3 semanas), los ajos y habas al plantar y el limonero en un apuro. No es la manguera gruesa de la piscina.",
+    uso: "Desde la resiembra y todo el año.", precio: "8-40 €",
+    gamas: [
+      { nivel: "Básica", nombre: "Regadera de 10 L con alcachofa (la boca de ducha)", precio: "8-12 €", texto: "Basta para las calvas: dos o tres viajes al día. Lenta para cualquier otra cosa.", u: "https://www.leroymerlin.es/search?q=regadera%2010%20litros" },
+      { nivel: "Lo que haría yo", nombre: "Manguera de 15-20 m con pistola de varios chorros y conector de grifo", precio: "25-40 €", texto: "Si hay grifo fuera. Con el chorro \"lluvia\" riega las calvas sin levantar la semilla, y sirve para el huerto, el limonero, limpiar la playa y rellenar la piscina tras aspirar.", u: "https://www.leroymerlin.es/search?q=kit%20manguera%20jardin%2020%20m%20pistola", recomendada: true }
+    ],
+    nota: "Mira antes si hay una junto al grifo de fuera o en el garaje." },
   { id: "escoba-hojas", cat: "herramientas", nombre: "Escoba de jardín para hojas", aviso: "2026-10-12", tenerAntes: "2026-10-17",
     gamas: [
       { nivel: "Básica", nombre: "Escoba de jardín para hojas", precio: "8-18 €", texto: "Suficiente para rincones, arriates y la terraza.", u: "https://www.leroymerlin.es/productos/escoba-con-mango-para-recoger-hojas-geolia-de-acero-de-44-5-cm-14052752.html" },
@@ -569,16 +754,11 @@ material: [
     queEs: "Abono específico para limoneros y naranjos, con hierro y microelementos.",
     cantidad: "Un envase pequeño (1-2 kg) da para la temporada.", precio: "6-10 €",
     links: [ { t: "Ejemplo: Abono cítricos Geolia 1,15 kg (Leroy Merlin)", u: "https://www.leroymerlin.es/productos/abono-citricos-geolia-1-15-kg-91987662.html" } ] },
-  { id: "manguera", cat: "piscina", nombre: "Manguera flotante de piscina de 38 mm", uso: "Para limpiar el fondo en primavera.", aviso: "2026-10-12", tenerAntes: "2027-04-10",
-    queEs: "Manguera gruesa y con anillos que flota. Conecta el limpiafondos con el skimmer para que la depuradora aspire el fondo. Una manguera de jardín no sirve.",
+  { id: "manguera", cat: "piscina", nombre: "Manguera flotante de piscina de 38 mm", uso: "Para aspirar el fondo ahora y cada primavera.", aviso: "2026-10-09", tenerAntes: "2026-10-14",
+    queEs: "Manguera gruesa y con anillos que flota. Une el limpiafondos con la toma de limpiafondos de la pared (tu piscina la tiene: es la tercera llave roja) para que la depuradora aspire el fondo. Una manguera de jardín no sirve.",
     cantidad: "El largo de la piscina más 2-3 m.", precio: "25-45 €",
     links: [ { t: "Ejemplo: manguera autoflotante 38 mm (ManoMano, elige el largo)", u: "https://www.manomano.es/p/manguera-autoflotante-eva-38mm-rollo-30m-con-terminales-corrugada-flexible-de-alta-resistencia-filtro-piscina-215776699" } ],
     nota: "Mide la boquilla del limpiafondos para confirmar los 38 mm." },
-  { id: "placa-skimmer", cat: "piscina", nombre: "Placa de aspiración para skimmer", uso: "Con la manguera, en primavera.", aviso: "2026-10-12", tenerAntes: "2027-04-10",
-    queEs: "Plato redondo con un tubo que se pone sobre el cestillo del skimmer para enchufar la manguera. Solo hace falta si la piscina no tiene toma de limpiafondos en la pared.",
-    cantidad: "1.", precio: "8-17 €",
-    links: [ { t: "Ejemplo: placa de aspiración 15 cm para manguera de 38 mm (ManoMano)", u: "https://www.manomano.es/p/placa-de-aspiracion-para-piscina-de-15-cm-con-racor-acodado-de-90-para-manguera-de-aspiracion-de-38-cm-compatible-con-skimmers-estandar-213117290" } ],
-    nota: "Antes, mirar el diámetro del skimmer: hay placas de distintos tamaños." },
   { id: "tijeras", cat: "herramientas", nombre: "Tijeras de podar de una mano (tipo bypass)", aviso: "2026-10-12", tenerAntes: "2026-12-15",
     gamas: [
       { nivel: "Básica", nombre: "Tijera bypass de gama media", precio: "15-30 €", texto: "Corta bien el primer año. Se mella antes y no tiene recambios.", u: "https://www.leroymerlin.es/productos/tijera-de-poda-a-una-mano-altuna-bypass-82063623.html" },
@@ -596,7 +776,7 @@ material: [
     queEs: "Sacos de 250 L para hojas, hierba cortada y restos de poda.", uso: "Otoño (hojas) e invierno (poda).",
     cantidad: "1-2 (son reutilizables).", precio: "5-10 €",
     links: [ { t: "Ejemplo: Bolsa de jardín 250 L (Leroy Merlin)", u: "https://www.leroymerlin.es/productos/bolsa-de-basura-de-jardin-de-70x60-cm-para-250l-81908399.html" } ] },
-  { id: "kit-agua", cat: "piscina", nombre: "Kit para medir el agua de la piscina (pH y cloro)", aviso: "2026-10-12", tenerAntes: "2026-10-24",
+  { id: "kit-agua", cat: "piscina", nombre: "Kit para medir el agua de la piscina (pH y cloro)", aviso: "2026-10-09", tenerAntes: "2026-10-10",
     gamas: [
       { nivel: "Básica", nombre: "Kit líquido de pH y cloro", precio: "8-12 €", texto: "Fiable pero mide solo pH y cloro.", u: "https://www.leroymerlin.es/productos/kit-de-analisis-liquido-para-piscina-axton-18666914.html" },
       { nivel: "Lo que haría yo", nombre: "Tiras reactivas 6 en 1", precio: "10-15 €", texto: "Miden además dureza y alcalinidad, que con el agua de Novés importan mucho. Rápidas: mojar y comparar colores.", u: "https://www.manomano.es/p/analisis-de-agua-para-piscinas-paquete-de-2-tiras-reactivas-6-en-1-para-piscinas-y-spas-tiras-reactivas-para-cloro-cloro-libre-ph-alcalinidad-acido-cianurico-dureza-del-agua-100-unidades-228215084", recomendada: true },
@@ -606,15 +786,30 @@ material: [
     uso: "Invernaje y toda la temporada de baño.", cantidad: "1 kit.", precio: "8-15 €",
     links: [ { t: "Ejemplo: Kit de análisis líquido para piscina Axton (Leroy Merlin)", u: "https://www.leroymerlin.es/productos/kit-de-analisis-liquido-para-piscina-axton-18666914.html" },
              { t: "Alternativa: tiras 6 en 1 que miden también dureza y alcalinidad (ManoMano)", u: "https://www.manomano.es/p/analisis-de-agua-para-piscinas-paquete-de-2-tiras-reactivas-6-en-1-para-piscinas-y-spas-tiras-reactivas-para-cloro-cloro-libre-ph-alcalinidad-acido-cianurico-dureza-del-agua-100-unidades-228215084" } ],
-    nota: "Con el agua tan dura de Novés, merece la pena medir también la dureza y la alcalinidad: las tiras 6 en 1 lo hacen." },
+    nota: "Compra las tiras 6 en 1: miden también dureza y alcalinidad, que con el agua de Novés importan." },
   { id: "abono-frutales", cat: "frutales", nombre: "Abono granulado para frutales", aviso: "2026-10-12", tenerAntes: "2027-03-06", uso: "Al hinchar las yemas (marzo) y a la caída de la flor (abril).",
     queEs: "Abono para echar al suelo alrededor de los frutales cuando arrancan en primavera.",
     cantidad: "1-2 kg para todos los árboles.", precio: "6-10 €",
     links: [ { t: "Ejemplo: Abono granulado Compo para huerta y frutales 1 kg (Leroy Merlin)", u: "https://www.leroymerlin.es/productos/abono-granulado-compo-para-huerta-y-frutales-1kg-para-uso-ecologico-16331483.html" } ] },
-  { id: "productos-piscina", cat: "piscina", nombre: "Productos de invernaje de la piscina", grupo: "despues", aviso: "2026-10-12", tenerAntes: "2026-10-24",
-    queEs: "Corrector de pH, cloro de choque e invernador.", uso: "Pendiente: primero hay que ver qué dejó el dueño y saber el volumen.",
-    cantidad: "La calcula Claude con el volumen.", precio: "-", links: [],
-    nota: "No comprar todavía: puede que ya tengas parte en el cuarto de la depuradora." },
+  { id: "minorador-ph", cat: "piscina", nombre: "Minorador de pH granulado", aviso: "2026-10-09", tenerAntes: "2026-10-10",
+    queEs: "Producto ácido en polvo para bajar el pH. Con el agua dura de Novés el pH sube solo: lo vas a usar toda la vida de la piscina.",
+    uso: "Ahora para recuperar el agua y toda la temporada.", cantidad: "Un envase de 5-8 kg (se conserva años cerrado).", precio: "10-20 €",
+    links: [ { t: "Ver minoradores de pH (Leroy Merlin)", u: "https://www.leroymerlin.es/search?q=minorador%20ph%20piscina" } ],
+    nota: "Guardar separado del cloro y lejos de los perros. Nunca mezclarlos." },
+  { id: "cloro-choque", cat: "piscina", nombre: "Cloro de choque granulado (dicloro)", aviso: "2026-10-09", tenerAntes: "2026-10-10",
+    queEs: "Cloro de disolución rápida para subir el cloro de golpe y matar algas. En la etiqueta: \"dicloro\" o \"dicloroisocianurato\", 55-60 %.",
+    uso: "Choque ahora, al invernar y al abrir en primavera.", cantidad: "Un envase de 5 kg da para el choque, el invernaje y la temporada.", precio: "25-40 €",
+    links: [ { t: "Ver cloro de choque granulado (Leroy Merlin)", u: "https://www.leroymerlin.es/search?q=cloro%20choque%20granulado%20piscina" } ],
+    nota: "No compres hipoclorito cálcico: con agua tan dura deja más cal y enturbia." },
+  { id: "floculante", cat: "piscina", nombre: "Floculante líquido", aviso: "2026-10-09", tenerAntes: "2026-10-14",
+    queEs: "Junta las partículas finas (algas muertas, polvo) en grumos que caen al fondo para aspirarlas al desagüe.",
+    uso: "Solo si tras el choque el agua queda turbia.", cantidad: "Botella de 1-2 L.", precio: "8-15 €",
+    links: [ { t: "Ver floculantes (Leroy Merlin)", u: "https://www.leroymerlin.es/search?q=floculante%20liquido%20piscina" } ],
+    nota: "Barato y se conserva: mejor tenerlo ya que volver a la tienda a mitad de la recuperación." },
+  { id: "invernador", cat: "piscina", nombre: "Invernador (alguicida de invierno)", aviso: "2026-10-09", tenerAntes: "2026-10-17",
+    queEs: "Producto que se echa al cerrar la piscina para que no crezcan algas ni cal durante el invierno.",
+    uso: "Una vez, al invernar.", cantidad: "Un envase de 5 L sobra para tu piscina. La dosis exacta, con las medidas.", precio: "15-25 €",
+    links: [ { t: "Ver invernadores (Leroy Merlin)", u: "https://www.leroymerlin.es/search?q=invernador%20piscina" } ] },
   { id: "gasolina-nueva", cat: "herramientas", nombre: "Gasolina nueva para el cortacésped", grupo: "despues", aviso: "2027-02-24", tenerAntes: "2027-03-06",
     queEs: "Gasolina sin plomo normal. Se compra justo antes porque se degrada en 2-3 meses.", uso: "Primera siega de marzo.",
     cantidad: "5 L.", precio: "8-10 €", links: [] }
