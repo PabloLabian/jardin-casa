@@ -61,7 +61,7 @@ nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--paper) 
 
 main{padding:22px 0 80px}
 h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:28px;margin:0 0 6px;letter-spacing:-.01em}
-h3{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:30px 0 10px;display:flex;align-items:baseline;gap:10px}
+h3{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:30px 0 10px;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px}
 h3 small{font:500 13px "DM Sans",sans-serif;color:var(--ink-3)}
 .lead{color:var(--ink-2);max-width:62ch;margin:0 0 4px}
 
@@ -152,6 +152,18 @@ h3 small{font:500 13px "DM Sans",sans-serif;color:var(--ink-3)}
 .links a{display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--line);border-radius:12px;text-decoration:none;margin-bottom:6px;background:var(--paper)}
 .links a::after{content:"↗";margin-left:auto;color:var(--ink-3)}
 
+.golink{font-size:13.5px;font-weight:600;text-decoration:none;color:var(--green);background:var(--sage-soft);padding:6px 11px;border-radius:99px;white-space:nowrap}
+.golink:hover{background:var(--sage);color:var(--paper)}
+.matline{display:flex;gap:6px;align-items:center}.matline button{flex:1}
+.buzon{margin-top:16px;background:var(--card);border:1px dashed var(--sage);border-radius:22px;padding:16px 18px}
+.notaform{display:flex;gap:8px}
+.notaform input{flex:1;min-width:0;font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.notaform input:focus{outline:2px solid var(--sage);border-color:transparent}
+.notaform button{border:0;background:var(--green);color:var(--paper);border-radius:12px;padding:0 16px;font-weight:600;cursor:pointer}
+.notas{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}
+.notas li{display:flex;gap:10px;align-items:center;background:var(--amber-soft);border-radius:12px;padding:8px 8px 8px 12px;font-size:14.5px}
+.notas li span{flex:1}.notas li small{color:var(--ink-3)}
+.notas li button{border:0;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-3);width:28px;height:28px;border-radius:50%}
 footer{color:var(--ink-3);font-size:13px;padding:30px 0 50px;border-top:1px solid var(--line)}
 @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
 </style>
@@ -233,12 +245,14 @@ INST.sort((a,b) => a.date - b.date || PRI_ORDER[a.t.prioridad] - PRI_ORDER[b.t.p
 const instByKey = Object.fromEntries(INST.map(i => [i.key, i]));
 
 /* ---------- Estado ---------- */
-let state = { done:{}, bought:{} };
+let state = { done:{}, bought:{}, notas:[] };
 let backend = null;
-const normalize = s => ({ done: (s && s.done) || {}, bought: (s && s.bought) || {} });
+const normalize = s => ({ done: (s && s.done) || {}, bought: (s && s.bought) || {}, notas: (s && s.notas) || [] });
 function applyOp(s, op){
-  const n = { done:{...s.done}, bought:{...s.bought} };
+  const n = { done:{...s.done}, bought:{...s.bought}, notas:[...(s.notas || [])] };
   if (op.t === "done" || op.t === "bought") { if (op.v) n[op.t][op.k] = op.v; else delete n[op.t][op.k]; }
+  if (op.t === "nota-add" && !n.notas.some(x => x.id === op.n.id)) n.notas.push(op.n);
+  if (op.t === "nota-del") n.notas = n.notas.filter(x => x.id !== op.id);
   return n;
 }
 const cacheLocal = () => { try { localStorage.setItem("jardin-noves", JSON.stringify(state)); } catch(e){} };
@@ -275,8 +289,8 @@ function matRow(m){
   return `<div class="task mat ${b ? "done" : ""}" role="button" tabindex="0" data-mat="${esc(m.id)}">
     <button class="check ${b ? "on" : ""}" data-buy="${esc(m.id)}" aria-label="${b ? "Desmarcar" : "Marcar como comprado"}: ${esc(m.nombre)}">${checkSVG}</button>
     <div><div class="t">${esc(m.nombre)}</div>
-      <div class="m"><span>Tenerlo antes del ${fmtShort(parse(m.tenerAntes))}</span>${m.precio ? `<span>${esc(m.precio)}</span>` : ""}${late ? '<span class="badge late">Ya hace falta</span>' : ""}</div>
-    </div><span class="arrow" aria-hidden="true">›</span></div>`;
+      <div class="m"><span>${m.uso ? esc(m.uso) : "Tenerlo antes del " + fmtShort(parse(m.tenerAntes))}</span>${m.precio ? `<span>${esc(m.precio)}</span>` : ""}${late ? '<span class="badge late">Ya hace falta</span>' : ""}</div>
+    </div>${m.links && m.links[0] ? `<a class="golink" href="${esc(m.links[0].u)}" target="_blank" rel="noopener" data-ext>Ver ↗</a>` : '<span class="arrow" aria-hidden="true">›</span>'}</div>`;
 }
 const listHTML = (items, fn, emptyText) => items.length ? `<div class="list">${items.map(fn).join("")}</div>` : `<p class="empty">${emptyText}</p>`;
 
@@ -285,7 +299,7 @@ function viewSemana(){
   const week = INST.filter(i => i.date >= WEEK0 && i.date <= WEEK1);
   const late = INST.filter(i => !i.rec && i.date < WEEK0 && !isDone(i.key) && i.date >= addDays(WEEK0, -90));
   const next = INST.filter(i => i.date > WEEK1 && i.date <= addDays(WEEK1, 21) && !(i.rec && INST.some(o => o.t === i.t && o.date > WEEK1 && o.date < i.date)));
-  const buys = D.material.filter(m => m.aviso && !isBought(m.id) && parse(m.aviso) <= WEEK1).sort((a,b) => a.tenerAntes.localeCompare(b.tenerAntes));
+  const buys = D.material.filter(m => m.aviso && !isBought(m.id) && parse(m.aviso) <= addDays(TODAY, 14)).sort((a,b) => (a.grupo === "despues") - (b.grupo === "despues") || a.tenerAntes.localeCompare(b.tenerAntes));
   const total = week.length, done = week.filter(i => isDone(i.key)).length;
   const pct = total ? done/total : 0, C = 2*Math.PI*38;
   const urg = week.filter(i => !isDone(i.key) && i.t.prioridad === "urgente").length;
@@ -301,14 +315,23 @@ function viewSemana(){
     <div><span class="season">${season(TODAY)}</span>
       <h2>Semana del ${fmtShort(WEEK0)} al ${fmtShort(WEEK1)}</h2><p>${msg}</p></div>
   </section>
+  ${buzonHTML()}
   ${late.length ? `<h3>Atrasado <small>${late.length}</small></h3>${listHTML(late, i => taskRow(i))}` : ""}
   <h3>Toca esta semana <small>${total}</small></h3>
   ${listHTML(week.sort((a,b) => PRI_ORDER[a.t.prioridad]-PRI_ORDER[b.t.prioridad] || a.date-b.date), i => taskRow(i), "Nada programado esta semana.")}
-  ${buys.length ? `<h3>Para comprar <small>${buys.length}</small></h3>${listHTML(buys, matRow)}` : ""}
+  ${buys.length ? `<h3>Para comprar <small>${buys.length} · todo de una vez</small></h3><p class="lead" style="margin-bottom:10px">Lo que se conserva va todo en la misma compra, aunque se use en primavera. "Ver" abre un producto de ejemplo.</p>${listHTML(buys, matRow)}` : ""}
   <h3>Lo que viene <small>próximas 3 semanas</small></h3>
   ${listHTML(next, i => taskRow(i), "Nada en las próximas semanas.")}`;
 }
 
+function buzonHTML(){
+  const notas = [...state.notas].sort((a,b) => b.d.localeCompare(a.d));
+  return `<section class="buzon">
+    <h3 style="margin-top:0">Apuntar <small>se lo pasas a Claude y lo convierte en tareas</small></h3>
+    <form id="notaForm" class="notaform"><input id="notaTxt" type="text" maxlength="300" placeholder="Ej.: hojas amarillas en el ciruelo, gotea un aspersor…" autocomplete="off" aria-label="Nueva nota"><button type="submit">Apuntar</button></form>
+    ${notas.length ? `<ul class="notas">${notas.map(n => `<li><span>${esc(n.t)}</span><small>${fmtShort(parse(n.d))}</small><button data-delnota="${esc(n.id)}" aria-label="Borrar nota">×</button></li>`).join("")}</ul>` : ""}
+  </section>`;
+}
 function viewArea(id){
   const a = AREA[id];
   const all = INST.filter(i => i.t.area === id);
@@ -338,8 +361,9 @@ function viewMaterial(){
     <div><div class="t">${esc(m.nombre)}</div><div class="m">${badge}<span>${esc(m.uso)}</span></div></div><span class="arrow" aria-hidden="true">›</span></div>`;
   return `
   <section class="intro-card"><h2>Material</h2>
-    <p class="lead">Lo que hay que comprar, ordenado por cuándo hace falta, con un enlace de ejemplo para saber qué es. No tiene por qué ser ese producto: sirve para reconocerlo. En el vivero o la cooperativa de Torrijos suele salir más barato y te aconsejan.</p></section>
-  <h3>Por comprar <small>${buy.filter(m => !isBought(m.id)).length} pendientes</small></h3>${listHTML(buy, matRow)}
+    <p class="lead">Todo lo que se conserva, en una sola compra, ordenado por cuándo hace falta. Cada cosa tiene un enlace de ejemplo para saber qué es. No tiene por qué ser ese producto: sirve para reconocerlo. En el vivero o la cooperativa de Torrijos suele salir más barato y te aconsejan.</p></section>
+  <h3>Compra grande <small>${buy.filter(m => !isBought(m.id) && m.grupo !== "despues").length} pendientes · se conserva todo</small></h3>${listHTML(buy.filter(m => m.grupo !== "despues"), matRow)}
+  <h3>Mejor justo antes <small>caduca o depende de datos</small></h3>${listHTML(buy.filter(m => m.grupo === "despues"), matRow)}
   <h3>Ya en el garaje <small>${garage.length}</small></h3>${listHTML(garage, m => simple(m, '<span class="badge garage">En casa</span>'))}
   <h3>No usar <small>${no.length}</small></h3>${listHTML(no, m => simple(m, '<span class="badge late">No usar</span>'))}`;
 }
@@ -388,7 +412,7 @@ function taskDrawer(inst){
   <div class="db">
     ${t.pendiente ? `<h5>Pendiente</h5><p class="note">${esc(t.pendiente)}</p>` : ""}
     <h5>Qué hacer</h5><p>${esc(t.que)}</p>
-    ${mats.length ? `<h5>Necesitas</h5><div class="mats">${mats.map(m => `<button data-mat="${esc(m.id)}"><span>${esc(m.nombre)}</span>${m.garaje ? '<span class="badge garage">En casa</span>' : isBought(m.id) ? '<span class="badge garage">Comprado</span>' : '<span class="badge">Comprar</span>'}</button>`).join("")}</div>` : ""}
+    ${mats.length ? `<h5>Necesitas</h5><div class="mats">${mats.map(m => `<div class="matline"><button data-mat="${esc(m.id)}"><span>${esc(m.nombre)}</span>${m.garaje ? '<span class="badge garage">En casa</span>' : isBought(m.id) ? '<span class="badge garage">Comprado</span>' : '<span class="badge">Comprar</span>'}</button>${!m.garaje && m.links && m.links[0] ? `<a class="golink" href="${esc(m.links[0].u)}" target="_blank" rel="noopener" data-ext>Ver ↗</a>` : ""}</div>`).join("")}</div>` : ""}
     <h5>Cómo hacerlo</h5><ol>${t.pasos.map(p => `<li>${esc(p)}</li>`).join("")}</ol>
     <h5>Por qué</h5><p>${esc(t.porque)}</p>
     ${t.sinoSe && t.sinoSe !== "-" ? `<h5>Si no se hace</h5><p>${esc(t.sinoSe)}</p>` : ""}
@@ -439,6 +463,9 @@ function closeDrawer(){
 
 /* ---------- Eventos ---------- */
 document.addEventListener("click", e => {
+  if (e.target.closest("[data-ext]")) { e.stopPropagation(); return; }
+  const dn = e.target.closest("[data-delnota]");
+  if (dn) { change({ t:"nota-del", id: dn.dataset.delnota }); return; }
   const el = e.target.closest("[data-check],[data-buy],[data-open],[data-mat],[data-tab],[data-close]");
   if (!el) { if (e.target === scrim) closeDrawer(); return; }
   if (el.dataset.check) { e.stopPropagation(); const k = el.dataset.check; change({ t:"done", k, v: isDone(k) ? null : iso(new Date()) }); return; }
@@ -451,6 +478,14 @@ document.addEventListener("click", e => {
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && openRef) closeDrawer();
   if ((e.key === "Enter" || e.key === " ") && e.target.matches(".task[role=button]")) { e.preventDefault(); e.target.click(); }
+});
+document.addEventListener("submit", e => {
+  if (e.target.id !== "notaForm") return;
+  e.preventDefault();
+  const v = document.getElementById("notaTxt").value.trim();
+  if (!v) return;
+  change({ t:"nota-add", n: { id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), t: v, d: iso(new Date()) } });
+  setTimeout(() => { const i = document.getElementById("notaTxt"); if (i) i.focus(); }, 0);
 });
 window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (AREA[h]) { current = h; render(); } });
 
@@ -467,10 +502,10 @@ const setSync = (txt, cls) => { syncEl.className = "sync " + (cls || ""); syncEl
     if (r.status === 404) return null;
     if (!r.ok) throw new Error("pull " + r.status);
     const f = (await r.json()).fields || {};
-    return normalize({ done: JSON.parse((f.done && f.done.stringValue) || "{}"), bought: JSON.parse((f.bought && f.bought.stringValue) || "{}") });
+    return normalize({ done: JSON.parse((f.done && f.done.stringValue) || "{}"), bought: JSON.parse((f.bought && f.bought.stringValue) || "{}"), notas: JSON.parse((f.notas && f.notas.stringValue) || "[]") });
   }
   async function push(s){
-    const body = { fields: { done:{ stringValue: JSON.stringify(s.done) }, bought:{ stringValue: JSON.stringify(s.bought) } } };
+    const body = { fields: { done:{ stringValue: JSON.stringify(s.done) }, bought:{ stringValue: JSON.stringify(s.bought) }, notas:{ stringValue: JSON.stringify(s.notas || []) } } };
     const r = await fetch(URL_DOC, { method:"PATCH", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body) });
     if (!r.ok) throw new Error("push " + r.status);
   }
@@ -479,7 +514,7 @@ const setSync = (txt, cls) => { syncEl.className = "sync " + (cls || ""); syncEl
     try {
       while (queue.length) {
         const ops = queue.slice();
-        let remote = (await pull()) || { done:{}, bought:{} };
+        let remote = (await pull()) || { done:{}, bought:{}, notas:[] };
         ops.forEach(op => { remote = applyOp(remote, op); });
         await push(remote);
         queue = queue.slice(ops.length);
@@ -499,8 +534,8 @@ const setSync = (txt, cls) => { syncEl.className = "sync " + (cls || ""); syncEl
     try {
       const remote = await pull();
       if (busy || queue.length) return;
-      if (remote === null) { if (Object.keys(state.done).length || Object.keys(state.bought).length) { queue.push({ t:"seed" }); flush(); } setSync("Guardado para los dos", "ok"); return; }
-      if (JSON.stringify(remote) !== JSON.stringify(state)) { state = remote; cacheLocal(); render(); refreshDrawer(); }
+      if (remote === null) { if (Object.keys(state.done).length || Object.keys(state.bought).length || state.notas.length) { queue.push({ t:"seed" }); flush(); } setSync("Guardado para los dos", "ok"); return; }
+      if (JSON.stringify(remote) !== JSON.stringify(state)) { state = remote; cacheLocal(); if (document.activeElement?.id !== "notaTxt") render(); refreshDrawer(); }
       setSync("Guardado para los dos", "ok");
     } catch(e) { setSync("Sin conexión: guardado en este móvil", "off"); }
   }
