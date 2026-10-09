@@ -17,7 +17,7 @@
   --amber:#c58a22; --amber-soft:#f3e4c2; --grey-soft:#e7e3d9;
   --shadow:0 1px 0 rgba(60,50,20,.06), 0 6px 18px -10px rgba(60,50,20,.25);
   --radius:16px;
-  --c-cesped:#5f8a4e; --c-frutales:#b65d3a; --c-limonero:#c9a227; --c-huerto:#8a6a3c; --c-piscina:#3f7f98; --c-riego:#5a8fa8; --c-herramientas:#8b8577;
+  --c-cesped:#3c9a3a; --c-frutales:#d2461f; --c-limonero:#e8c100; --c-huerto:#6b3f1d; --c-piscina:#13a6c6; --c-riego:#2c5bd8; --c-herramientas:#8b8577;
   --t-hacer:#2f4a36; --t-hacer-soft:#dfe7d3; --t-revisar:#4f5aa3; --t-revisar-soft:#e1e3f3; --t-cosecha:#a3456b; --t-cosecha-soft:#f4dde7; --t-comprar:#b06f12; --t-comprar-soft:#f5e3c0;
 }
 @media (prefers-color-scheme: dark){
@@ -26,7 +26,7 @@
     --line:#34433a; --green:#a9c79a; --sage:#7f9c73; --sage-soft:#2c3b2f; --terra:#e08a64; --terra-soft:#3d2a22;
     --amber:#e2b04f; --amber-soft:#3a3120; --grey-soft:#2b332d;
     --shadow:0 1px 0 rgba(0,0,0,.2), 0 8px 20px -12px rgba(0,0,0,.6);
-    --c-cesped:#8fbf7a; --c-frutales:#e08a64; --c-limonero:#e2c45a; --c-huerto:#c79a62; --c-piscina:#6fb3cc; --c-riego:#86b7cc; --c-herramientas:#a8a294;
+    --c-cesped:#6fd46a; --c-frutales:#ff7a50; --c-limonero:#ffe03a; --c-huerto:#b07a4a; --c-piscina:#3fd0f0; --c-riego:#6f95ff; --c-herramientas:#a8a294;
     --t-hacer:#a9c79a; --t-hacer-soft:#2c3b2f; --t-revisar:#a3aaf0; --t-revisar-soft:#2a2d48; --t-cosecha:#eb94b8; --t-cosecha-soft:#45283a; --t-comprar:#e8b453; --t-comprar-soft:#3d3220;
   }
 }
@@ -214,6 +214,16 @@ footer{color:var(--ink-3);font-size:13px;padding:30px 0 50px;border-top:1px soli
 .thumb img{width:44px;height:44px;object-fit:cover;border-radius:8px;background:var(--line)}
 .fotoerr{color:var(--terra);font-size:13.5px;margin:8px 0 0}
 .bigfoto{width:100%;border-radius:14px;margin-top:12px}
+.notaform .micbtn{display:grid;place-items:center;width:44px;flex:none;border:1px solid var(--line);border-radius:12px;background:var(--paper);cursor:pointer;color:var(--ink-2);font:inherit}
+.notaform .micbtn:hover{border-color:var(--sage)}
+.notaform .micbtn.rec{width:auto;padding:0 12px;background:#c2412d;border-color:#c2412d;color:#fff;font-weight:600;font-size:14px;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.75}}
+.audprev{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:14px;color:var(--ink-2);flex-wrap:wrap}
+@media (max-width:600px){ .notaform{flex-wrap:wrap} .notaform input[type=text]{order:-1;flex-basis:100%} .notaform button[type=submit]{flex:1;padding:10px 16px} }
+.audprev audio{height:36px;max-width:100%}
+.audprev button{border:0;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-3)}
+.notas li .playbtn{width:auto;height:auto;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:4px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--green);flex:none;white-space:nowrap}
+.notas li .thumb{width:auto;height:auto;border-radius:8px}
 </style>
 </head>
 <body>
@@ -263,6 +273,7 @@ const ICON = {
   revisar: ic('<path d="M1.2 7S3.3 3 7 3s5.8 4 5.8 4-2.1 4-5.8 4S1.2 7 1.2 7z"/><circle cx="7" cy="7" r="1.7"/>'),
   cosecha: ic('<path d="M1.8 6.2h10.4L11 12H3z"/><path d="M4.3 6.2 7 2.2l2.7 4"/>'),
   comprar: ic('<path d="M2.8 4.8h8.4l-.7 7.2H3.5z"/><path d="M5 4.8V4a2 2 0 0 1 4 0v.8"/>'),
+  mic: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="7.5" y="2.5" width="5" height="10" rx="2.5"/><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v2.5"/></svg>',
   foto: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.5h3l1.5-2h6l1.5 2h3v9h-15z"/><circle cx="10" cy="11" r="3"/></svg>'
 };
 const tipoHTML = t => `<span class="tipo" data-t="${t}">${ICON[t]}${TIPO[t]}</span>`;
@@ -393,6 +404,42 @@ function viewSemana(){
 /* Fotos del buzón: cada foto va en su propio documento (jardin-fotos/<id>) para no inflar el estado. */
 const FOTO_BASE = "https://firestore.googleapis.com/v1/projects/nos-vamos-de-mudanza/databases/(default)/documents/jardin-fotos/";
 let pendingFoto = null, fotoErr = "";
+/* Audio: se graba en el móvil y se guarda troceado en jardin-fotos/<id>-<n> (mismas reglas que las fotos). */
+let pendingAudio = null, rec = null, recStart = 0, recTimer = null;
+const AUDIOS = {}, CHUNK = 700000;
+const fmtDur = s => `${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,"0")}`;
+async function startRec(){
+  fotoErr = "";
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const mime = ["audio/webm;codecs=opus","audio/mp4","audio/webm"].find(m => window.MediaRecorder && MediaRecorder.isTypeSupported(m)) || "";
+    const mr = new MediaRecorder(stream, mime ? { mimeType: mime, audioBitsPerSecond: 32000 } : { audioBitsPerSecond: 32000 });
+    const parts = [];
+    mr.ondataavailable = ev => { if (ev.data.size) parts.push(ev.data); };
+    mr.onstop = () => {
+      stream.getTracks().forEach(t => t.stop());
+      clearInterval(recTimer);
+      const dur = (Date.now() - recStart) / 1000;
+      const blob = new Blob(parts, { type: mr.mimeType || mime || "audio/webm" });
+      const fr = new FileReader();
+      fr.onload = () => { pendingAudio = { id: "a" + Date.now().toString(36) + Math.random().toString(36).slice(2,5), data: fr.result, dur }; rec = null; render(); };
+      fr.readAsDataURL(blob);
+    };
+    rec = mr; recStart = Date.now(); mr.start();
+    recTimer = setInterval(() => {
+      const b = document.getElementById("micBtn"); const sec = (Date.now() - recStart) / 1000;
+      if (b) b.textContent = "■ " + fmtDur(sec);
+      if (sec >= 300) mr.stop();
+    }, 500);
+    render();
+  } catch(err) { rec = null; fotoErr = "No he podido usar el micrófono. Revisa que el navegador tenga permiso."; render(); }
+}
+async function loadAudio(id, n){
+  if (AUDIOS[id]) return AUDIOS[id];
+  const parts = await Promise.all(Array.from({ length: n }, (_, i) => fetch(FOTO_BASE + id + "-" + i).then(r => r.json()).then(j => j.fields.img.stringValue)));
+  return (AUDIOS[id] = parts.join(""));
+}
+let playing = null;
 const FOTOS = {}, fotoLoading = new Set();
 async function compress(file){
   const url = URL.createObjectURL(file);
@@ -427,10 +474,11 @@ function buzonHTML(){
   const notas = [...state.notas].sort((a,b) => b.d.localeCompare(a.d));
   return `<section class="buzon">
     <h3 style="margin-top:0">Apuntar <small>se lo pasas a Claude y lo convierte en tareas</small></h3>
-    <form id="notaForm" class="notaform"><label class="fotobtn" title="Añadir una foto">${ICON.foto}<input id="notaFoto" type="file" accept="image/*" hidden aria-label="Añadir una foto"></label><input id="notaTxt" type="text" maxlength="300" placeholder="Ej.: hojas amarillas en el ciruelo, gotea un aspersor…" autocomplete="off" aria-label="Nueva nota"><button type="submit" id="notaBtn">Apuntar</button></form>
+    <form id="notaForm" class="notaform"><label class="fotobtn" title="Añadir una foto">${ICON.foto}<input id="notaFoto" type="file" accept="image/*" hidden aria-label="Añadir una foto"></label><button type="button" id="micBtn" class="micbtn ${rec ? "rec" : ""}" data-mic aria-label="${rec ? "Parar grabación" : "Grabar un audio"}" title="Grabar un audio">${rec ? "■ " + fmtDur((Date.now() - recStart) / 1000) : ICON.mic}</button><input id="notaTxt" type="text" maxlength="300" placeholder="Ej.: hojas amarillas en el ciruelo, gotea un aspersor…" autocomplete="off" aria-label="Nueva nota"><button type="submit" id="notaBtn">Apuntar</button></form>
     ${pendingFoto ? `<div class="fotoprev"><img src="${pendingFoto.data}" alt="Foto preparada"><span>Foto lista. Escribe qué quieres que mire y pulsa Apuntar.</span><button type="button" data-quitarfoto aria-label="Quitar foto">×</button></div>` : ""}
+    ${pendingAudio ? `<div class="audprev"><audio controls src="${pendingAudio.data}"></audio><span>Audio de ${fmtDur(pendingAudio.dur)} listo. Pulsa Apuntar.</span><button type="button" data-quitaraudio aria-label="Quitar audio">×</button></div>` : ""}
     ${fotoErr ? `<p class="fotoerr">${esc(fotoErr)}</p>` : ""}
-    ${notas.length ? `<ul class="notas">${notas.map(n => `<li>${n.f ? `<button class="thumb" data-foto="${esc(n.f)}" data-fnota="${esc(n.id)}" aria-label="Ver foto"><img data-fimg="${esc(n.f)}" src="${FOTOS[n.f] || "data:image/gif;base64,R0lGODlhAQABAAAAACw="}" alt=""></button>` : ""}<span>${esc(n.t)}</span><small>${fmtShort(parse(n.d))}</small><button data-delnota="${esc(n.id)}" aria-label="Borrar nota">×</button></li>`).join("")}</ul>` : ""}
+    ${notas.length ? `<ul class="notas">${notas.map(n => `<li>${n.f ? `<button class="thumb" data-foto="${esc(n.f)}" data-fnota="${esc(n.id)}" aria-label="Ver foto"><img data-fimg="${esc(n.f)}" src="${FOTOS[n.f] || "data:image/gif;base64,R0lGODlhAQABAAAAACw="}" alt=""></button>` : ""}${n.a ? `<button class="playbtn" data-audio="${esc(n.a)}" data-an="${n.an || 1}">${playing && playing.id === n.a ? "■ Parar" : "▶ Audio"}</button>` : ""}<span>${esc(n.t)}</span><small>${fmtShort(parse(n.d))}</small><button data-delnota="${esc(n.id)}" aria-label="Borrar nota">×</button></li>`).join("")}</ul>` : ""}
   </section>`;
 }
 function viewArea(id){
@@ -594,6 +642,21 @@ document.addEventListener("click", e => {
   if (e.target.closest("[data-ext]")) { e.stopPropagation(); return; }
   const mm = e.target.closest("[data-matmode]");
   if (mm) { matMode = mm.dataset.matmode; try { localStorage.setItem("jardin-matmode", matMode); } catch(e) {} render(); return; }
+  if (e.target.closest("[data-mic]")) { if (rec) rec.stop(); else startRec(); return; }
+  if (e.target.closest("[data-quitaraudio]")) { pendingAudio = null; render(); return; }
+  const pa = e.target.closest("[data-audio]");
+  if (pa) {
+    const id = pa.dataset.audio;
+    if (playing && playing.id === id) { playing.el.pause(); playing = null; render(); return; }
+    if (playing) { playing.el.pause(); playing = null; }
+    pa.textContent = "Cargando…";
+    loadAudio(id, +pa.dataset.an).then(src => {
+      const el = new Audio(src); playing = { id, el };
+      el.onended = () => { playing = null; render(); };
+      el.play().catch(() => {}); render();
+    }).catch(() => { pa.textContent = "Error"; });
+    return;
+  }
   const qf = e.target.closest("[data-quitarfoto]");
   if (qf) { pendingFoto = null; fotoErr = ""; render(); return; }
   const fo = e.target.closest("[data-foto]");
@@ -602,6 +665,7 @@ document.addEventListener("click", e => {
   if (dn) {
     const n = state.notas.find(x => x.id === dn.dataset.delnota);
     if (n && n.f) fetch(FOTO_BASE + n.f, { method:"DELETE" }).catch(() => {});
+    if (n && n.a) for (let i = 0; i < (n.an || 1); i++) fetch(FOTO_BASE + n.a + "-" + i, { method:"DELETE" }).catch(() => {});
     change({ t:"nota-del", id: dn.dataset.delnota }); return;
   }
   const el = e.target.closest("[data-check],[data-buy],[data-open],[data-mat],[data-tab],[data-close]");
@@ -628,9 +692,26 @@ document.addEventListener("submit", async e => {
   if (e.target.id !== "notaForm") return;
   e.preventDefault();
   const v = document.getElementById("notaTxt").value.trim();
-  if (!v && !pendingFoto) return;
+  if (rec) { fotoErr = "Para la grabación antes de apuntar."; render(); return; }
+  if (!v && !pendingFoto && !pendingAudio) return;
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-  const nota = { id, t: v || "Foto (sin comentario)", d: iso(new Date()) };
+  const nota = { id, t: v || (pendingAudio ? "Audio" : "Foto (sin comentario)"), d: iso(new Date()) };
+  if (pendingAudio) {
+    const btn = document.getElementById("notaBtn"); if (btn) { btn.disabled = true; btn.textContent = "Subiendo…"; }
+    try {
+      const chunks = []; for (let i = 0; i < pendingAudio.data.length; i += CHUNK) chunks.push(pendingAudio.data.slice(i, i + CHUNK));
+      for (let i = 0; i < chunks.length; i++) {
+        const r = await fetch(FOTO_BASE + pendingAudio.id + "-" + i, { method:"PATCH", headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({ fields: { img:{ stringValue: chunks[i] }, d:{ stringValue: nota.d } } }) });
+        if (!r.ok) throw new Error(r.status);
+      }
+      AUDIOS[pendingAudio.id] = pendingAudio.data; nota.a = pendingAudio.id; nota.an = chunks.length; pendingAudio = null; fotoErr = "";
+    } catch(err) {
+      fotoErr = "No se ha podido subir el audio (¿sin conexión?). Vuelve a pulsar Apuntar.";
+      if (btn) { btn.disabled = false; btn.textContent = "Apuntar"; }
+      render(); return;
+    }
+  }
   if (pendingFoto) {
     const btn = document.getElementById("notaBtn"); if (btn) { btn.disabled = true; btn.textContent = "Subiendo…"; }
     try {
