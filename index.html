@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El jardín de Novés</title>
+<meta name="theme-color" content="#f3eee2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#18211b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%232f4a36'/%3E%3Cpath d='M32 50C32 34 40 22 50 16c-2 14-8 26-18 34zM32 50c0-12-6-20-16-24 2 10 8 20 16 24z' fill='%23d9e4c6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3eee2; --paper-2:#ebe4d3; --card:#fbf8f1; --ink:#22301f; --ink-2:#4f5b4a; --ink-3:#7c8576;
+  --line:#d9d0bb; --green:#2f4a36; --sage:#8aa37f; --sage-soft:#dfe7d3; --terra:#b65d3a; --terra-soft:#f2dccf;
+  --amber:#c58a22; --amber-soft:#f3e4c2; --grey-soft:#e7e3d9;
+  --shadow:0 1px 0 rgba(60,50,20,.06), 0 6px 18px -10px rgba(60,50,20,.25);
+  --radius:16px;
+  --c-cesped:#5f8a4e; --c-frutales:#b65d3a; --c-limonero:#c9a227; --c-huerto:#8a6a3c; --c-piscina:#3f7f98; --c-riego:#5a8fa8;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#18211b; --paper-2:#1f2a22; --card:#222e25; --ink:#e9ecdf; --ink-2:#b9c2ae; --ink-3:#8b9584;
+    --line:#34433a; --green:#a9c79a; --sage:#7f9c73; --sage-soft:#2c3b2f; --terra:#e08a64; --terra-soft:#3d2a22;
+    --amber:#e2b04f; --amber-soft:#3a3120; --grey-soft:#2b332d;
+    --shadow:0 1px 0 rgba(0,0,0,.2), 0 8px 20px -12px rgba(0,0,0,.6);
+    --c-cesped:#8fbf7a; --c-frutales:#e08a64; --c-limonero:#e2c45a; --c-huerto:#c79a62; --c-piscina:#6fb3cc; --c-riego:#86b7cc;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "DM Sans",system-ui,sans-serif;
+  background-image:radial-gradient(circle at 12% 0%, rgba(138,163,127,.18), transparent 40%), radial-gradient(circle at 100% 20%, rgba(182,93,58,.08), transparent 35%);
+  background-attachment:fixed;min-height:100vh}
+button{font:inherit;color:inherit}
+a{color:var(--green)}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+
+/* Cabecera */
+header{padding:28px 0 8px;position:relative}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 4px}
+h1{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(34px,7vw,52px);line-height:1;margin:0;letter-spacing:-.02em;color:var(--green)}
+h1 em{font-style:italic;font-weight:400}
+.sub{margin:10px 0 0;color:var(--ink-2)}
+.sync{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-3);background:var(--card);border:1px solid var(--line);padding:6px 10px;border-radius:99px;white-space:nowrap}
+.sync i{width:8px;height:8px;border-radius:50%;background:var(--ink-3);display:inline-block}
+.sync.ok i{background:var(--sage)} .sync.off i{background:var(--amber)}
+.sprig{position:absolute;right:-6px;top:58px;width:150px;opacity:.55;pointer-events:none;color:var(--sage)}
+@media (max-width:600px){.sprig{display:none} .top{flex-direction:column-reverse;gap:14px}}
+
+/* Navegación */
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--paper) 88%, transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:18px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 16px;max-width:980px;margin:0 auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:1px solid var(--line);background:transparent;padding:7px 14px;border-radius:99px;cursor:pointer;font-size:14.5px;color:var(--ink-2);display:inline-flex;align-items:center;gap:7px}
+.tab .dot{width:8px;height:8px;border-radius:50%}
+.tab[aria-current="page"]{background:var(--green);border-color:var(--green);color:var(--paper)}
+.tab:focus-visible,.task:focus-visible,.chip:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+
+main{padding:22px 0 80px}
+h2{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:28px;margin:0 0 6px;letter-spacing:-.01em}
+h3{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:20px;margin:30px 0 10px;display:flex;align-items:baseline;gap:10px}
+h3 small{font:500 13px "DM Sans",sans-serif;color:var(--ink-3)}
+.lead{color:var(--ink-2);max-width:62ch;margin:0 0 4px}
+
+/* Resumen semana */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+.ring{width:92px;height:92px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font:600 20px Fraunces,serif;color:var(--green)}
+.hero h2{font-size:24px}
+.hero p{margin:4px 0 0;color:var(--ink-2)}
+.season{display:inline-block;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--terra);background:var(--terra-soft);padding:3px 9px;border-radius:99px;margin-bottom:6px}
+
+/* Tareas */
+.list{display:grid;gap:8px}
+.task{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;cursor:pointer;text-align:left;width:100%;box-shadow:var(--shadow);transition:transform .15s ease, border-color .15s}
+.task:hover{border-color:var(--sage);transform:translateY(-1px)}
+.task .t{font-weight:500;line-height:1.3}
+.task .m{font-size:13px;color:var(--ink-3);margin-top:3px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.task.done .t{text-decoration:line-through;color:var(--ink-3)}
+.task.done{opacity:.72}
+.check{width:28px;height:28px;border-radius:50%;border:2px solid var(--sage);display:grid;place-items:center;background:transparent;cursor:pointer;flex:none;padding:0}
+.check svg{opacity:0;transition:opacity .15s}
+.check.on{background:var(--sage);border-color:var(--sage)}
+.check.on svg{opacity:1}
+.check:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+.arrow{color:var(--ink-3)}
+.pri{display:inline-flex;align-items:center;gap:5px;font-weight:500}
+.pri i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.p-urgente i{background:#c2412d} .p-importante i{background:#d98a1f} .p-mantenimiento i{background:#5f8a4e} .p-opcional i{background:#a8a293}
+.p-urgente{color:#b23a28} .p-importante{color:#a96a12}
+@media (prefers-color-scheme: dark){ .p-urgente{color:#ef8a76} .p-importante{color:#e9b25a} }
+.area-tag{display:inline-flex;align-items:center;gap:5px}
+.area-tag i{width:7px;height:7px;border-radius:2px;display:inline-block}
+.empty{color:var(--ink-3);font-style:italic;padding:8px 2px}
+.badge{font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--amber-soft);color:var(--amber)}
+.badge.late{background:var(--terra-soft);color:var(--terra)}
+.badge.garage{background:var(--sage-soft);color:var(--green)}
+
+/* Ficha del área */
+.ficha{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:16px}
+.ficha div{background:var(--paper-2);border-radius:14px;padding:12px 14px}
+.ficha b{display:block;font:500 15px Fraunces,serif;color:var(--green);margin-bottom:3px}
+.ficha span{font-size:14px;color:var(--ink-2)}
+.intro-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+
+/* Año */
+.year{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.month{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+.month.now{border-color:var(--terra);box-shadow:0 0 0 2px var(--terra-soft), var(--shadow)}
+.month h4{margin:0 0 2px;font:500 18px Fraunces,serif;text-transform:capitalize}
+.month .s{font-size:12px;color:var(--ink-3);margin-bottom:8px}
+.chips{display:flex;flex-direction:column;gap:5px}
+.chip{display:flex;gap:8px;align-items:flex-start;text-align:left;background:transparent;border:0;padding:4px 6px;border-radius:8px;cursor:pointer;font-size:13.5px;line-height:1.3;width:100%}
+.chip:hover{background:var(--paper-2)}
+.chip i{width:8px;height:8px;border-radius:2px;margin-top:5px;flex:none}
+.chip.done span{text-decoration:line-through;color:var(--ink-3)}
+.chip .d{color:var(--ink-3);font-variant-numeric:tabular-nums;min-width:20px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink-2);margin:10px 0 16px}
+
+/* Material */
+.mat{grid-template-columns:auto 1fr auto}
+.mat .t a{font-weight:500}
+
+/* Panel lateral */
+.scrim{position:fixed;inset:0;background:rgba(20,25,18,.35);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;z-index:50;background:var(--card);box-shadow:0 10px 40px rgba(0,0,0,.25);display:flex;flex-direction:column;transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+@media (min-width:760px){ .drawer{top:0;right:0;bottom:0;width:min(480px,92vw);transform:translateX(105%);border-left:1px solid var(--line)} .drawer.open{transform:none} }
+@media (max-width:759px){ .drawer{left:0;right:0;bottom:0;max-height:88vh;border-radius:22px 22px 0 0;transform:translateY(105%)} .drawer.open{transform:none} .drawer .grab{display:block} }
+.drawer .grab{display:none;width:40px;height:4px;border-radius:2px;background:var(--line);margin:10px auto 0}
+.dh{padding:18px 20px 12px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start}
+.dh h2{font-size:24px;line-height:1.15;margin:4px 0 6px}
+.dh .meta{font-size:13.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:4px 12px}
+.close{margin-left:auto;border:1px solid var(--line);background:transparent;width:36px;height:36px;border-radius:50%;cursor:pointer;flex:none;font-size:18px;line-height:1}
+.db{padding:6px 20px 28px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.db h5{font:600 12px "DM Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin:20px 0 6px}
+.db p{margin:0 0 6px}
+.db ol{margin:0;padding-left:0;counter-reset:s;list-style:none}
+.db ol li{counter-increment:s;position:relative;padding:6px 0 6px 36px;border-bottom:1px dashed var(--line)}
+.db ol li:last-child{border-bottom:0}
+.db ol li::before{content:counter(s);position:absolute;left:0;top:6px;width:24px;height:24px;border-radius:50%;background:var(--sage-soft);color:var(--green);font:600 13px "DM Sans";display:grid;place-items:center}
+.note{background:var(--amber-soft);border-radius:12px;padding:10px 12px;font-size:14.5px}
+.note.warn{background:var(--terra-soft)}
+.mats{display:grid;gap:6px}
+.mats button{display:flex;justify-content:space-between;gap:10px;align-items:center;text-align:left;width:100%;border:1px solid var(--line);background:var(--paper);padding:9px 12px;border-radius:12px;cursor:pointer;font-size:14.5px}
+.bigcheck{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:18px;padding:13px;border-radius:14px;border:0;cursor:pointer;font-weight:600;background:var(--green);color:var(--paper)}
+.bigcheck.on{background:var(--sage-soft);color:var(--green)}
+.links a{display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--line);border-radius:12px;text-decoration:none;margin-bottom:6px;background:var(--paper)}
+.links a::after{content:"↗";margin-left:auto;color:var(--ink-3)}
+
+footer{color:var(--ink-3);font-size:13px;padding:30px 0 50px;border-top:1px solid var(--line)}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="top">
+    <div>
+      <p class="kicker" id="today"></p>
+      <h1>El jardín<br><em>de Novés</em></h1>
+      <p class="sub">Qué toca, cómo se hace y por qué. Marca lo hecho y se guarda para los dos.</p>
+    </div>
+    <span class="sync" id="sync" role="status"><i></i><span>Conectando…</span></span>
+  </div>
+  <svg class="sprig" viewBox="0 0 150 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+    <path d="M10 112 C 50 90, 90 60, 140 8"/>
+    <path d="M40 94 c -10 -14 -6 -30 8 -38 c 6 14 2 30 -8 38z"/><path d="M40 94 c 14 -4 28 4 32 18 c -14 4 -28 -4 -32 -18z"/>
+    <path d="M72 70 c -8 -14 -2 -30 12 -36 c 4 14 -2 30 -12 36z"/><path d="M72 70 c 14 -2 26 8 28 22 c -14 2 -26 -8 -28 -22z"/>
+    <path d="M104 42 c -6 -12 0 -26 12 -30 c 2 12 -2 24 -12 30z"/><path d="M104 42 c 12 0 22 8 22 20 c -12 0 -22 -8 -22 -20z"/>
+  </svg>
+</header>
+
+<nav aria-label="Secciones"><div class="tabs" id="tabs"></div></nav>
+
+<main class="wrap" id="main"></main>
+
+<footer class="wrap">
+  Hecho a medida para la casa de Novés. Las fechas son orientativas: lo que manda es el momento de la planta (por ejemplo, "cuando caiga la hoja"). Ante la duda, foto a Claude.
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dtitle" aria-hidden="true">
+  <div class="grab"></div>
+  <div id="dcontent"></div>
+</aside>
+
+<script src="data.js"></script>
+<script>
+(() => {
+const D = window.JARDIN;
+const AREA = Object.fromEntries(D.areas.map(a => [a.id, a]));
+const MAT = Object.fromEntries(D.material.map(m => [m.id, m]));
+const COLORS = { cesped:"var(--c-cesped)", frutales:"var(--c-frutales)", limonero:"var(--c-limonero)", huerto:"var(--c-huerto)", piscina:"var(--c-piscina)", riego:"var(--c-riego)" };
+const PRI = { urgente:"Urgente", importante:"Importante", mantenimiento:"Mantenimiento", opcional:"Opcional" };
+const PRI_ORDER = { urgente:0, importante:1, mantenimiento:2, opcional:3 };
+
+/* ---------- Fechas ---------- */
+const qs = new URLSearchParams(location.search);
+const parse = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); };
+const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
+const TODAY = qs.get("hoy") ? parse(qs.get("hoy")) : (() => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); })();
+const monday = d => addDays(d, -((d.getDay()+6)%7));
+const WEEK0 = monday(TODAY), WEEK1 = addDays(WEEK0, 6);
+const fmtLong = d => d.toLocaleDateString("es-ES", { weekday:"long", day:"numeric", month:"long" });
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const fmtShort = d => d.toLocaleDateString("es-ES", { day:"numeric", month:"short" }).replace(".", "");
+function season(d){
+  const md = (d.getMonth()+1)*100 + d.getDate();
+  if (md >= 321 && md < 621) return "Primavera";
+  if (md >= 621 && md < 923) return "Verano";
+  if (md >= 923 && md < 1221) return "Otoño";
+  return "Invierno";
+}
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+
+/* ---------- Instancias de tareas ---------- */
+// Cada tarea de un día es una instancia; las semanales generan una por semana.
+const INST = [];
+D.tareas.forEach(t => {
+  if (t.fecha) INST.push({ key: t.id, t, date: parse(t.fecha) });
+  else if (t.semanal) {
+    for (let d = parse(t.semanal.desde), end = parse(t.semanal.hasta); d <= end; d = addDays(d, 7))
+      INST.push({ key: `${t.id}@${iso(d)}`, t, date: d, rec: true });
+  }
+});
+INST.sort((a,b) => a.date - b.date || PRI_ORDER[a.t.prioridad] - PRI_ORDER[b.t.prioridad]);
+const instByKey = Object.fromEntries(INST.map(i => [i.key, i]));
+
+/* ---------- Estado ---------- */
+let state = { done:{}, bought:{} };
+let backend = null;
+const normalize = s => ({ done: (s && s.done) || {}, bought: (s && s.bought) || {} });
+function applyOp(s, op){
+  const n = { done:{...s.done}, bought:{...s.bought} };
+  if (op.t === "done" || op.t === "bought") { if (op.v) n[op.t][op.k] = op.v; else delete n[op.t][op.k]; }
+  return n;
+}
+const cacheLocal = () => { try { localStorage.setItem("jardin-noves", JSON.stringify(state)); } catch(e){} };
+try { const raw = localStorage.getItem("jardin-noves"); if (raw) state = normalize(JSON.parse(raw)); } catch(e){}
+function change(op){
+  state = applyOp(state, op);
+  cacheLocal();
+  if (backend) backend.sync(op);
+  render(); refreshDrawer();
+}
+const isDone = key => !!state.done[key];
+const isBought = id => !!state.bought[id];
+
+/* ---------- Componentes ---------- */
+const checkSVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-7"/></svg>';
+const priHTML = p => `<span class="pri p-${p}"><i></i>${PRI[p]}</span>`;
+const areaHTML = a => `<span class="area-tag"><i style="background:${COLORS[a]}"></i>${esc(AREA[a].nombre)}</span>`;
+
+function taskRow(inst, opts = {}){
+  const done = isDone(inst.key);
+  const late = !done && inst.date < WEEK0;
+  const when = inst.rec ? `${fmtShort(inst.date)} · cada semana` : fmtShort(inst.date);
+  return `<div class="task ${done ? "done" : ""}" role="button" tabindex="0" data-open="${esc(inst.key)}">
+    <button class="check ${done ? "on" : ""}" data-check="${esc(inst.key)}" aria-label="${done ? "Desmarcar" : "Marcar como hecha"}: ${esc(inst.t.titulo)}">${checkSVG}</button>
+    <div><div class="t">${esc(inst.t.titulo)}</div>
+      <div class="m">${priHTML(inst.t.prioridad)}<span>${when}</span>${opts.area !== false ? areaHTML(inst.t.area) : ""}${inst.t.duracion ? `<span>${esc(inst.t.duracion)}</span>` : ""}${late ? '<span class="badge late">Atrasada</span>' : ""}${inst.t.pendiente && !done ? '<span class="badge">Faltan datos</span>' : ""}</div>
+    </div>
+    <span class="arrow" aria-hidden="true">›</span>
+  </div>`;
+}
+function matRow(m){
+  const b = isBought(m.id);
+  const late = !b && m.tenerAntes && parse(m.tenerAntes) < TODAY;
+  return `<div class="task mat ${b ? "done" : ""}" role="button" tabindex="0" data-mat="${esc(m.id)}">
+    <button class="check ${b ? "on" : ""}" data-buy="${esc(m.id)}" aria-label="${b ? "Desmarcar" : "Marcar como comprado"}: ${esc(m.nombre)}">${checkSVG}</button>
+    <div><div class="t">${esc(m.nombre)}</div>
+      <div class="m"><span>Tenerlo antes del ${fmtShort(parse(m.tenerAntes))}</span>${m.precio ? `<span>${esc(m.precio)}</span>` : ""}${late ? '<span class="badge late">Ya hace falta</span>' : ""}</div>
+    </div><span class="arrow" aria-hidden="true">›</span></div>`;
+}
+const listHTML = (items, fn, emptyText) => items.length ? `<div class="list">${items.map(fn).join("")}</div>` : `<p class="empty">${emptyText}</p>`;
+
+/* ---------- Vistas ---------- */
+function viewSemana(){
+  const week = INST.filter(i => i.date >= WEEK0 && i.date <= WEEK1);
+  const late = INST.filter(i => !i.rec && i.date < WEEK0 && !isDone(i.key) && i.date >= addDays(WEEK0, -90));
+  const next = INST.filter(i => i.date > WEEK1 && i.date <= addDays(WEEK1, 21) && !(i.rec && INST.some(o => o.t === i.t && o.date > WEEK1 && o.date < i.date)));
+  const buys = D.material.filter(m => m.aviso && !isBought(m.id) && parse(m.aviso) <= WEEK1).sort((a,b) => a.tenerAntes.localeCompare(b.tenerAntes));
+  const total = week.length, done = week.filter(i => isDone(i.key)).length;
+  const pct = total ? done/total : 0, C = 2*Math.PI*38;
+  const urg = week.filter(i => !isDone(i.key) && i.t.prioridad === "urgente").length;
+  const msg = !total ? "Semana tranquila: nada programado." : done === total ? "Todo hecho esta semana. A disfrutar del jardín." :
+    `${total - done} ${total - done === 1 ? "tarea pendiente" : "tareas pendientes"}${urg ? `, ${urg} urgente${urg > 1 ? "s" : ""}` : ""}.`;
+  return `
+  <section class="hero">
+    <div class="ring" aria-label="${done} de ${total} hechas">
+      <svg width="92" height="92" viewBox="0 0 92 92"><circle cx="46" cy="46" r="38" fill="none" stroke="var(--sage-soft)" stroke-width="9"/>
+      <circle cx="46" cy="46" r="38" fill="none" stroke="var(--sage)" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}"/></svg>
+      <b>${done}/${total}</b>
+    </div>
+    <div><span class="season">${season(TODAY)}</span>
+      <h2>Semana del ${fmtShort(WEEK0)} al ${fmtShort(WEEK1)}</h2><p>${msg}</p></div>
+  </section>
+  ${late.length ? `<h3>Atrasado <small>${late.length}</small></h3>${listHTML(late, i => taskRow(i))}` : ""}
+  <h3>Toca esta semana <small>${total}</small></h3>
+  ${listHTML(week.sort((a,b) => PRI_ORDER[a.t.prioridad]-PRI_ORDER[b.t.prioridad] || a.date-b.date), i => taskRow(i), "Nada programado esta semana.")}
+  ${buys.length ? `<h3>Para comprar <small>${buys.length}</small></h3>${listHTML(buys, matRow)}` : ""}
+  <h3>Lo que viene <small>próximas 3 semanas</small></h3>
+  ${listHTML(next, i => taskRow(i), "Nada en las próximas semanas.")}`;
+}
+
+function viewArea(id){
+  const a = AREA[id];
+  const all = INST.filter(i => i.t.area === id);
+  const recIds = [...new Set(all.filter(i => i.rec).map(i => i.t.id))];
+  const recCards = recIds.map(tid => {
+    const ins = all.filter(i => i.t.id === tid);
+    const cur = ins.find(i => i.date >= WEEK0) || ins[ins.length-1];
+    return { cur, total: ins.length, done: ins.filter(i => isDone(i.key)).length };
+  });
+  const oneoff = all.filter(i => !i.rec);
+  const upcoming = oneoff.filter(i => i.date >= WEEK0 || !isDone(i.key));
+  const past = oneoff.filter(i => i.date < WEEK0 && isDone(i.key));
+  return `
+  <section class="intro-card"><h2>${esc(a.nombre)}</h2><p class="lead">${esc(a.intro)}</p>
+    ${a.ficha ? `<div class="ficha">${a.ficha.map(([k,v]) => `<div><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join("")}</div>` : ""}
+  </section>
+  ${recCards.length ? `<h3>Cada semana</h3><div class="list">${recCards.map(r => taskRow(r.cur, {area:false}).replace("cada semana", `cada semana · ${r.done} de ${r.total} hechas`)).join("")}</div>` : ""}
+  <h3>Próximas tareas <small>${upcoming.length}</small></h3>
+  ${listHTML(upcoming, i => taskRow(i, {area:false}), "No hay tareas pendientes en esta sección.")}
+  ${past.length ? `<h3>Hechas <small>${past.length}</small></h3>${listHTML(past, i => taskRow(i, {area:false}))}` : ""}`;
+}
+
+function viewMaterial(){
+  const buy = D.material.filter(m => m.aviso).sort((a,b) => (isBought(a.id) - isBought(b.id)) || a.tenerAntes.localeCompare(b.tenerAntes));
+  const garage = D.material.filter(m => m.garaje), no = D.material.filter(m => m.noUsar);
+  const simple = (m, badge) => `<div class="task" role="button" tabindex="0" data-mat="${esc(m.id)}" style="grid-template-columns:1fr auto">
+    <div><div class="t">${esc(m.nombre)}</div><div class="m">${badge}<span>${esc(m.uso)}</span></div></div><span class="arrow" aria-hidden="true">›</span></div>`;
+  return `
+  <section class="intro-card"><h2>Material</h2>
+    <p class="lead">Lo que hay que comprar, ordenado por cuándo hace falta, con un enlace de ejemplo para saber qué es. No tiene por qué ser ese producto: sirve para reconocerlo. En el vivero o la cooperativa de Torrijos suele salir más barato y te aconsejan.</p></section>
+  <h3>Por comprar <small>${buy.filter(m => !isBought(m.id)).length} pendientes</small></h3>${listHTML(buy, matRow)}
+  <h3>Ya en el garaje <small>${garage.length}</small></h3>${listHTML(garage, m => simple(m, '<span class="badge garage">En casa</span>'))}
+  <h3>No usar <small>${no.length}</small></h3>${listHTML(no, m => simple(m, '<span class="badge late">No usar</span>'))}`;
+}
+
+function viewAnio(){
+  const start = new Date(2026, 9, 1);
+  const months = Array.from({length:12}, (_, k) => new Date(start.getFullYear(), start.getMonth()+k, 1));
+  const areas = ["cesped","frutales","limonero","huerto","piscina","riego"];
+  return `
+  <section class="intro-card"><h2>El año de un vistazo</h2>
+    <p class="lead">De octubre a septiembre. Las rondas semanales no salen aquí para no llenarlo todo: están en "Esta semana" y en cada sección. Pulsa cualquier tarea para ver el detalle.</p>
+    <div class="legend">${areas.map(a => areaHTML(a)).join("")}</div></section>
+  <div class="year" style="margin-top:14px">${months.map(m => {
+    const items = INST.filter(i => !i.rec && i.date.getFullYear() === m.getFullYear() && i.date.getMonth() === m.getMonth());
+    const now = m.getFullYear() === TODAY.getFullYear() && m.getMonth() === TODAY.getMonth();
+    return `<div class="month ${now ? "now" : ""}"><h4>${m.toLocaleDateString("es-ES",{month:"long"})}</h4><div class="s">${m.getFullYear()} · ${season(new Date(m.getFullYear(), m.getMonth(), 15))}</div>
+      <div class="chips">${items.length ? items.map(i => `<button class="chip ${isDone(i.key) ? "done" : ""}" data-open="${esc(i.key)}"><span class="d">${i.date.getDate()}</span><i style="background:${COLORS[i.t.area]}"></i><span>${esc(i.t.titulo)}</span></button>`).join("") : '<span class="empty" style="font-size:13px">Solo rondas semanales.</span>'}</div></div>`;
+  }).join("")}</div>`;
+}
+
+/* ---------- Render ---------- */
+let current = (location.hash || "#semana").slice(1);
+if (!AREA[current]) current = "semana";
+function renderTabs(){
+  document.getElementById("tabs").innerHTML = D.areas.map(a =>
+    `<button class="tab" data-tab="${a.id}" ${a.id === current ? 'aria-current="page"' : ""}>${COLORS[a.id] ? `<span class="dot" style="background:${COLORS[a.id]}"></span>` : ""}${esc(a.nombre)}</button>`).join("");
+}
+function render(){
+  renderTabs();
+  const m = document.getElementById("main");
+  m.innerHTML = current === "semana" ? viewSemana() : current === "material" ? viewMaterial() : current === "anio" ? viewAnio() : viewArea(current);
+}
+document.getElementById("today").textContent = cap(fmtLong(TODAY));
+
+/* ---------- Panel lateral ---------- */
+const drawer = document.getElementById("drawer"), scrim = document.getElementById("scrim"), dc = document.getElementById("dcontent");
+let openRef = null, lastFocus = null;
+function taskDrawer(inst){
+  const t = inst.t, done = isDone(inst.key);
+  const mats = (t.material || []).map(id => MAT[id]).filter(Boolean);
+  return `<div class="dh"><div style="min-width:0">
+      <div class="meta">${areaHTML(t.area)}${priHTML(t.prioridad)}</div>
+      <h2 id="dtitle">${esc(t.titulo)}</h2>
+      <div class="meta"><span>${cap(fmtLong(inst.date))}</span>${t.duracion ? `<span>${esc(t.duracion)}</span>` : ""}${inst.rec ? "<span>Se repite cada semana</span>" : ""}</div>
+    </div><button class="close" data-close aria-label="Cerrar">×</button></div>
+  <div class="db">
+    ${t.pendiente ? `<h5>Pendiente</h5><p class="note">${esc(t.pendiente)}</p>` : ""}
+    <h5>Qué hacer</h5><p>${esc(t.que)}</p>
+    ${mats.length ? `<h5>Necesitas</h5><div class="mats">${mats.map(m => `<button data-mat="${esc(m.id)}"><span>${esc(m.nombre)}</span>${m.garaje ? '<span class="badge garage">En casa</span>' : isBought(m.id) ? '<span class="badge garage">Comprado</span>' : '<span class="badge">Comprar</span>'}</button>`).join("")}</div>` : ""}
+    <h5>Cómo hacerlo</h5><ol>${t.pasos.map(p => `<li>${esc(p)}</li>`).join("")}</ol>
+    <h5>Por qué</h5><p>${esc(t.porque)}</p>
+    ${t.sinoSe && t.sinoSe !== "-" ? `<h5>Si no se hace</h5><p>${esc(t.sinoSe)}</p>` : ""}
+    ${t.importante ? `<h5>Importante</h5><p class="note warn">${esc(t.importante)}</p>` : ""}
+    <button class="bigcheck ${done ? "on" : ""}" data-check="${esc(inst.key)}">${done ? `Hecha el ${fmtShort(parse(state.done[inst.key]))} · desmarcar` : "Marcar como hecha"}</button>
+  </div>`;
+}
+function matDrawer(m){
+  const b = isBought(m.id);
+  const uses = INST.filter(i => (i.t.material || []).includes(m.id) && !i.rec);
+  const recUses = [...new Set(INST.filter(i => i.rec && (i.t.material || []).includes(m.id)).map(i => i.t))];
+  const usedIn = [...uses, ...recUses.map(t => INST.find(i => i.t === t && i.date >= WEEK0) || INST.find(i => i.t === t))].filter(Boolean);
+  return `<div class="dh"><div style="min-width:0">
+      <div class="meta">${m.garaje ? '<span class="badge garage">En el garaje</span>' : m.noUsar ? '<span class="badge late">No usar</span>' : '<span class="badge">Por comprar</span>'}</div>
+      <h2 id="dtitle">${esc(m.nombre)}</h2>
+      ${m.tenerAntes ? `<div class="meta"><span>Tenerlo antes del ${fmtShort(parse(m.tenerAntes))}</span>${m.precio ? `<span>${esc(m.precio)}</span>` : ""}</div>` : ""}
+    </div><button class="close" data-close aria-label="Cerrar">×</button></div>
+  <div class="db">
+    <h5>Qué es</h5><p>${esc(m.queEs)}</p>
+    ${m.cantidad ? `<h5>Cuánto</h5><p>${esc(m.cantidad)}</p>` : ""}
+    ${m.uso ? `<h5>Cuándo se usa</h5><p>${esc(m.uso)}</p>` : ""}
+    ${usedIn.length ? `<h5>Para estas tareas</h5><div class="mats">${usedIn.map(i => `<button data-open="${esc(i.key)}"><span>${esc(i.t.titulo)}</span><span class="badge garage">${fmtShort(i.date)}</span></button>`).join("")}</div>` : ""}
+    ${m.links && m.links.length ? `<h5>Dónde verlo</h5><div class="links">${m.links.map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener">${esc(l.t)}</a>`).join("")}</div>` : ""}
+    ${m.nota ? `<h5>Ojo</h5><p class="note">${esc(m.nota)}</p>` : ""}
+    ${m.aviso ? `<button class="bigcheck ${b ? "on" : ""}" data-buy="${esc(m.id)}">${b ? "Comprado · desmarcar" : "Marcar como comprado"}</button>` : ""}
+  </div>`;
+}
+function openDrawer(ref){
+  if (!drawer.classList.contains("open")) lastFocus = document.activeElement;
+  openRef = ref; refreshDrawer();
+  drawer.classList.add("open"); scrim.classList.add("open"); drawer.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+  setTimeout(() => { const c = drawer.querySelector(".close"); if (c) c.focus(); }, 60);
+}
+function refreshDrawer(){
+  if (!openRef) return;
+  const top = dc.querySelector(".db")?.scrollTop || 0;
+  if (openRef.type === "task" && instByKey[openRef.key]) dc.innerHTML = taskDrawer(instByKey[openRef.key]);
+  if (openRef.type === "mat" && MAT[openRef.id]) dc.innerHTML = matDrawer(MAT[openRef.id]);
+  const db = dc.querySelector(".db"); if (db) db.scrollTop = top;
+}
+function closeDrawer(){
+  openRef = null;
+  drawer.classList.remove("open"); scrim.classList.remove("open"); drawer.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+  if (lastFocus) lastFocus.focus();
+}
+
+/* ---------- Eventos ---------- */
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-check],[data-buy],[data-open],[data-mat],[data-tab],[data-close]");
+  if (!el) { if (e.target === scrim) closeDrawer(); return; }
+  if (el.dataset.check) { e.stopPropagation(); const k = el.dataset.check; change({ t:"done", k, v: isDone(k) ? null : iso(new Date()) }); return; }
+  if (el.dataset.buy) { e.stopPropagation(); const k = el.dataset.buy; change({ t:"bought", k, v: isBought(k) ? null : iso(new Date()) }); return; }
+  if (el.dataset.tab) { current = el.dataset.tab; history.replaceState(null, "", "#" + current); render(); window.scrollTo({ top: 0 }); el.scrollIntoView?.({ inline:"center", block:"nearest" }); return; }
+  if (el.dataset.close !== undefined) { closeDrawer(); return; }
+  if (el.dataset.open) { openDrawer({ type:"task", key: el.dataset.open }); return; }
+  if (el.dataset.mat) { openDrawer({ type:"mat", id: el.dataset.mat }); return; }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && openRef) closeDrawer();
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches(".task[role=button]")) { e.preventDefault(); e.target.click(); }
+});
+window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (AREA[h]) { current = h; render(); } });
+
+render();
+
+/* ---------- Guardado compartido (Firebase) ---------- */
+const syncEl = document.getElementById("sync");
+const setSync = (txt, cls) => { syncEl.className = "sync " + (cls || ""); syncEl.querySelector("span").textContent = txt; };
+(() => {
+  const URL_DOC = "https://firestore.googleapis.com/v1/projects/nos-vamos-de-mudanza/databases/(default)/documents/jardin/estado";
+  let queue = [], busy = false;
+  async function pull(){
+    const r = await fetch(URL_DOC, { cache:"no-store" });
+    if (r.status === 404) return null;
+    if (!r.ok) throw new Error("pull " + r.status);
+    const f = (await r.json()).fields || {};
+    return normalize({ done: JSON.parse((f.done && f.done.stringValue) || "{}"), bought: JSON.parse((f.bought && f.bought.stringValue) || "{}") });
+  }
+  async function push(s){
+    const body = { fields: { done:{ stringValue: JSON.stringify(s.done) }, bought:{ stringValue: JSON.stringify(s.bought) } } };
+    const r = await fetch(URL_DOC, { method:"PATCH", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body) });
+    if (!r.ok) throw new Error("push " + r.status);
+  }
+  async function flush(){
+    if (busy) return; busy = true;
+    try {
+      while (queue.length) {
+        const ops = queue.slice();
+        let remote = (await pull()) || { done:{}, bought:{} };
+        ops.forEach(op => { remote = applyOp(remote, op); });
+        await push(remote);
+        queue = queue.slice(ops.length);
+        let view = remote; queue.forEach(op => { view = applyOp(view, op); });
+        state = view;
+      }
+      cacheLocal(); render(); refreshDrawer();
+      setSync("Guardado para los dos", "ok");
+    } catch(e) {
+      setSync("Sin conexión: se sube al volver", "off");
+      setTimeout(() => { busy = false; flush(); }, 5000); return;
+    }
+    busy = false;
+  }
+  async function refresh(){
+    if (busy || queue.length || document.hidden) return;
+    try {
+      const remote = await pull();
+      if (busy || queue.length) return;
+      if (remote === null) { if (Object.keys(state.done).length || Object.keys(state.bought).length) { queue.push({ t:"seed" }); flush(); } setSync("Guardado para los dos", "ok"); return; }
+      if (JSON.stringify(remote) !== JSON.stringify(state)) { state = remote; cacheLocal(); render(); refreshDrawer(); }
+      setSync("Guardado para los dos", "ok");
+    } catch(e) { setSync("Sin conexión: guardado en este móvil", "off"); }
+  }
+  backend = { sync(op){ queue.push(op); flush(); } };
+  refresh();
+  setInterval(refresh, 6000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
+})();
+})();
+</script>
+</body>
+</html>
