@@ -166,6 +166,22 @@ h3 small{font:500 13px "DM Sans",sans-serif;color:var(--ink-3)}
 .notas li button{border:0;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-3);width:28px;height:28px;border-radius:50%}
 footer{color:var(--ink-3);font-size:13px;padding:30px 0 50px;border-top:1px solid var(--line)}
 @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px;margin-top:12px}
+.seg button{border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:var(--ink-2);padding:6px 14px;border-radius:99px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--green);color:var(--paper)}
+.more{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px dashed var(--sage);border-radius:16px;background:var(--card);cursor:pointer;width:100%;font:inherit;text-align:left;color:inherit}
+.more:hover{border-style:solid}
+.more .ic{width:26px;height:26px;border-radius:50%;background:var(--sage-soft);color:var(--green);display:grid;place-items:center;font-weight:700;flex:none}
+.more .t{font-weight:600}.more .m{font-size:13px;color:var(--ink-3)}
+.more .arrow{margin-left:auto}
+.gamas{display:grid;gap:8px}
+.gama{border:1px solid var(--line);border-radius:14px;padding:11px 13px;background:var(--paper)}
+.gama.rec{border-color:var(--sage);box-shadow:inset 0 0 0 1px var(--sage)}
+.gama .gh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-bottom:4px}
+.gama .gn{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3)}
+.gama b{font-weight:600}.gama .gp{margin-left:auto;font-size:13.5px;color:var(--ink-2);white-space:nowrap}
+.gama p{margin:0 0 6px;font-size:14.5px;color:var(--ink-2)}
+.gama a{font-size:13.5px;font-weight:600;color:var(--green)}
 </style>
 </head>
 <body>
@@ -289,7 +305,7 @@ function matRow(m){
   return `<div class="task mat ${b ? "done" : ""}" role="button" tabindex="0" data-mat="${esc(m.id)}">
     <button class="check ${b ? "on" : ""}" data-buy="${esc(m.id)}" aria-label="${b ? "Desmarcar" : "Marcar como comprado"}: ${esc(m.nombre)}">${checkSVG}</button>
     <div><div class="t">${esc(m.nombre)}</div>
-      <div class="m"><span>${m.uso ? esc(m.uso) : "Tenerlo antes del " + fmtShort(parse(m.tenerAntes))}</span>${m.precio ? `<span>${esc(m.precio)}</span>` : ""}${late ? '<span class="badge late">Ya hace falta</span>' : ""}</div>
+      <div class="m"><span>${m.uso ? esc(m.uso) : "Tenerlo antes del " + fmtShort(parse(m.tenerAntes))}</span>${m.precio ? `<span>${esc(m.precio)}</span>` : ""}${m.grupo === "despues" ? '<span class="badge">Justo antes</span>' : ""}${m.gamas ? `<span class="badge garage">${m.gamas.length} opciones</span>` : ""}${late ? '<span class="badge late">Ya hace falta</span>' : ""}</div>
     </div>${m.links && m.links[0] ? `<a class="golink" href="${esc(m.links[0].u)}" target="_blank" rel="noopener" data-ext>Ver ↗</a>` : '<span class="arrow" aria-hidden="true">›</span>'}</div>`;
 }
 const listHTML = (items, fn, emptyText) => items.length ? `<div class="list">${items.map(fn).join("")}</div>` : `<p class="empty">${emptyText}</p>`;
@@ -299,7 +315,9 @@ function viewSemana(){
   const week = INST.filter(i => i.date >= WEEK0 && i.date <= WEEK1);
   const late = INST.filter(i => !i.rec && i.date < WEEK0 && !isDone(i.key) && i.date >= addDays(WEEK0, -90));
   const next = INST.filter(i => i.date > WEEK1 && i.date <= addDays(WEEK1, 21) && !(i.rec && INST.some(o => o.t === i.t && o.date > WEEK1 && o.date < i.date)));
-  const buys = D.material.filter(m => m.aviso && !isBought(m.id) && parse(m.aviso) <= addDays(TODAY, 14)).sort((a,b) => (a.grupo === "despues") - (b.grupo === "despues") || a.tenerAntes.localeCompare(b.tenerAntes));
+  const pend = D.material.filter(m => m.aviso && !isBought(m.id));
+  const buys = pend.filter(m => parse(m.tenerAntes) <= addDays(TODAY, 14)).sort((a,b) => a.tenerAntes.localeCompare(b.tenerAntes));
+  const rest = pend.length - buys.length;
   const total = week.length, done = week.filter(i => isDone(i.key)).length;
   const pct = total ? done/total : 0, C = 2*Math.PI*38;
   const urg = week.filter(i => !isDone(i.key) && i.t.prioridad === "urgente").length;
@@ -319,7 +337,9 @@ function viewSemana(){
   ${late.length ? `<h3>Atrasado <small>${late.length}</small></h3>${listHTML(late, i => taskRow(i))}` : ""}
   <h3>Toca esta semana <small>${total}</small></h3>
   ${listHTML(week.sort((a,b) => PRI_ORDER[a.t.prioridad]-PRI_ORDER[b.t.prioridad] || a.date-b.date), i => taskRow(i), "Nada programado esta semana.")}
-  ${buys.length ? `<h3>Para comprar <small>${buys.length} · todo de una vez</small></h3><p class="lead" style="margin-bottom:10px">Lo que se conserva va todo en la misma compra, aunque se use en primavera. "Ver" abre un producto de ejemplo.</p>${listHTML(buys, matRow)}` : ""}
+  ${buys.length || rest ? `<h3>Para comprar <small>próximas 2 semanas</small></h3>
+  <div class="list">${buys.map(matRow).join("")}
+    ${rest ? `<button class="more" data-tab="material"><span class="ic">+</span><span><span class="t">Revisar resto del material</span><br><span class="m">${rest} cosas más para la compra grande, por mes y por tipo</span></span><span class="arrow" aria-hidden="true">›</span></button>` : ""}</div>` : ""}
   <h3>Lo que viene <small>próximas 3 semanas</small></h3>
   ${listHTML(next, i => taskRow(i), "Nada en las próximas semanas.")}`;
 }
@@ -354,20 +374,36 @@ function viewArea(id){
   ${past.length ? `<h3>Hechas <small>${past.length}</small></h3>${listHTML(past, i => taskRow(i, {area:false}))}` : ""}`;
 }
 
+const CATS = [["cesped","Césped"],["frutales","Frutales"],["limonero","Limonero y plantas"],["huerto","Huerto"],["piscina","Piscina"],["herramientas","Herramientas y protección"]];
+let matMode = "fecha";
+try { matMode = localStorage.getItem("jardin-matmode") || "fecha"; } catch(e) {}
 function viewMaterial(){
   const buy = D.material.filter(m => m.aviso).sort((a,b) => (isBought(a.id) - isBought(b.id)) || a.tenerAntes.localeCompare(b.tenerAntes));
   const garage = D.material.filter(m => m.garaje), no = D.material.filter(m => m.noUsar);
   const simple = (m, badge) => `<div class="task" role="button" tabindex="0" data-mat="${esc(m.id)}" style="grid-template-columns:1fr auto">
     <div><div class="t">${esc(m.nombre)}</div><div class="m">${badge}<span>${esc(m.uso)}</span></div></div><span class="arrow" aria-hidden="true">›</span></div>`;
+  const pendN = buy.filter(m => !isBought(m.id)).length;
+  let groups;
+  if (matMode === "tipo") {
+    groups = CATS.map(([c, n]) => [n, buy.filter(m => m.cat === c)]).filter(g => g[1].length);
+  } else {
+    const byM = {};
+    buy.forEach(m => { const d = parse(m.tenerAntes); const k = iso(new Date(d.getFullYear(), d.getMonth(), 1)); (byM[k] = byM[k] || []).push(m); });
+    groups = Object.keys(byM).sort().map(k => { const d = parse(k); return [`Para ${d.toLocaleDateString("es-ES",{month:"long"})} de ${d.getFullYear()}`, byM[k]]; });
+  }
+  const gHTML = groups.map(([n, items]) => {
+    const p = items.filter(m => !isBought(m.id)).length;
+    return `<h3>${esc(n)} <small>${p ? `${p} por comprar` : "todo comprado"}</small></h3>${listHTML(items, matRow)}`;
+  }).join("");
   return `
   <section class="intro-card"><h2>Material</h2>
-    <p class="lead">Todo lo que se conserva, en una sola compra, ordenado por cuándo hace falta. Cada cosa tiene un enlace de ejemplo para saber qué es. No tiene por qué ser ese producto: sirve para reconocerlo. En el vivero o la cooperativa de Torrijos suele salir más barato y te aconsejan.</p></section>
-  <h3>Compra grande <small>${buy.filter(m => !isBought(m.id) && m.grupo !== "despues").length} pendientes · se conserva todo</small></h3>${listHTML(buy.filter(m => m.grupo !== "despues"), matRow)}
-  <h3>Mejor justo antes <small>caduca o depende de datos</small></h3>${listHTML(buy.filter(m => m.grupo === "despues"), matRow)}
+    <p class="lead">Todo lo que hay que comprar, en una sola compra grande aunque se use en primavera (lo que caduca o depende de datos lleva la nota "justo antes"). Cada cosa tiene un enlace de ejemplo para reconocerla, no tiene por qué ser ese producto. Donde pone "opciones" hay varias gamas de precio y te digo cuál elegiría yo.</p>
+    <div class="seg" role="group" aria-label="Ordenar material"><button data-matmode="fecha" aria-pressed="${matMode === "fecha"}">Por mes</button><button data-matmode="tipo" aria-pressed="${matMode === "tipo"}">Por tipo</button></div>
+    <p class="m" style="margin:10px 0 0;color:var(--ink-3);font-size:14px">${pendN} pendientes de ${buy.length}</p></section>
+  ${gHTML}
   <h3>Ya en el garaje <small>${garage.length}</small></h3>${listHTML(garage, m => simple(m, '<span class="badge garage">En casa</span>'))}
   <h3>No usar <small>${no.length}</small></h3>${listHTML(no, m => simple(m, '<span class="badge late">No usar</span>'))}`;
 }
-
 function viewAnio(){
   const start = new Date(2026, 9, 1);
   const months = Array.from({length:12}, (_, k) => new Date(start.getFullYear(), start.getMonth()+k, 1));
@@ -435,6 +471,7 @@ function matDrawer(m){
     ${m.cantidad ? `<h5>Cuánto</h5><p>${esc(m.cantidad)}</p>` : ""}
     ${m.uso ? `<h5>Cuándo se usa</h5><p>${esc(m.uso)}</p>` : ""}
     ${usedIn.length ? `<h5>Para estas tareas</h5><div class="mats">${usedIn.map(i => `<button data-open="${esc(i.key)}"><span>${esc(i.t.titulo)}</span><span class="badge garage">${fmtShort(i.date)}</span></button>`).join("")}</div>` : ""}
+    ${m.gamas ? `<h5>Opciones</h5><div class="gamas">${m.gamas.map(g => `<div class="gama ${g.recomendada ? "rec" : ""}"><div class="gh"><span class="gn">${esc(g.nivel)}</span>${g.recomendada ? '<span class="badge garage">Mi elección</span>' : ""}<span class="gp">${esc(g.precio || "")}</span></div><b>${esc(g.nombre)}</b><p>${esc(g.texto)}</p>${g.u ? `<a href="${esc(g.u)}" target="_blank" rel="noopener">Ver ejemplo ↗</a>` : ""}</div>`).join("")}</div>` : ""}
     ${m.links && m.links.length ? `<h5>Dónde verlo</h5><div class="links">${m.links.map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener">${esc(l.t)}</a>`).join("")}</div>` : ""}
     ${m.nota ? `<h5>Ojo</h5><p class="note">${esc(m.nota)}</p>` : ""}
     ${m.aviso ? `<button class="bigcheck ${b ? "on" : ""}" data-buy="${esc(m.id)}">${b ? "Comprado · desmarcar" : "Marcar como comprado"}</button>` : ""}
@@ -464,6 +501,8 @@ function closeDrawer(){
 /* ---------- Eventos ---------- */
 document.addEventListener("click", e => {
   if (e.target.closest("[data-ext]")) { e.stopPropagation(); return; }
+  const mm = e.target.closest("[data-matmode]");
+  if (mm) { matMode = mm.dataset.matmode; try { localStorage.setItem("jardin-matmode", matMode); } catch(e) {} render(); return; }
   const dn = e.target.closest("[data-delnota]");
   if (dn) { change({ t:"nota-del", id: dn.dataset.delnota }); return; }
   const el = e.target.closest("[data-check],[data-buy],[data-open],[data-mat],[data-tab],[data-close]");
