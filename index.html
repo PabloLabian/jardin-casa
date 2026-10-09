@@ -17,7 +17,8 @@
   --amber:#c58a22; --amber-soft:#f3e4c2; --grey-soft:#e7e3d9;
   --shadow:0 1px 0 rgba(60,50,20,.06), 0 6px 18px -10px rgba(60,50,20,.25);
   --radius:16px;
-  --c-cesped:#5f8a4e; --c-frutales:#b65d3a; --c-limonero:#c9a227; --c-huerto:#8a6a3c; --c-piscina:#3f7f98; --c-riego:#5a8fa8;
+  --c-cesped:#5f8a4e; --c-frutales:#b65d3a; --c-limonero:#c9a227; --c-huerto:#8a6a3c; --c-piscina:#3f7f98; --c-riego:#5a8fa8; --c-herramientas:#8b8577;
+  --t-hacer:#2f4a36; --t-hacer-soft:#dfe7d3; --t-revisar:#4f5aa3; --t-revisar-soft:#e1e3f3; --t-cosecha:#a3456b; --t-cosecha-soft:#f4dde7; --t-comprar:#b06f12; --t-comprar-soft:#f5e3c0;
 }
 @media (prefers-color-scheme: dark){
   :root{
@@ -25,7 +26,8 @@
     --line:#34433a; --green:#a9c79a; --sage:#7f9c73; --sage-soft:#2c3b2f; --terra:#e08a64; --terra-soft:#3d2a22;
     --amber:#e2b04f; --amber-soft:#3a3120; --grey-soft:#2b332d;
     --shadow:0 1px 0 rgba(0,0,0,.2), 0 8px 20px -12px rgba(0,0,0,.6);
-    --c-cesped:#8fbf7a; --c-frutales:#e08a64; --c-limonero:#e2c45a; --c-huerto:#c79a62; --c-piscina:#6fb3cc; --c-riego:#86b7cc;
+    --c-cesped:#8fbf7a; --c-frutales:#e08a64; --c-limonero:#e2c45a; --c-huerto:#c79a62; --c-piscina:#6fb3cc; --c-riego:#86b7cc; --c-herramientas:#a8a294;
+    --t-hacer:#a9c79a; --t-hacer-soft:#2c3b2f; --t-revisar:#a3aaf0; --t-revisar-soft:#2a2d48; --t-cosecha:#eb94b8; --t-cosecha-soft:#45283a; --t-comprar:#e8b453; --t-comprar-soft:#3d3220;
   }
 }
 *{box-sizing:border-box}
@@ -91,7 +93,7 @@ h3 small{font:500 13px "DM Sans",sans-serif;color:var(--ink-3)}
 .pri{display:inline-flex;align-items:center;gap:5px;font-weight:500}
 .pri i{width:8px;height:8px;border-radius:50%;display:inline-block}
 .p-urgente i{background:#c2412d} .p-importante i{background:#d98a1f} .p-mantenimiento i{background:#5f8a4e} .p-opcional i{background:#a8a293}
-.p-urgente{color:#b23a28} .p-importante{color:#a96a12}
+.p-urgente{color:#b23a28;font-weight:700} .p-importante{color:#a96a12;font-weight:600} .p-mantenimiento,.p-opcional{color:var(--ink-3)}
 @media (prefers-color-scheme: dark){ .p-urgente{color:#ef8a76} .p-importante{color:#e9b25a} }
 .area-tag{display:inline-flex;align-items:center;gap:5px}
 .area-tag i{width:7px;height:7px;border-radius:2px;display:inline-block}
@@ -136,7 +138,8 @@ h3 small{font:500 13px "DM Sans",sans-serif;color:var(--ink-3)}
 .dh h2{font-size:24px;line-height:1.15;margin:4px 0 6px}
 .dh .meta{font-size:13.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:4px 12px}
 .close{margin-left:auto;border:1px solid var(--line);background:transparent;width:36px;height:36px;border-radius:50%;cursor:pointer;flex:none;font-size:18px;line-height:1}
-.db{padding:6px 20px 28px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#dcontent{display:flex;flex-direction:column;flex:1;min-height:0}
+.db{flex:1;min-height:0;overscroll-behavior:contain;padding:6px 20px 28px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .db h5{font:600 12px "DM Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin:20px 0 6px}
 .db p{margin:0 0 6px}
 .db ol{margin:0;padding-left:0;counter-reset:s;list-style:none}
@@ -182,6 +185,35 @@ footer{color:var(--ink-3);font-size:13px;padding:30px 0 50px;border-top:1px soli
 .gama b{font-weight:600}.gama .gp{margin-left:auto;font-size:13.5px;color:var(--ink-2);white-space:nowrap}
 .gama p{margin:0 0 6px;font-size:14.5px;color:var(--ink-2)}
 .gama a{font-size:13.5px;font-weight:600;color:var(--green)}
+/* Tipos: franja + etiqueta. Zona: punto de color. */
+[data-t=hacer]{--tc:var(--t-hacer);--tcs:var(--t-hacer-soft)}
+[data-t=revisar]{--tc:var(--t-revisar);--tcs:var(--t-revisar-soft)}
+[data-t=cosecha]{--tc:var(--t-cosecha);--tcs:var(--t-cosecha-soft)}
+[data-t=comprar]{--tc:var(--t-comprar);--tcs:var(--t-comprar-soft)}
+.task{position:relative;overflow:hidden}
+.task[data-t]{padding-left:18px}
+.task[data-t]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--tc)}
+.task[data-t] .check{border-color:var(--tc)}
+.task[data-t] .check.on{background:var(--tc);border-color:var(--tc)}
+.check.sq{border-radius:8px}
+.tdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:0;flex:none}
+.tipo{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;padding:2px 8px 2px 6px;border-radius:99px;color:var(--tc);background:var(--tcs)}
+.tipo svg{flex:none}
+.key{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:14px 2px 0;font-size:13px;color:var(--ink-3)}
+.key .sep{width:1px;height:16px;background:var(--line);margin:0 4px}
+.key .z{display:inline-flex;align-items:center;gap:5px}
+.key .z i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.chip .ci{display:inline-flex;color:var(--tc);margin-top:2px;flex:none}
+.ventana{background:var(--t-cosecha-soft);border-radius:12px;padding:10px 12px;font-size:14.5px}
+.fotobtn{display:grid;place-items:center;width:44px;flex:none;border:1px solid var(--line);border-radius:12px;background:var(--paper);cursor:pointer;color:var(--ink-2)}
+.fotobtn:hover{border-color:var(--sage)}
+.fotoprev{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:14px;color:var(--ink-2)}
+.fotoprev img{width:52px;height:52px;object-fit:cover;border-radius:10px}
+.fotoprev button{border:0;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-3)}
+.thumb{border:0;padding:0;background:transparent;cursor:pointer;flex:none;line-height:0}
+.thumb img{width:44px;height:44px;object-fit:cover;border-radius:8px;background:var(--line)}
+.fotoerr{color:var(--terra);font-size:13.5px;margin:8px 0 0}
+.bigfoto{width:100%;border-radius:14px;margin-top:12px}
 </style>
 </head>
 <body>
@@ -223,7 +255,18 @@ footer{color:var(--ink-3);font-size:13px;padding:30px 0 50px;border-top:1px soli
 const D = window.JARDIN;
 const AREA = Object.fromEntries(D.areas.map(a => [a.id, a]));
 const MAT = Object.fromEntries(D.material.map(m => [m.id, m]));
-const COLORS = { cesped:"var(--c-cesped)", frutales:"var(--c-frutales)", limonero:"var(--c-limonero)", huerto:"var(--c-huerto)", piscina:"var(--c-piscina)", riego:"var(--c-riego)" };
+const COLORS = { cesped:"var(--c-cesped)", frutales:"var(--c-frutales)", limonero:"var(--c-limonero)", huerto:"var(--c-huerto)", piscina:"var(--c-piscina)", riego:"var(--c-riego)", herramientas:"var(--c-herramientas)" };
+const TIPO = { hacer:"Hacer", revisar:"Revisar", cosecha:"Cosecha", comprar:"Comprar" };
+const ic = d => `<svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const ICON = {
+  hacer: ic('<path d="M8.5 5.5 3 11"/><path d="M8 2.5c1.6-.4 3.3.4 3.6 1.9.3 1.5-.6 3-2.2 3.4L6.2 4.6c.3-1 .9-1.8 1.8-2.1z"/>'),
+  revisar: ic('<path d="M1.2 7S3.3 3 7 3s5.8 4 5.8 4-2.1 4-5.8 4S1.2 7 1.2 7z"/><circle cx="7" cy="7" r="1.7"/>'),
+  cosecha: ic('<path d="M1.8 6.2h10.4L11 12H3z"/><path d="M4.3 6.2 7 2.2l2.7 4"/>'),
+  comprar: ic('<path d="M2.8 4.8h8.4l-.7 7.2H3.5z"/><path d="M5 4.8V4a2 2 0 0 1 4 0v.8"/>'),
+  foto: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.5h3l1.5-2h6l1.5 2h3v9h-15z"/><circle cx="10" cy="11" r="3"/></svg>'
+};
+const tipoHTML = t => `<span class="tipo" data-t="${t}">${ICON[t]}${TIPO[t]}</span>`;
+const dotHTML = a => `<i class="tdot" style="background:${COLORS[a] || "var(--ink-3)"}" aria-hidden="true"></i>`;
 const PRI = { urgente:"Urgente", importante:"Importante", mantenimiento:"Mantenimiento", opcional:"Opcional" };
 const PRI_ORDER = { urgente:0, importante:1, mantenimiento:2, opcional:3 };
 
@@ -284,17 +327,19 @@ const isBought = id => !!state.bought[id];
 
 /* ---------- Componentes ---------- */
 const checkSVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-7"/></svg>';
-const priHTML = p => `<span class="pri p-${p}"><i></i>${PRI[p]}</span>`;
-const areaHTML = a => `<span class="area-tag"><i style="background:${COLORS[a]}"></i>${esc(AREA[a].nombre)}</span>`;
+const priHTML = p => `<span class="pri p-${p}">${p === "urgente" ? "!! " : p === "importante" ? "! " : ""}${PRI[p]}</span>`;
+const AREANAME = { herramientas:"Herramientas y protección" };
+const areaHTML = a => `<span class="area-tag"><i style="background:${COLORS[a]};border-radius:50%"></i>${esc((AREA[a] && AREA[a].nombre) || AREANAME[a] || a)}</span>`;
 
 function taskRow(inst, opts = {}){
   const done = isDone(inst.key);
   const late = !done && inst.date < WEEK0;
   const when = inst.rec ? `${fmtShort(inst.date)} · cada semana` : fmtShort(inst.date);
-  return `<div class="task ${done ? "done" : ""}" role="button" tabindex="0" data-open="${esc(inst.key)}">
+  const tp = inst.t.tipo || "hacer";
+  return `<div class="task ${done ? "done" : ""}" data-t="${tp}" role="button" tabindex="0" data-open="${esc(inst.key)}">
     <button class="check ${done ? "on" : ""}" data-check="${esc(inst.key)}" aria-label="${done ? "Desmarcar" : "Marcar como hecha"}: ${esc(inst.t.titulo)}">${checkSVG}</button>
-    <div><div class="t">${esc(inst.t.titulo)}</div>
-      <div class="m">${priHTML(inst.t.prioridad)}<span>${when}</span>${opts.area !== false ? areaHTML(inst.t.area) : ""}${inst.t.duracion ? `<span>${esc(inst.t.duracion)}</span>` : ""}${late ? '<span class="badge late">Atrasada</span>' : ""}${inst.t.pendiente && !done ? '<span class="badge">Faltan datos</span>' : ""}</div>
+    <div><div class="t">${dotHTML(inst.t.area)}${esc(inst.t.titulo)}</div>
+      <div class="m">${tipoHTML(tp)}${priHTML(inst.t.prioridad)}<span>${when}</span>${opts.area !== false ? `<span>${esc(AREA[inst.t.area].nombre)}</span>` : ""}${inst.t.duracion ? `<span>${esc(inst.t.duracion)}</span>` : ""}${late ? '<span class="badge late">Atrasada</span>' : ""}${inst.t.pendiente && !done ? '<span class="badge">Faltan datos</span>' : ""}</div>
     </div>
     <span class="arrow" aria-hidden="true">›</span>
   </div>`;
@@ -302,10 +347,10 @@ function taskRow(inst, opts = {}){
 function matRow(m){
   const b = isBought(m.id);
   const late = !b && m.tenerAntes && parse(m.tenerAntes) < TODAY;
-  return `<div class="task mat ${b ? "done" : ""}" role="button" tabindex="0" data-mat="${esc(m.id)}">
-    <button class="check ${b ? "on" : ""}" data-buy="${esc(m.id)}" aria-label="${b ? "Desmarcar" : "Marcar como comprado"}: ${esc(m.nombre)}">${checkSVG}</button>
-    <div><div class="t">${esc(m.nombre)}</div>
-      <div class="m"><span>${m.uso ? esc(m.uso) : "Tenerlo antes del " + fmtShort(parse(m.tenerAntes))}</span>${m.precio ? `<span>${esc(m.precio)}</span>` : ""}${m.grupo === "despues" ? '<span class="badge">Justo antes</span>' : ""}${m.gamas ? `<span class="badge garage">${m.gamas.length} opciones</span>` : ""}${late ? '<span class="badge late">Ya hace falta</span>' : ""}</div>
+  return `<div class="task mat ${b ? "done" : ""}" data-t="comprar" role="button" tabindex="0" data-mat="${esc(m.id)}">
+    <button class="check sq ${b ? "on" : ""}" data-buy="${esc(m.id)}" aria-label="${b ? "Desmarcar" : "Marcar como comprado"}: ${esc(m.nombre)}">${checkSVG}</button>
+    <div><div class="t">${dotHTML(m.cat)}${esc(m.nombre)}</div>
+      <div class="m">${tipoHTML("comprar")}<span>${m.uso ? esc(m.uso) : "Tenerlo antes del " + fmtShort(parse(m.tenerAntes))}</span>${m.precio ? `<span>${esc(m.precio)}</span>` : ""}${m.grupo === "despues" ? '<span class="badge">Justo antes</span>' : ""}${m.gamas ? `<span class="badge garage">${m.gamas.length} opciones</span>` : ""}${late ? '<span class="badge late">Ya hace falta</span>' : ""}</div>
     </div>${m.links && m.links[0] ? `<a class="golink" href="${esc(m.links[0].u)}" target="_blank" rel="noopener" data-ext>Ver ↗</a>` : '<span class="arrow" aria-hidden="true">›</span>'}</div>`;
 }
 const listHTML = (items, fn, emptyText) => items.length ? `<div class="list">${items.map(fn).join("")}</div>` : `<p class="empty">${emptyText}</p>`;
@@ -333,6 +378,7 @@ function viewSemana(){
     <div><span class="season">${season(TODAY)}</span>
       <h2>Semana del ${fmtShort(WEEK0)} al ${fmtShort(WEEK1)}</h2><p>${msg}</p></div>
   </section>
+  <div class="key" aria-label="Leyenda">${["hacer","revisar","cosecha","comprar"].map(tipoHTML).join("")}<span class="sep"></span>${["cesped","frutales","limonero","huerto","piscina","riego"].map(a => `<span class="z"><i style="background:${COLORS[a]}"></i>${esc(AREA[a].nombre)}</span>`).join("")}</div>
   ${buzonHTML()}
   ${late.length ? `<h3>Atrasado <small>${late.length}</small></h3>${listHTML(late, i => taskRow(i))}` : ""}
   <h3>Toca esta semana <small>${total}</small></h3>
@@ -344,12 +390,47 @@ function viewSemana(){
   ${listHTML(next, i => taskRow(i), "Nada en las próximas semanas.")}`;
 }
 
+/* Fotos del buzón: cada foto va en su propio documento (jardin-fotos/<id>) para no inflar el estado. */
+const FOTO_BASE = "https://firestore.googleapis.com/v1/projects/nos-vamos-de-mudanza/databases/(default)/documents/jardin-fotos/";
+let pendingFoto = null, fotoErr = "";
+const FOTOS = {}, fotoLoading = new Set();
+async function compress(file){
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; });
+    let max = 1400, q = .72, out = "";
+    for (let k = 0; k < 5; k++) {
+      const sc = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.naturalWidth * sc); c.height = Math.round(img.naturalHeight * sc);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      out = c.toDataURL("image/jpeg", q);
+      if (out.length < 800000) return out;
+      max *= .75; q -= .08;
+    }
+    throw new Error("grande");
+  } finally { URL.revokeObjectURL(url); }
+}
+function loadThumbs(){
+  document.querySelectorAll("img[data-fimg]").forEach(el => {
+    const id = el.dataset.fimg;
+    if (FOTOS[id]) { el.src = FOTOS[id]; return; }
+    if (fotoLoading.has(id)) return;
+    fotoLoading.add(id);
+    fetch(FOTO_BASE + id).then(r => r.ok ? r.json() : null).then(j => {
+      const v = j && j.fields && j.fields.img && j.fields.img.stringValue;
+      if (v) { FOTOS[id] = v; document.querySelectorAll(`img[data-fimg="${id}"]`).forEach(x => x.src = v); refreshDrawer(); }
+    }).catch(() => {}).finally(() => fotoLoading.delete(id));
+  });
+}
 function buzonHTML(){
   const notas = [...state.notas].sort((a,b) => b.d.localeCompare(a.d));
   return `<section class="buzon">
     <h3 style="margin-top:0">Apuntar <small>se lo pasas a Claude y lo convierte en tareas</small></h3>
-    <form id="notaForm" class="notaform"><input id="notaTxt" type="text" maxlength="300" placeholder="Ej.: hojas amarillas en el ciruelo, gotea un aspersor…" autocomplete="off" aria-label="Nueva nota"><button type="submit">Apuntar</button></form>
-    ${notas.length ? `<ul class="notas">${notas.map(n => `<li><span>${esc(n.t)}</span><small>${fmtShort(parse(n.d))}</small><button data-delnota="${esc(n.id)}" aria-label="Borrar nota">×</button></li>`).join("")}</ul>` : ""}
+    <form id="notaForm" class="notaform"><label class="fotobtn" title="Añadir una foto">${ICON.foto}<input id="notaFoto" type="file" accept="image/*" hidden aria-label="Añadir una foto"></label><input id="notaTxt" type="text" maxlength="300" placeholder="Ej.: hojas amarillas en el ciruelo, gotea un aspersor…" autocomplete="off" aria-label="Nueva nota"><button type="submit" id="notaBtn">Apuntar</button></form>
+    ${pendingFoto ? `<div class="fotoprev"><img src="${pendingFoto.data}" alt="Foto preparada"><span>Foto lista. Escribe qué quieres que mire y pulsa Apuntar.</span><button type="button" data-quitarfoto aria-label="Quitar foto">×</button></div>` : ""}
+    ${fotoErr ? `<p class="fotoerr">${esc(fotoErr)}</p>` : ""}
+    ${notas.length ? `<ul class="notas">${notas.map(n => `<li>${n.f ? `<button class="thumb" data-foto="${esc(n.f)}" data-fnota="${esc(n.id)}" aria-label="Ver foto"><img data-fimg="${esc(n.f)}" src="${FOTOS[n.f] || "data:image/gif;base64,R0lGODlhAQABAAAAACw="}" alt=""></button>` : ""}<span>${esc(n.t)}</span><small>${fmtShort(parse(n.d))}</small><button data-delnota="${esc(n.id)}" aria-label="Borrar nota">×</button></li>`).join("")}</ul>` : ""}
   </section>`;
 }
 function viewArea(id){
@@ -381,7 +462,7 @@ function viewMaterial(){
   const buy = D.material.filter(m => m.aviso).sort((a,b) => (isBought(a.id) - isBought(b.id)) || a.tenerAntes.localeCompare(b.tenerAntes));
   const garage = D.material.filter(m => m.garaje), no = D.material.filter(m => m.noUsar);
   const simple = (m, badge) => `<div class="task" role="button" tabindex="0" data-mat="${esc(m.id)}" style="grid-template-columns:1fr auto">
-    <div><div class="t">${esc(m.nombre)}</div><div class="m">${badge}<span>${esc(m.uso)}</span></div></div><span class="arrow" aria-hidden="true">›</span></div>`;
+    <div><div class="t">${dotHTML(m.cat)}${esc(m.nombre)}</div><div class="m">${badge}<span>${esc(m.uso)}</span></div></div><span class="arrow" aria-hidden="true">›</span></div>`;
   const pendN = buy.filter(m => !isBought(m.id)).length;
   let groups;
   if (matMode === "tipo") {
@@ -411,12 +492,13 @@ function viewAnio(){
   return `
   <section class="intro-card"><h2>El año de un vistazo</h2>
     <p class="lead">De octubre a septiembre. Las rondas semanales no salen aquí para no llenarlo todo: están en "Esta semana" y en cada sección. Pulsa cualquier tarea para ver el detalle.</p>
-    <div class="legend">${areas.map(a => areaHTML(a)).join("")}</div></section>
+    <div class="legend">${areas.map(a => areaHTML(a)).join("")}</div>
+    <div class="legend">${["revisar","cosecha"].map(tipoHTML).join("")}<span>el resto son tareas para hacer</span></div></section>
   <div class="year" style="margin-top:14px">${months.map(m => {
     const items = INST.filter(i => !i.rec && i.date.getFullYear() === m.getFullYear() && i.date.getMonth() === m.getMonth());
     const now = m.getFullYear() === TODAY.getFullYear() && m.getMonth() === TODAY.getMonth();
     return `<div class="month ${now ? "now" : ""}"><h4>${m.toLocaleDateString("es-ES",{month:"long"})}</h4><div class="s">${m.getFullYear()} · ${season(new Date(m.getFullYear(), m.getMonth(), 15))}</div>
-      <div class="chips">${items.length ? items.map(i => `<button class="chip ${isDone(i.key) ? "done" : ""}" data-open="${esc(i.key)}"><span class="d">${i.date.getDate()}</span><i style="background:${COLORS[i.t.area]}"></i><span>${esc(i.t.titulo)}</span></button>`).join("") : '<span class="empty" style="font-size:13px">Solo rondas semanales.</span>'}</div></div>`;
+      <div class="chips">${items.length ? items.map(i => `<button class="chip ${isDone(i.key) ? "done" : ""}" data-open="${esc(i.key)}"><span class="d">${i.date.getDate()}</span><i style="background:${COLORS[i.t.area]};border-radius:50%"></i>${i.t.tipo && i.t.tipo !== "hacer" ? `<span class="ci" data-t="${i.t.tipo}" title="${TIPO[i.t.tipo]}">${ICON[i.t.tipo]}</span>` : ""}<span>${esc(i.t.titulo)}</span></button>`).join("") : '<span class="empty" style="font-size:13px">Solo rondas semanales.</span>'}</div></div>`;
   }).join("")}</div>`;
 }
 
@@ -428,9 +510,12 @@ function renderTabs(){
     `<button class="tab" data-tab="${a.id}" ${a.id === current ? 'aria-current="page"' : ""}>${COLORS[a.id] ? `<span class="dot" style="background:${COLORS[a.id]}"></span>` : ""}${esc(a.nombre)}</button>`).join("");
 }
 function render(){
+  const typed = document.getElementById("notaTxt")?.value || "";
   renderTabs();
   const m = document.getElementById("main");
   m.innerHTML = current === "semana" ? viewSemana() : current === "material" ? viewMaterial() : current === "anio" ? viewAnio() : viewArea(current);
+  const nt = document.getElementById("notaTxt"); if (nt && typed) nt.value = typed;
+  loadThumbs();
 }
 document.getElementById("today").textContent = cap(fmtLong(TODAY));
 
@@ -441,12 +526,13 @@ function taskDrawer(inst){
   const t = inst.t, done = isDone(inst.key);
   const mats = (t.material || []).map(id => MAT[id]).filter(Boolean);
   return `<div class="dh"><div style="min-width:0">
-      <div class="meta">${areaHTML(t.area)}${priHTML(t.prioridad)}</div>
+      <div class="meta">${tipoHTML(t.tipo || "hacer")}${areaHTML(t.area)}${priHTML(t.prioridad)}</div>
       <h2 id="dtitle">${esc(t.titulo)}</h2>
       <div class="meta"><span>${cap(fmtLong(inst.date))}</span>${t.duracion ? `<span>${esc(t.duracion)}</span>` : ""}${inst.rec ? "<span>Se repite cada semana</span>" : ""}</div>
     </div><button class="close" data-close aria-label="Cerrar">×</button></div>
   <div class="db">
     ${t.pendiente ? `<h5>Pendiente</h5><p class="note">${esc(t.pendiente)}</p>` : ""}
+    ${t.ventana ? `<h5>Cuándo se recoge</h5><p class="ventana">${esc(t.ventana)}. La fecha es el aviso para empezar a mirar: manda el fruto, no el calendario.</p>` : ""}
     <h5>Qué hacer</h5><p>${esc(t.que)}</p>
     ${mats.length ? `<h5>Necesitas</h5><div class="mats">${mats.map(m => `<div class="matline"><button data-mat="${esc(m.id)}"><span>${esc(m.nombre)}</span>${m.garaje ? '<span class="badge garage">En casa</span>' : isBought(m.id) ? '<span class="badge garage">Comprado</span>' : '<span class="badge">Comprar</span>'}</button>${!m.garaje && m.links && m.links[0] ? `<a class="golink" href="${esc(m.links[0].u)}" target="_blank" rel="noopener" data-ext>Ver ↗</a>` : ""}</div>`).join("")}</div>` : ""}
     <h5>Cómo hacerlo</h5><ol>${t.pasos.map(p => `<li>${esc(p)}</li>`).join("")}</ol>
@@ -462,7 +548,7 @@ function matDrawer(m){
   const recUses = [...new Set(INST.filter(i => i.rec && (i.t.material || []).includes(m.id)).map(i => i.t))];
   const usedIn = [...uses, ...recUses.map(t => INST.find(i => i.t === t && i.date >= WEEK0) || INST.find(i => i.t === t))].filter(Boolean);
   return `<div class="dh"><div style="min-width:0">
-      <div class="meta">${m.garaje ? '<span class="badge garage">En el garaje</span>' : m.noUsar ? '<span class="badge late">No usar</span>' : '<span class="badge">Por comprar</span>'}</div>
+      <div class="meta">${m.garaje ? '<span class="badge garage">En el garaje</span>' : m.noUsar ? '<span class="badge late">No usar</span>' : tipoHTML("comprar")}${m.cat ? areaHTML(m.cat) : ""}</div>
       <h2 id="dtitle">${esc(m.nombre)}</h2>
       ${m.tenerAntes ? `<div class="meta"><span>Tenerlo antes del ${fmtShort(parse(m.tenerAntes))}</span>${m.precio ? `<span>${esc(m.precio)}</span>` : ""}</div>` : ""}
     </div><button class="close" data-close aria-label="Cerrar">×</button></div>
@@ -489,6 +575,11 @@ function refreshDrawer(){
   const top = dc.querySelector(".db")?.scrollTop || 0;
   if (openRef.type === "task" && instByKey[openRef.key]) dc.innerHTML = taskDrawer(instByKey[openRef.key]);
   if (openRef.type === "mat" && MAT[openRef.id]) dc.innerHTML = matDrawer(MAT[openRef.id]);
+  if (openRef.type === "foto") {
+    const n = state.notas.find(x => x.id === openRef.nota);
+    dc.innerHTML = `<div class="dh"><div style="min-width:0"><div class="meta"><span>Buzón${n ? " · " + fmtShort(parse(n.d)) : ""}</span></div><h2 id="dtitle">${esc(n ? n.t : "Foto")}</h2></div><button class="close" data-close aria-label="Cerrar">×</button></div>
+      <div class="db">${FOTOS[openRef.id] ? `<img class="bigfoto" src="${FOTOS[openRef.id]}" alt="${esc(n ? n.t : "Foto")}">` : '<p class="empty">Cargando la foto…</p>'}</div>`;
+  }
   const db = dc.querySelector(".db"); if (db) db.scrollTop = top;
 }
 function closeDrawer(){
@@ -503,8 +594,16 @@ document.addEventListener("click", e => {
   if (e.target.closest("[data-ext]")) { e.stopPropagation(); return; }
   const mm = e.target.closest("[data-matmode]");
   if (mm) { matMode = mm.dataset.matmode; try { localStorage.setItem("jardin-matmode", matMode); } catch(e) {} render(); return; }
+  const qf = e.target.closest("[data-quitarfoto]");
+  if (qf) { pendingFoto = null; fotoErr = ""; render(); return; }
+  const fo = e.target.closest("[data-foto]");
+  if (fo) { openDrawer({ type:"foto", id: fo.dataset.foto, nota: fo.dataset.fnota }); return; }
   const dn = e.target.closest("[data-delnota]");
-  if (dn) { change({ t:"nota-del", id: dn.dataset.delnota }); return; }
+  if (dn) {
+    const n = state.notas.find(x => x.id === dn.dataset.delnota);
+    if (n && n.f) fetch(FOTO_BASE + n.f, { method:"DELETE" }).catch(() => {});
+    change({ t:"nota-del", id: dn.dataset.delnota }); return;
+  }
   const el = e.target.closest("[data-check],[data-buy],[data-open],[data-mat],[data-tab],[data-close]");
   if (!el) { if (e.target === scrim) closeDrawer(); return; }
   if (el.dataset.check) { e.stopPropagation(); const k = el.dataset.check; change({ t:"done", k, v: isDone(k) ? null : iso(new Date()) }); return; }
@@ -518,12 +617,35 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape" && openRef) closeDrawer();
   if ((e.key === "Enter" || e.key === " ") && e.target.matches(".task[role=button]")) { e.preventDefault(); e.target.click(); }
 });
-document.addEventListener("submit", e => {
+document.addEventListener("change", async e => {
+  if (e.target.id !== "notaFoto" || !e.target.files || !e.target.files[0]) return;
+  fotoErr = "";
+  try { pendingFoto = { id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), data: await compress(e.target.files[0]) }; }
+  catch(err) { pendingFoto = null; fotoErr = "No he podido leer esa foto. Prueba con otra o haz una captura de pantalla de ella."; }
+  render();
+});
+document.addEventListener("submit", async e => {
   if (e.target.id !== "notaForm") return;
   e.preventDefault();
   const v = document.getElementById("notaTxt").value.trim();
-  if (!v) return;
-  change({ t:"nota-add", n: { id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), t: v, d: iso(new Date()) } });
+  if (!v && !pendingFoto) return;
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+  const nota = { id, t: v || "Foto (sin comentario)", d: iso(new Date()) };
+  if (pendingFoto) {
+    const btn = document.getElementById("notaBtn"); if (btn) { btn.disabled = true; btn.textContent = "Subiendo…"; }
+    try {
+      const r = await fetch(FOTO_BASE + pendingFoto.id, { method:"PATCH", headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ fields: { img:{ stringValue: pendingFoto.data }, d:{ stringValue: nota.d } } }) });
+      if (!r.ok) throw new Error(r.status);
+      FOTOS[pendingFoto.id] = pendingFoto.data; nota.f = pendingFoto.id; pendingFoto = null; fotoErr = "";
+    } catch(err) {
+      fotoErr = "No se ha podido subir la foto (¿sin conexión?). Vuelve a pulsar Apuntar.";
+      if (btn) { btn.disabled = false; btn.textContent = "Apuntar"; }
+      render(); return;
+    }
+  }
+  document.getElementById("notaTxt").value = "";
+  change({ t:"nota-add", n: nota });
   setTimeout(() => { const i = document.getElementById("notaTxt"); if (i) i.focus(); }, 0);
 });
 window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (AREA[h]) { current = h; render(); } });
