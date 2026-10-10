@@ -7,11 +7,12 @@ window.JARDIN = {
 areas: [
   { id: "semana",   nombre: "Esta semana" },
   { id: "cesped",   nombre: "Césped",
-    intro: "Mezcla de ray grass y festuca (las semillas del garaje son de ese tipo). Es hierba de clima frío: crece mucho en primavera y otoño, sufre con el calor de julio y en invierno se queda verde pero parada. Por eso sus dos estaciones importantes son el otoño y la primavera, no el verano. Cuatro tareas la mantienen: segar, regar, abonar y rellenar calvas." ,
+    intro: "Unos 132 m² en cuatro zonas (plano en el proyecto \"Casa\"). Mezcla de ray grass y festuca: hierba de clima frío que crece mucho en primavera y otoño, sufre con el calor de julio y en invierno se queda verde pero parada. Por eso sus dos estaciones importantes son el otoño y la primavera. Cuatro tareas la mantienen: segar, regar, abonar y rellenar calvas.",
     ficha: [
+      ["Superficie", "L trasera ≈ 68 m² · franja lateral ≈ 42 m² (28 del tramo estrecho y 14 del ancho) · entrada ≈ 22 m². Total ≈ 132 m². Para comprar material, calcular sobre 145 m²."],
       ["Siega", "Mar-may: cada semana a 4-5 cm. Jun-sep: cada 7-10 días a 5-6 cm. Oct-nov: cada 10-15 días a 5 cm. Dic-feb: solo si pasa de 7-8 cm."],
       ["Regla de oro", "No cortar nunca más de un tercio de la altura de una vez."],
-      ["Abono", "Tres veces al año: marzo-abril, finales de mayo y octubre. Nunca en verano ni en invierno."],
+      ["Abono", "Tres veces al año: marzo-abril, finales de mayo y octubre. Nunca en verano ni en invierno. Para tu césped, unos 4 kg por pasada (a 30 g/m²; manda la etiqueta)."],
       ["Calvas", "Se resiembran en octubre o en marzo-abril. En noviembre ya no: la tierra está fría y la semilla no nace."],
       ["Escarificado", "Una vez al año, en marzo-abril, justo antes de resembrar y abonar."]
     ]},
@@ -25,7 +26,7 @@ areas: [
       ["Perros", "Recoger la fruta caída: fermenta, atrae avispas y los huesos son peligrosos."]
     ]},
   { id: "limonero", nombre: "Limonero y plantas",
-    intro: "El limonero está en el arriate pegado a la casa, con las aromáticas y las flores. La pared le da calor y le protege, pero es el único árbol de la casa que sufre con el frío de Novés: por debajo de -2 °C se queman hojas y ramas jóvenes.",
+    intro: "El limonero está en el parterre del muro verde del fondo, entre la higuera y el manzano, con lantanas, tagetes, cosmos y margaritas africanas. El muro le da calor y le protege, pero es el único árbol de la casa que sufre con el frío de Novés: por debajo de -2 °C se queman hojas y ramas jóvenes.",
     ficha: [
       ["Heladas", "Taparlo con la manta térmica las noches por debajo de -2 °C. Quitarla por la mañana."],
       ["Riego en invierno", "Muy poco. Nunca los días de helada."],
@@ -40,14 +41,16 @@ areas: [
       ["Riego", "La lluvia suele bastar en invierno. Solo si pasan 3 semanas sin llover."]
     ]},
   { id: "piscina",  nombre: "Piscina",
-    intro: "Piscina de cloro de unos 20 m², con depuradora y lona de invierno. El agua de Novés es muy dura: tendencia a cal, agua turbia y pH alto. Para dar cantidades de producto hacen falta el volumen (largo, ancho y profundidades) y las fotos de los productos que dejó el dueño: hasta entonces, nada a ojo.",
+    intro: "Piscina de obra de 6,5 × 3,5 m, de 1 a 1,5 m de profundidad: unos 28 m³ de agua. Cloro, filtro de arena y lona de invierno con rejilla. El agua de Novés es muy dura: tendencia a cal, agua turbia y pH alto. Todas las dosis de esta sección están calculadas para esos 28 m³.",
     ficha: [
-      ["Pendiente", "Medidas: largo, ancho, profundidad mínima y máxima. Con eso, dosis exactas."],
-      ["Tu equipo", "Filtro de arena con manómetro y válvula selectora de 6 posiciones, bomba con prefiltro, reloj programador en el cuadro naranja y 3 llaves rojas: skimmer, fondo y limpiafondos."],
-      ["Regla de oro", "Nunca mover la válvula selectora con la bomba en marcha. Siempre: bomba OFF, mover, bomba ON."],
-      ["Limpiafondos", "Lo tienes. Falta la manguera flotante de 38 mm: se compra en primavera."],
-      ["La depuradora", "Es la aspiradora: la bomba chupa por el skimmer, el filtro atrapa la suciedad y el agua vuelve limpia."],
-      ["Perros", "Más demanda de cloro y pelo en skimmers y prefiltro. Revisar los cestillos más a menudo en verano."]
+      ["Volumen", "≈ 28 m³ (6,5 × 3,5 × 1,25 m de media, al nivel actual del agua)."],
+      ["Presión del filtro", "Limpio marca unos 0,55 bar (la aguja baila entre 0,5 y 0,6). Contralavado cuando llegue a 0,9-1,0."],
+      ["Tu equipo", "Filtro de arena AstralPool con manómetro y válvula selectora de 6 posiciones (manda la punta corta de la maneta), bomba Sena con prefiltro transparente, cuadro naranja (MANUAL / AUTO / PARO) y 3 llaves rojas: skimmers, fondo y limpiafondos (maneta en línea con el tubo = abierta)."],
+      ["Regla de oro", "Nunca mover la válvula selectora con la bomba en marcha. Siempre: bomba OFF, mover, bomba ON. La rueda de la derecha de la tapa del filtro es el cierre: no tocarla nunca."],
+      ["Química", "pH y cloro nunca a la vez: 4-6 h entre uno y otro, cubos distintos y siempre el producto sobre el agua. Guantes y gafas."],
+      ["Dosis tuyas", "Reductor de pH líquido: unos 0,5 L baja 0,2 puntos (máximo 1,5 L por tanda). Cloro de choque: 550 g para recuperar agua verde; 300 g de mantenimiento o al invernar."],
+      ["Limpiafondos", "Lo tienes. Falta la manguera flotante de 38 mm (sin placa de skimmer: va a la toma de la pared)."],
+      ["Perros", "Fuera del agua desde que se echa producto hasta que el cloro vuelve a 1-3. Hasta ver en la etiqueta de la lona que aguanta peso, que no se suba."]
     ]},
   { id: "riego",    nombre: "Riego",
     intro: "Riego automático con un solo programa: todo se riega a la vez y con la misma frecuencia (césped, árboles y huerto). Por eso lo que necesita más agua de forma puntual (calvas recién sembradas, plantones nuevos) se riega a mano. En invierno se apaga, pero \"no se riega\" significa \"no se riega si llueve\".",
@@ -95,39 +98,44 @@ tareas: [
 
 /* ---------- CÉSPED ---------- */
 { id: "c-medir", area: "cesped", tipo: "revisar", titulo: "Medir los m² de césped", prioridad: "importante", fecha: "2026-10-10", duracion: "10 min",
-  que: "Saber cuánto césped hay para calcular abono y semilla.",
+  que: "Hecho: unos 132 m² de césped y 24 m² de huerto. Las medidas y el plano están en el proyecto \"Casa\".",
   pasos: [
-    "Divide el césped en rectángulos (más o menos).",
-    "Mide largo y ancho de cada uno a pasos (un paso normal es casi un metro).",
-    "Multiplica y suma. Pásale el número a Claude."
+    "L trasera (barbacoa, higuera, manzano, piscina): ≈ 68 m².",
+    "Franja lateral entre el pasillo y el muro: ≈ 42 m².",
+    "Césped de la entrada (peral y albaricoquero): ≈ 22 m².",
+    "Para comprar semilla o abono, calcular sobre 145 m² (margen del 10 %)."
   ],
   porque: "La dosis de abono va por m². Sin ese dato se compra de más o de menos.",
   sinoSe: "Abonar a ojo: o se quema el césped o no hace nada."
 },
-{ id: "c-resiembra", area: "cesped", tipo: "hacer", titulo: "Resembrar las calvas", prioridad: "importante", fecha: "2026-10-10", duracion: "1 h",
-  que: "Rellenar las zonas peladas aprovechando la última ventana templada del año.",
+{ id: "c-resiembra", area: "cesped", tipo: "hacer", titulo: "Resembrar las calvas", prioridad: "importante", fecha: "2026-10-10", duracion: "1-1,5 h",
+  que: "Rellenar las zonas peladas aprovechando la última ventana templada del año. Se hace antes que el abono y el mismo día.",
   material: ["semillas", "mantillo", "rastrillo", "manguera-jardin", "guantes"],
   pasos: [
-    "Rastrillar fuerte cada calva: quitar hierba muerta y soltar 1-2 cm de tierra.",
-    "Repartir la semilla a la dosis de la caja (unos 30 g/m²; en una calva, un puñado pequeño por palmo cuadrado).",
-    "Tapar con medio centímetro de mantillo.",
-    "Apretar con el dorso del rastrillo para que la semilla toque la tierra.",
-    "Regar las calvas a mano, suave (lluvia fina, no chorro), cada día 2-3 semanas, sin encharcar. Si llueve, ese día no.",
-    "Nace en 7-14 días. No pisar ni segar esas zonas hasta que la hierba mida unos 8 cm."
+    "Si el césped pasa de 7-8 cm, segar antes a 5 cm, con la bolsa puesta (recoge también las hojas).",
+    "Marcar las calvas: si cuesta verlas, regar 5 minutos antes y se distinguen mejor.",
+    "Rastrillar fuerte cada calva con el rastrillo de púas: quitar hierba muerta y piedras y soltar 1-2 cm de tierra. Que quede como tierra de maceta, sin terrones.",
+    "Semilla: unos 35 g/m², que es un puñado pequeño por cada calva del tamaño de una baldosa grande. Mejor dos pasadas cruzadas que una. Que la semilla se vea repartida, sin montones.",
+    "Tapar con medio centímetro de mantillo: la semilla casi tiene que desaparecer, no enterrarse.",
+    "Apretar con el dorso del rastrillo (o pisando con suavidad) para que la semilla toque la tierra.",
+    "Regar las calvas a mano con la pistola en modo lluvia, hasta que el mantillo se vea oscuro, sin hacer charcos ni arrastrar semilla.",
+    "Desde mañana: riego a mano de las calvas cada día (2 veces si hace sol y viento) durante 2-3 semanas. Si llueve, ese día no.",
+    "Nace en 7-14 días. No pisar ni segar esas zonas hasta que la hierba mida unos 8 cm. Los perros, lejos de las calvas: con unas sillas o un palé basta."
   ],
-  porque: "La semilla necesita la tierra por encima de unos 10 °C para germinar; en Novés eso dura hasta finales de octubre. Sembrada ahora, tiene todo el invierno y la primavera para enraizar antes del calor.",
+  porque: "La semilla necesita la tierra por encima de unos 10 °C para germinar; en Novés eso dura hasta finales de octubre. Sembrada ahora, tiene todo el invierno y la primavera para enraizar antes del calor. El mantillo guarda la humedad y la esconde de los pájaros.",
   sinoSe: "Calvas todo el invierno, con hueco para malas hierbas. Habría que esperar a marzo.",
-  importante: "Si no da tiempo antes del 25 de octubre, no sembrar en noviembre: se pasa a marzo-abril. No echar abono encima de la semilla recién sembrada. El riego automático no vale para esto: va todo junto y regar todo el jardín a diario encharcaría árboles y huerto."
+  importante: "Si no da tiempo antes del 25 de octubre, no sembrar en noviembre: se pasa a marzo-abril. No echar abono encima de la semilla recién sembrada. El riego automático no vale para esto: va todo junto y regar todo el jardín a diario encharcaría árboles y huerto. Mirar la fecha de las cajas de semilla: si tienen varios años, echar algo más (45 g/m²)."
 },
 { id: "c-abono-otono", area: "cesped", tipo: "hacer", titulo: "Abono de otoño del césped", prioridad: "mantenimiento", fecha: "2026-10-10", duracion: "20 min",
-  que: "Fortalecer la raíz y preparar el césped para el frío.",
+  que: "Fortalecer la raíz y preparar el césped para el frío. Se puede hacer el mismo día que la resiembra, justo después y sin pasar por las calvas.",
   material: ["abono-otono"],
   pasos: [
-    "Mejor 1-2 días después de segar, con el césped seco.",
-    "Repartir el abono a la dosis de la etiqueta, a voleo y en dos pasadas cruzadas para que quede uniforme.",
-    "No echarlo sobre las calvas recién sembradas.",
-    "Regar justo después (o aplicarlo antes de un día de lluvia).",
-    "Perros fuera hasta que esté regado."
+    "Con el césped seco (si acabas de regar las calvas, no importa: solo el resto tiene que estar seco).",
+    "Cantidad: la de la etiqueta; si pone 30 g/m², para tus 132 m² son unos 4 kg. Pésalo o mídelo con un vaso: un vaso de agua lleno de abono son unos 200 g.",
+    "Repartirlo a voleo por zonas (L trasera ≈ 2 kg, franja lateral ≈ 1,3 kg, entrada ≈ 0,7 kg), en dos pasadas cruzadas con la mitad cada una.",
+    "Rodear las calvas recién sembradas y los alcorques de los árboles.",
+    "Regar justo después todo el césped (5-10 minutos con el automático, en manual, o con la manguera) para que el grano se deshaga y no se queme la hierba.",
+    "Perros dentro hasta que esté regado y seco. Barrer los granos que caigan en la playa de la piscina o el patio: manchan la piedra."
   ],
   porque: "En otoño el césped crece hacia abajo: echa raíz y guarda reservas. El abono de otoño lleva más potasio (K), que refuerza raíz y resistencia al frío, y poco nitrógeno (N), que solo daría hoja tierna justo antes de las heladas.",
   sinoSe: "Poca cosa: césped algo menos fuerte en primavera. Es recomendable, no obligatorio."
@@ -498,37 +506,34 @@ tareas: [
 
 /* ---------- PISCINA ---------- */
 { id: "p-revisar", area: "piscina", tipo: "revisar", titulo: "Arrancar la depuradora y medir el agua", prioridad: "urgente", fecha: "2026-10-10", duracion: "30 min",
-  que: "Poner a filtrar y saber de dónde partimos. El agua está verde y turbia: principio de algas.",
+  que: "Hecho el 10 de octubre: contralavado y enjuague, depuradora filtrando 24 h en MANUAL, medidas tomadas (28 m³) y agua medida (pH 8,0-8,2 y cloro 0).",
   material: ["kit-agua"],
   pasos: [
-    "Quitar la toalla de encima del filtro (guarda humedad y tapa el manómetro).",
-    "Llaves rojas de skimmer y fondo abiertas; la de limpiafondos cerrada (se abre solo para aspirar).",
-    "Con la bomba apagada, la maneta negra de encima del filtro: apretar hacia abajo y girar hasta FILTRACIÓN.",
-    "Vaciar el cestillo de cada skimmer y el del prefiltro de la bomba (tapa transparente). Bomba apagada para abrir el prefiltro.",
-    "Bomba en manual (interruptor del cuadro naranja) y dejarla encendida día y noche: la depuradora solo limpia mientras la bomba funciona.",
-    "A los 5 minutos, apuntar lo que marca el manómetro: es tu presión de referencia con el filtro limpio.",
-    "Medir pH y cloro con una tira: a la altura del codo 1-2 s, esperar 15 s y comparar con la tabla del bote. Ideal: pH 7,2-7,6 y cloro libre 1-3.",
-    "Medir largo, ancho y profundidad mínima y máxima. Pasárselo a Claude (por el buzón)."
+    "Llaves rojas de skimmers y fondo abiertas; la de limpiafondos cerrada (se abre solo para aspirar).",
+    "Selector en FILTRACIÓN (con la bomba apagada para moverlo).",
+    "Cuadro naranja en MANUAL: la bomba funciona día y noche hasta que el agua esté limpia. Luego pasa a AUTO.",
+    "Referencia del manómetro con el filtro limpio: 0,55 bar.",
+    "Cada día, un vistazo: cestillos de skimmers y prefiltro limpios y presión por debajo de 0,9."
   ],
   porque: "El agua verde es cloro a cero o que no actúa. Sin filtrar y sin saber el pH, cualquier producto que eches se desperdicia.",
   sinoSe: "El verde va a más y cuesta el doble de producto recuperarla.",
-  importante: "Si al encender la bomba hace ruido raro, no saca agua o gotea algo en la caseta: apagar y foto a Claude."
+  importante: "Si la bomba hace ruido raro, no saca agua o gotea algo en la caseta: apagar y foto a Claude. La purga del filtro (la rueda pequeña junto al manómetro) está atascada de cal: no es urgente, se limpia otro día con la bomba apagada."
 },
-{ id: "p-choque", area: "piscina", tipo: "hacer", titulo: "Recuperar el agua: pH y cloración de choque", prioridad: "urgente", fecha: "2026-10-10", duracion: "45 min",
-  que: "Matar las algas antes de invernar. Primero el pH, luego el choque, nunca a la vez.",
+{ id: "p-choque", area: "piscina", tipo: "hacer", titulo: "Recuperar el agua: pH y cloración de choque", prioridad: "urgente", fecha: "2026-10-10", duracion: "45 min en dos tandas",
+  que: "Matar las algas antes de invernar. Primero el pH, luego el choque, nunca a la vez. Hecho a mediodía del 10: 1,5 L de reductor de pH con el agua a pH 8,0-8,2 y cloro 0.",
   material: ["minorador-ph", "cloro-choque", "kit-agua", "guantes"],
-  pendiente: "Dosis exacta cuando Claude tenga las medidas. Mientras, la de la etiqueta calculando unos 25-30 m³.",
   pasos: [
-    "Cepillar paredes y fondo para despegar las algas (con el cepillo curvo del garaje).",
-    "Si el pH pasa de 7,6: echar minorador de pH disuelto en un cubo de agua, repartido por el borde, con la bomba en marcha.",
-    "Esperar 4-6 horas y volver a medir. Objetivo: pH 7,2-7,4.",
-    "Al anochecer, cloro de choque: disolver en un cubo (siempre el producto sobre el agua, nunca al revés) y repartir por todo el borde con la bomba en marcha.",
-    "Filtrar 24 h seguidas durante 2-3 días.",
-    "Perros fuera del agua y de la playa mientras tanto."
+    "✓ Cepillado de paredes (el fondo, cuando llegue la manguera).",
+    "✓ 1,5 L de reductor de pH líquido diluido en un cubo y repartido por las boquillas, con la bomba en marcha.",
+    "Entre las 18:30 y las 19:00, volver a medir el pH. Foto del kit a Claude.",
+    "Si sale 7,6 o menos: a partir de las 22:00, choque con 550 g de cloro rápido granulado (dicloro). Disolverlo en un cubo distinto lleno de agua de la piscina (el producto sobre el agua, nunca al revés), remover con un palo y repartirlo por todo el borde.",
+    "Si sale 7,8 o más: otro litro de reductor esa tarde y el choque al día siguiente por la noche.",
+    "Bomba en MANUAL 24 h durante 2-3 días después del choque. Cepillar paredes y fondo una vez al día.",
+    "Perros fuera del agua y de la playa hasta que el cloro vuelva a 1-3 (1-2 días)."
   ],
-  porque: "Con el pH alto (tu agua dura lo sube sola) el cloro pierde casi toda su fuerza. Al anochecer, porque el sol destruye el cloro en pocas horas. El cepillado deja las algas sueltas para que el cloro y el filtro acaben con ellas.",
+  porque: "Con el pH alto (tu agua dura lo sube sola) el cloro pierde casi toda su fuerza: a pH 8 trabaja a un 20 %, a 7,4 a más del 50 %. De noche, porque el sol destruye el cloro en pocas horas. El cepillado deja las algas sueltas para que el cloro y el filtro acaben con ellas.",
   sinoSe: "No se puede invernar: con algas debajo de la lona, en marzo hay una charca.",
-  importante: "No mezclar nunca productos entre sí ni en el mismo cubo. Guantes y gafas. Dicloro, no hipoclorito cálcico: con agua tan dura mete más cal."
+  importante: "No mezclar nunca productos entre sí ni en el mismo cubo, y dejar 4-6 h entre pH y cloro. Guantes y gafas. El reductor apenas suelta vapor: basta con no inclinarse sobre el cubo. Dicloro, no hipoclorito cálcico: con agua tan dura mete más cal."
 },
 { id: "p-grieta", area: "piscina", tipo: "revisar", titulo: "Revisar las grietas de la playa", prioridad: "importante", fecha: "2026-10-10", duracion: "10 min",
   que: "Ver si las fisuras del pavimento llegan al borde del vaso.",
@@ -541,32 +546,58 @@ tareas: [
   porque: "Por una grieta junto al borde entra agua; al helar, se expande y la abre más.",
   sinoSe: "Reparación más cara en primavera."
 },
+{ id: "p-lona", area: "piscina", tipo: "hacer", titulo: "Limpiar la lona y guardarla seca", prioridad: "importante", fecha: "2026-10-11", duracion: "1 h (entre dos)",
+  que: "Dejar la lona limpia antes del invernaje. Ahora es el momento: con el choque de cloro tiene que estar quitada.",
+  material: ["manguera-jardin"],
+  pasos: [
+    "Si está puesta: quitar hojas y tierra con una escoba blanda y sacar el agua de encima antes de moverla. Con peso no se arrastra.",
+    "Retirarla entre dos, doblándola por la mitad, y extenderla en el patio o la entrada (en el césped, como mucho una o dos horas: lo amarillea).",
+    "Mojar con la manguera, frotar con cepillo de cerdas suaves y agua con un chorro de jabón neutro (el de fregar sirve).",
+    "Manchas verdes o de moho: un vaso de vinagre en un cubo de agua, frotar y aclarar.",
+    "Aclarar bien por las dos caras y dejarla secar del todo al sol, dándole la vuelta.",
+    "Doblarla solo cuando esté seca. Guardarla en la caseta, a la sombra y levantada del suelo."
+  ],
+  porque: "La suciedad que se queda en la lona acaba en el agua al quitarla en primavera, y doblada húmeda coge moho y se pudre.",
+  sinoSe: "Lona que huele, se mancha y dura menos años.",
+  importante: "Nada de lejía, disolventes ni estropajo. Hidrolimpiadora solo a baja presión y a medio metro. Perros fuera mientras esté mojada con jabón."
+},
+{ id: "p-purga", area: "piscina", tipo: "hacer", titulo: "Desatascar la purga del filtro", prioridad: "opcional", fecha: "2026-11-07", duracion: "20 min",
+  que: "La rueda pequeña junto al manómetro, que sirve para sacar el aire del filtro, está atascada de cal.",
+  pasos: [
+    "Bomba en PARO.",
+    "Desenroscar la purga del todo (ya sabes que sale entera).",
+    "Dejarla en vinagre de limpieza una hora y repasar el agujero con un alambre fino o un clip.",
+    "Mirar la junta de goma: si está agrietada, foto a Claude.",
+    "Volver a montarla y encender: debe salir un poco de aire y luego agua al abrirla."
+  ],
+  porque: "Si entra aire en el filtro, filtra peor y la presión baila. La purga es la forma de sacarlo.",
+  sinoSe: "Nada grave a corto plazo."
+},
 { id: "p-aclarar", area: "piscina", tipo: "revisar", titulo: "Revisar el agua tras el choque", prioridad: "importante", fecha: "2026-10-14", duracion: "30 min",
   que: "Ver si el choque ha funcionado y rematar.",
   material: ["floculante", "kit-agua", "manguera"],
   pasos: [
-    "Mirar el manómetro: si marca 0,3-0,5 bar más que tu referencia, contralavado (paso siguiente). Si no, saltarlo.",
+    "Mirar el manómetro: si marca 0,9-1,0 bar (o 0,3-0,4 más que los 0,55 de referencia), contralavado. Si no, saltar el paso siguiente.",
     "Contralavado: bomba OFF, selector en LAVADO, bomba ON 2-3 min (hasta que el agua del visor salga limpia), bomba OFF, ENJUAGUE 30 s, bomba OFF, FILTRACIÓN, bomba ON.",
-    "Si el agua está azul y se ve el fondo: perfecto. Medir cloro (1-3 ppm) y pH (7,2-7,6) y listo para invernar.",
-    "Si sigue verde: segundo choque igual que el primero.",
-    "Si está turbia gris o blanquecina (algas muertas en suspensión): floculante según etiqueta, bomba parada toda la noche.",
-    "Al día siguiente, aspirar el fondo con el limpiafondos con el selector en DESAGÜE (o VACIADO), para tirar la suciedad sin pasar por el filtro. Baja el nivel: rellenar con manguera."
+    "Si el agua está azul y se ve el fondo: perfecto. Medir cloro (1-3) y pH (7,2-7,6) y listo para invernar.",
+    "Si sigue verde: segundo choque igual que el primero (antes, pH a 7,2-7,6).",
+    "Si está turbia gris o blanquecina (algas muertas en suspensión): floculante según la etiqueta para 28 m³, repartido por el borde con la bomba en marcha 10 min, y luego bomba parada toda la noche.",
+    "Al día siguiente, aspirar el fondo despacio con el limpiafondos y el selector en VACIADO, para tirar la suciedad sin pasar por el filtro. Llaves: solo la de limpiafondos abierta. Baja el nivel: rellenar con la manguera de jardín."
   ],
   porque: "Las algas muertas son polvo fino que el filtro de arena no atrapa bien. El floculante las junta en el fondo y se tiran directamente al desagüe.",
   sinoSe: "Invernar con agua turbia: el invernador no hace bien su trabajo."
 },
 { id: "p-invernaje", area: "piscina", tipo: "hacer", titulo: "Invernar la piscina", prioridad: "urgente", fecha: "2026-10-24", duracion: "1-2 h",
   que: "Dejar el agua protegida para todo el invierno. Solo con el agua ya transparente.",
-  material: ["kit-agua", "invernador", "cloro-choque"],
-  pendiente: "Faltan las medidas para la dosis exacta de invernador.",
+  material: ["kit-agua", "invernador", "cloro-choque", "minorador-ph"],
   pasos: [
-    "Limpiar fondo, paredes y cestillos.",
-    "Ajustar el pH (7,2-7,6).",
-    "Choque de cloro.",
-    "Al día siguiente, invernador repartido por el borde con la bomba en marcha.",
+    "Limpiar fondo (limpiafondos), paredes y cestillos. Contralavado si el manómetro pasa de 0,9.",
+    "Ajustar el pH a 7,2-7,6 con el reductor (unos 0,5 L por cada 0,2 puntos).",
+    "4-6 h después, de noche: 300 g de cloro de choque disuelto en un cubo.",
+    "Al día siguiente, el invernador: la dosis de la etiqueta para 28 m³ (con los habituales, 1-1,5 L), repartido por el borde con la bomba en marcha 4-6 h.",
     "Quitar el dosificador flotante de pastillas: en invierno no hace falta.",
-    "Si vivís allí: depuradora 2 horas al día, mejor de madrugada para que el agua en movimiento no hiele.",
-    "Poner la lona bien tensa."
+    "Depuradora en AUTO: 2 horas al día, de madrugada, para que el agua en movimiento no hiele.",
+    "Poner la lona limpia y bien tensa."
   ],
   porque: "Con el agua por debajo de 15 °C las algas casi no crecen. Bien invernada, en primavera basta con limpiar y ajustar.",
   sinoSe: "Agua verde en primavera: semanas de trabajo y mucho producto."
@@ -756,9 +787,9 @@ material: [
     links: [ { t: "Ejemplo: Abono cítricos Geolia 1,15 kg (Leroy Merlin)", u: "https://www.leroymerlin.es/productos/abono-citricos-geolia-1-15-kg-91987662.html" } ] },
   { id: "manguera", cat: "piscina", nombre: "Manguera flotante de piscina de 38 mm", uso: "Para aspirar el fondo ahora y cada primavera.", aviso: "2026-10-09", tenerAntes: "2026-10-14",
     queEs: "Manguera gruesa y con anillos que flota. Une el limpiafondos con la toma de limpiafondos de la pared (tu piscina la tiene: es la tercera llave roja) para que la depuradora aspire el fondo. Una manguera de jardín no sirve.",
-    cantidad: "El largo de la piscina más 2-3 m.", precio: "25-45 €",
+    cantidad: "12-15 m, con sus terminales (los extremos que encajan en el limpiafondos y en la toma).", precio: "25-45 €",
     links: [ { t: "Ejemplo: manguera autoflotante 38 mm (ManoMano, elige el largo)", u: "https://www.manomano.es/p/manguera-autoflotante-eva-38mm-rollo-30m-con-terminales-corrugada-flexible-de-alta-resistencia-filtro-piscina-215776699" } ],
-    nota: "Mide la boquilla del limpiafondos para confirmar los 38 mm." },
+    nota: "Va directa a la toma de limpiafondos de la pared: no hace falta placa de skimmer. La de 32 mm de la tienda no vale. Hace falta para aspirar el fondo tras el choque y antes de invernar." },
   { id: "tijeras", cat: "herramientas", nombre: "Tijeras de podar de una mano (tipo bypass)", aviso: "2026-10-12", tenerAntes: "2026-12-15",
     gamas: [
       { nivel: "Básica", nombre: "Tijera bypass de gama media", precio: "15-30 €", texto: "Corta bien el primer año. Se mella antes y no tiene recambios.", u: "https://www.leroymerlin.es/productos/tijera-de-poda-a-una-mano-altuna-bypass-82063623.html" },
@@ -791,16 +822,16 @@ material: [
     queEs: "Abono para echar al suelo alrededor de los frutales cuando arrancan en primavera.",
     cantidad: "1-2 kg para todos los árboles.", precio: "6-10 €",
     links: [ { t: "Ejemplo: Abono granulado Compo para huerta y frutales 1 kg (Leroy Merlin)", u: "https://www.leroymerlin.es/productos/abono-granulado-compo-para-huerta-y-frutales-1kg-para-uso-ecologico-16331483.html" } ] },
-  { id: "minorador-ph", cat: "piscina", nombre: "Minorador de pH granulado", aviso: "2026-10-09", tenerAntes: "2026-10-10",
-    queEs: "Producto ácido en polvo para bajar el pH. Con el agua dura de Novés el pH sube solo: lo vas a usar toda la vida de la piscina.",
-    uso: "Ahora para recuperar el agua y toda la temporada.", cantidad: "Un envase de 5-8 kg (se conserva años cerrado).", precio: "10-20 €",
-    links: [ { t: "Ver minoradores de pH (Leroy Merlin)", u: "https://www.leroymerlin.es/search?q=minorador%20ph%20piscina" } ],
-    nota: "Guardar separado del cloro y lejos de los perros. Nunca mezclarlos." },
-  { id: "cloro-choque", cat: "piscina", nombre: "Cloro de choque granulado (dicloro)", aviso: "2026-10-09", tenerAntes: "2026-10-10",
+  { id: "minorador-ph", cat: "piscina", nombre: "Reductor de pH líquido (Axton \"– pH\", 5 L)", aviso: "2026-10-09", tenerAntes: "2026-10-10",
+    queEs: "Ácido diluido para bajar el pH. Con el agua dura de Novés el pH sube solo: lo vas a usar toda la vida de la piscina.",
+    uso: "Para tus 28 m³: unos 0,5 L baja 0,2 puntos. Máximo 1,5 L por tanda, diluido en un cubo.", cantidad: "Garrafa de 5 L (comprada).", precio: "10-20 €",
+    links: [],
+    nota: "Guardar separado del cloro, tapado y lejos de los perros. Nunca mezclarlos ni usar el mismo cubo." },
+  { id: "cloro-choque", cat: "piscina", nombre: "Cloro rápido granulado (dicloro)", aviso: "2026-10-09", tenerAntes: "2026-10-10",
     queEs: "Cloro de disolución rápida para subir el cloro de golpe y matar algas. En la etiqueta: \"dicloro\" o \"dicloroisocianurato\", 55-60 %.",
-    uso: "Choque ahora, al invernar y al abrir en primavera.", cantidad: "Un envase de 5 kg da para el choque, el invernaje y la temporada.", precio: "25-40 €",
-    links: [ { t: "Ver cloro de choque granulado (Leroy Merlin)", u: "https://www.leroymerlin.es/search?q=cloro%20choque%20granulado%20piscina" } ],
-    nota: "No compres hipoclorito cálcico: con agua tan dura deja más cal y enturbia." },
+    uso: "Para tus 28 m³: 550 g para recuperar agua verde; 300 g al invernar o de mantenimiento.", cantidad: "Un envase de 5 kg da para el choque, el invernaje y la temporada.", precio: "25-40 €",
+    links: [],
+    nota: "No uses hipoclorito cálcico: con agua tan dura deja más cal y enturbia. Siempre disuelto en un cubo, nunca a puñados al agua." },
   { id: "floculante", cat: "piscina", nombre: "Floculante líquido", aviso: "2026-10-09", tenerAntes: "2026-10-14",
     queEs: "Junta las partículas finas (algas muertas, polvo) en grumos que caen al fondo para aspirarlas al desagüe.",
     uso: "Solo si tras el choque el agua queda turbia.", cantidad: "Botella de 1-2 L.", precio: "8-15 €",
@@ -808,7 +839,7 @@ material: [
     nota: "Barato y se conserva: mejor tenerlo ya que volver a la tienda a mitad de la recuperación." },
   { id: "invernador", cat: "piscina", nombre: "Invernador (alguicida de invierno)", aviso: "2026-10-09", tenerAntes: "2026-10-17",
     queEs: "Producto que se echa al cerrar la piscina para que no crezcan algas ni cal durante el invierno.",
-    uso: "Una vez, al invernar.", cantidad: "Un envase de 5 L sobra para tu piscina. La dosis exacta, con las medidas.", precio: "15-25 €",
+    uso: "Una vez, al invernar.", cantidad: "Para tus 28 m³, la dosis de la etiqueta (con los habituales, 1-1,5 L).", precio: "15-25 €",
     links: [ { t: "Ver invernadores (Leroy Merlin)", u: "https://www.leroymerlin.es/search?q=invernador%20piscina" } ] },
   { id: "gasolina-nueva", cat: "herramientas", nombre: "Gasolina nueva para el cortacésped", grupo: "despues", aviso: "2027-02-24", tenerAntes: "2027-03-06",
     queEs: "Gasolina sin plomo normal. Se compra justo antes porque se degrada en 2-3 meses.", uso: "Primera siega de marzo.",
