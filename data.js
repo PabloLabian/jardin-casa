@@ -8,7 +8,7 @@ areas: [
   { id: "semana",   nombre: "Esta semana" },
   { id: "plano",    nombre: "Plano" },
   { id: "cesped",   nombre: "Césped",
-    intro: "Unos 132 m² en cuatro zonas (plano en el proyecto \"Casa\"). Mezcla de ray grass y festuca: hierba de clima frío que crece mucho en primavera y otoño, sufre con el calor de julio y en invierno se queda verde pero parada. Por eso sus dos estaciones importantes son el otoño y la primavera. Cuatro tareas la mantienen: segar, regar, abonar y rellenar calvas.",
+    intro: "Unos 132 m² en tres zonas: la L trasera, la franja lateral y la entrada (las verás en la pestaña Plano). Mezcla de ray grass y festuca: hierba de clima frío que crece mucho en primavera y otoño, sufre con el calor de julio y en invierno se queda verde pero parada. Por eso sus dos estaciones importantes son el otoño y la primavera. Cuatro tareas la mantienen: segar, regar, abonar y rellenar calvas.",
     ficha: [
       ["Superficie", "L trasera ≈ 68 m² · franja lateral ≈ 42 m² (28 del tramo estrecho y 14 del ancho) · entrada ≈ 22 m². Total ≈ 132 m². Para comprar material, calcular sobre 145 m²."],
       ["Siega", "Mar-may: cada semana a 4-5 cm. Jun-sep: cada 7-10 días a 5-6 cm. Oct-nov: cada 10-15 días a 5 cm. Dic-feb: solo si pasa de 7-8 cm."],
