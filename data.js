@@ -238,6 +238,7 @@ tareas: [
 { id: "c-resiembra", area: "cesped", tipo: "hacer", titulo: "Resembrar las calvas", prioridad: "importante", fecha: "2026-10-10", duracion: "1-1,5 h",
   que: "Rellenar las zonas peladas aprovechando la última ventana templada del año. Se hace antes que el abono y el mismo día.",
   material: ["semillas", "mantillo", "rastrillo", "manguera-jardin", "guantes"],
+  grupos: [["Preparar: segar y rastrillar las calvas", [0,1,2]], ["Sembrar, tapar y apretar", [3,4,5]], ["Primer riego", [6]], ["Seguimiento de 2-3 semanas", [7,8]]],
   pasos: [
     "Si el césped pasa de 7-8 cm, segar antes a 5 cm, con la bolsa puesta (recoge también las hojas).",
     "Marcar las calvas: si cuesta verlas, regar 5 minutos antes y se distinguen mejor.",
@@ -256,6 +257,7 @@ tareas: [
 { id: "c-abono-otono", area: "cesped", tipo: "hacer", titulo: "Abono de otoño del césped", prioridad: "mantenimiento", fecha: "2026-10-10", duracion: "20 min",
   que: "Fortalecer la raíz y preparar el césped para el frío. Se puede hacer el mismo día que la resiembra, justo después y sin pasar por las calvas.",
   material: ["abono-otono"],
+  grupos: [["Medir y repartir el abono", [0,1,2,3]], ["Regar", [4]], ["Perros y limpieza", [5]]],
   pasos: [
     "Con el césped seco (si acabas de regar las calvas, no importa: solo el resto tiene que estar seco).",
     "Cantidad: la de la etiqueta; si pone 30 g/m², para tus 132 m² son unos 4 kg. Pésalo o mídelo con un vaso: un vaso de agua lleno de abono son unos 200 g.",
@@ -280,6 +282,7 @@ tareas: [
 { id: "c-escarificar", area: "cesped", tipo: "hacer", titulo: "Escarificar, resembrar y abonar", prioridad: "importante", fecha: "2027-03-20", duracion: "2-3 h",
   que: "La puesta a punto anual del césped. La máquina que pasaba el dueño en abril es un escarificador.",
   material: ["escarificador", "abono-primavera", "semillas", "mantillo", "rastrillo"],
+  grupos: [["Segar y escarificar", [0,1,2,3]], ["Resembrar y abonar", [4,5]], ["Riego de seguimiento", [6]]],
   pasos: [
     "Esperar a que el césped ya crezca con ganas (mediados de marzo a abril).",
     "Segar a 4 cm.",
@@ -329,6 +332,7 @@ tareas: [
 { id: "f-trat1", area: "frutales", tipo: "hacer", titulo: "Tratamiento de invierno 1/2: caída de la hoja", prioridad: "urgente", fecha: "2026-11-21", duracion: "1 h",
   que: "Pulverizar los frutales cuando ya han perdido casi toda la hoja.",
   material: ["pack-sipcam", "pulverizador", "epi"],
+  grupos: [["Preparar: día, árboles y producto", [0,1,2,4]], ["Tratar con protección", [3,5]], ["Lavar el pulverizador", [6]]],
   pasos: [
     "Esperar a que hayan caído la mayoría de las hojas (si aún tienen muchas, 1-2 semanas más).",
     "Árboles: el melocotonero (prioridad), los dos albaricoqueros, ciruelo, peral y manzano. Higuera y limonero no.",
@@ -585,6 +589,7 @@ tareas: [
 { id: "h-limpiar", area: "huerto", tipo: "hacer", titulo: "Recoger lo aprovechable y limpiar el huerto de verano", prioridad: "importante", fecha: "2026-10-17", duracion: "1 h",
   que: "Tomateras y pimientos ya han terminado: se aprovecha lo que quede y se quitan. Las acelgas se quedan.",
   material: ["guantes", "bolsas"],
+  grupos: [["Cosechar lo aprovechable", [0]], ["Arrancar y limpiar", [1,2,3]], ["Preparar la tierra", [4]]],
   pasos: [
     "Recoger los tomates que tengan algo de color y los pimientos sanos. Los tomates verdes y duros maduran en casa en una caja con una manzana o un plátano en 1-2 semanas.",
     "Arrancar tomateras y pimientos con su raíz.",
@@ -649,9 +654,10 @@ tareas: [
 { id: "p-choque", area: "piscina", tipo: "hacer", titulo: "Recuperar el agua: pH y cloración de choque", prioridad: "urgente", fecha: "2026-10-10", duracion: "45 min en dos tandas",
   que: "Matar las algas antes de invernar. Primero el pH, luego el choque, nunca a la vez. Hecho a mediodía del 10: 1,5 L de reductor de pH con el agua a pH 8,0-8,2 y cloro 0.",
   material: ["minorador-ph", "cloro-choque", "kit-agua", "guantes"],
+  grupos: [["Cepillar y bajar el pH", [0,1]], ["Medir el pH (18:30-19:00)", [2]], ["Choque de cloro (o más reductor)", [3,4]], ["Seguimiento de 2-3 días", [5,6]]],
   pasos: [
-    "✓ Cepillado de paredes (el fondo, cuando llegue la manguera).",
-    "✓ 1,5 L de reductor de pH líquido diluido en un cubo y repartido por las boquillas, con la bomba en marcha.",
+    "Cepillado de paredes (el fondo, cuando llegue la manguera).",
+    "1,5 L de reductor de pH líquido diluido en un cubo y repartido por las boquillas, con la bomba en marcha.",
     "Entre las 18:30 y las 19:00, volver a medir el pH. Foto del kit a Claude.",
     "Si sale 7,6 o menos: a partir de las 22:00, choque con 550 g de cloro rápido granulado (dicloro). Disolverlo en un cubo distinto lleno de agua de la piscina (el producto sobre el agua, nunca al revés), remover con un palo y repartirlo por todo el borde.",
     "Si sale 7,8 o más: otro litro de reductor esa tarde y el choque al día siguiente por la noche.",
@@ -676,6 +682,7 @@ tareas: [
 { id: "p-lona", area: "piscina", tipo: "hacer", titulo: "Limpiar la lona y guardarla seca", prioridad: "importante", fecha: "2026-10-11", duracion: "1 h (entre dos)",
   que: "Dejar la lona limpia antes del invernaje. Ahora es el momento: con el choque de cloro tiene que estar quitada.",
   material: ["manguera-jardin"],
+  grupos: [["Quitar la lona", [0,1]], ["Lavarla", [2,3]], ["Aclarar y secar", [4]], ["Guardarla", [5]]],
   pasos: [
     "Si está puesta: quitar hojas y tierra con una escoba blanda y sacar el agua de encima antes de moverla. Con peso no se arrastra.",
     "Retirarla entre dos, doblándola por la mitad, y extenderla en el patio o la entrada (en el césped, como mucho una o dos horas: lo amarillea).",
@@ -703,6 +710,7 @@ tareas: [
 { id: "p-aclarar", area: "piscina", tipo: "revisar", titulo: "Revisar el agua tras el choque", prioridad: "importante", fecha: "2026-10-14", duracion: "30 min",
   que: "Ver si el choque ha funcionado y rematar.",
   material: ["floculante", "kit-agua", "manguera"],
+  grupos: [["Filtro", [0,1]], ["Mirar el agua y decidir", [2,3,4]], ["Aspirar el fondo", [5]]],
   pasos: [
     "Mirar el manómetro: si marca 0,9-1,0 bar (o 0,3-0,4 más que los 0,55 de referencia), contralavado. Si no, saltar el paso siguiente.",
     "Contralavado: bomba OFF, selector en LAVADO, bomba ON 2-3 min (hasta que el agua del visor salga limpia), bomba OFF, ENJUAGUE 30 s, bomba OFF, FILTRACIÓN, bomba ON.",
@@ -717,6 +725,7 @@ tareas: [
 { id: "p-invernaje", area: "piscina", tipo: "hacer", titulo: "Invernar la piscina", prioridad: "urgente", fecha: "2026-10-24", duracion: "1-2 h",
   que: "Dejar el agua protegida para todo el invierno. Solo con el agua ya transparente.",
   material: ["kit-agua", "invernador", "cloro-choque", "minorador-ph"],
+  grupos: [["Limpiar", [0]], ["Día 1: pH y cloro", [1,2]], ["Día 2: invernador", [3,4]], ["Depuradora y lona", [5,6]]],
   pasos: [
     "Limpiar fondo (limpiafondos), paredes y cestillos. Contralavado si el manómetro pasa de 0,9.",
     "Ajustar el pH a 7,2-7,6 con el reductor (unos 0,5 L por cada 0,2 puntos).",
@@ -732,6 +741,7 @@ tareas: [
 { id: "p-primavera", area: "piscina", tipo: "hacer", titulo: "Puesta a punto de primavera", prioridad: "importante", fecha: "2027-04-10", duracion: "Medio día",
   que: "Quitar la lona y dejar la piscina lista para la temporada.",
   material: ["manguera"],
+  grupos: [["Quitar y guardar la lona", [0]], ["Limpieza y filtro", [1,2,4]], ["Ajustar el agua", [3]]],
   pasos: [
     "Limpiar y secar la lona antes de guardarla.",
     "Limpiar fondo con el limpiafondos conectado a la toma de la pared (manguera llena de agua antes de conectarla).",
