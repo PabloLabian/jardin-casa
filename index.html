@@ -230,6 +230,36 @@ footer{color:var(--ink-3);font-size:13px;padding:30px 0 50px;border-top:1px soli
 .audprev button{border:0;background:transparent;font-size:18px;cursor:pointer;color:var(--ink-3)}
 .notas li .playbtn{width:auto;height:auto;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:4px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--green);flex:none;white-space:nowrap}
 .notas li .thumb{width:auto;height:auto;border-radius:8px}
+/* Plano */
+.plano-wrap{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:12px 8px;box-shadow:var(--shadow);margin-top:14px}
+.plano{display:block;width:100%;max-width:540px;margin:0 auto;height:auto;font-family:"DM Sans",system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+.pl-cesped{fill:color-mix(in srgb,var(--c-cesped) 30%,var(--card));stroke:var(--c-cesped);stroke-width:.7}
+.pl-agua{fill:color-mix(in srgb,var(--c-piscina) 42%,var(--card));stroke:var(--c-piscina);stroke-width:.7}
+.pl-huerto{fill:color-mix(in srgb,var(--c-huerto) 26%,var(--card));stroke:var(--c-huerto);stroke-width:.7}
+.pl-parterre{fill:color-mix(in srgb,var(--c-huerto) 48%,var(--card))}
+.pl-piedra{fill:var(--paper-2);stroke:var(--line);stroke-width:.6}
+.pl-casa{fill:var(--grey-soft);stroke:var(--ink-3);stroke-width:.6}
+.pl-borde{fill:none;stroke:var(--ink-3);stroke-width:.8;stroke-dasharray:4 3}
+.pl-t{font-size:10.5px;fill:var(--ink-2)} .pl-tb{font-size:13px;font-weight:600;fill:var(--ink)} .pl-tw{font-size:10px;fill:#f1efe8}
+.pl-arbol{fill:var(--c-frutales);stroke:var(--card);stroke-width:1.2} .pl-arbol.lim{fill:var(--c-limonero)}
+.pl-num{font-size:10.5px;font-weight:700;fill:#fff;text-anchor:middle;pointer-events:none} .pl-num.lim{fill:#3a3000}
+.pl-planta{fill:var(--card);stroke:var(--c-huerto);stroke-width:1} .pl-let{font-size:8.5px;font-weight:700;fill:var(--ink-2);text-anchor:middle;pointer-events:none}
+.pl-ghost{fill:transparent;stroke:none}
+.pl-hit{cursor:pointer;outline:none}
+.pl-hit:hover :is(.pl-cesped,.pl-agua,.pl-huerto,.pl-arbol,.pl-planta){filter:brightness(1.08)}
+.pl-hit.sel :is(.pl-cesped,.pl-agua,.pl-huerto,.pl-arbol,.pl-planta),.pl-hit:focus-visible :is(.pl-cesped,.pl-agua,.pl-huerto,.pl-arbol,.pl-planta){stroke:var(--ink);stroke-width:2.2}
+.plgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.plbtn{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:10px 12px;cursor:pointer;font-size:14.5px;line-height:1.3}
+.plbtn:hover{border-color:var(--sage)}
+.plbtn small{display:block;color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.plbtn .mk{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:700 12px "DM Sans",sans-serif;flex:none;color:#fff}
+.plbtn .mk.pl{background:var(--card);border:1.5px solid var(--c-huerto);color:var(--ink-2)}
+.mats button .badge{white-space:nowrap}
+.pldatos{display:grid}
+.pldatos div{display:grid;grid-template-columns:minmax(96px,32%) 1fr;gap:10px;font-size:14.5px;border-bottom:1px dashed var(--line);padding:6px 0}
+.pldatos div:last-child{border-bottom:0}
+.pldatos b{font-weight:600;color:var(--ink-2)}
+.plul{margin:0;padding-left:18px}.plul li{margin:0 0 6px}
 </style>
 </head>
 <body>
@@ -556,6 +586,72 @@ function viewAnio(){
   }).join("")}</div>`;
 }
 
+/* ---------- Plano ---------- */
+const PL = Object.fromEntries((D.plano || []).map(e => [e.id, e]));
+let plSel = null;
+function planoSVG(){
+  const hit = (id, inner) => PL[id] ? `<g class="pl-hit${plSel === id ? " sel" : ""}" data-el="${id}" tabindex="0" role="button" aria-label="${esc(PL[id].nombre)}">${inner}</g>` : inner;
+  const trees = [[1,99,74],[2,191,71],[3,145,40],[4,174,166],[5,305,392],[6,312,436],[7,168,511],[8,214,497]];
+  const plants = [["A",50,80],["B",50,118],["A",105,40],["C",178,40],["D",203,40],["E",290,230],["E",314,230],["F",329,250],["G",329,272],["H",329,320],["I",329,372],["L",165,533],["K",195,533],["C",225,533],["J",329,528],["M",262,522]];
+  return `<svg class="plano" viewBox="30 6 320 562" role="group" aria-label="Plano del jardín">
+  <text class="pl-t" x="190" y="20" text-anchor="middle">Fondo (muro verde)</text>
+  <rect class="pl-borde" x="45" y="30" width="289" height="507"/>
+  ${hit("piscina", `<rect class="pl-piedra" x="216" y="30" width="118" height="197"/>
+    <rect class="pl-agua" x="242" y="50" width="60" height="123"/><circle class="pl-agua" cx="272" cy="173" r="17"/><rect x="255.4" y="154" width="33.2" height="19.6" style="fill:color-mix(in srgb,var(--c-piscina) 42%,var(--card))"/>
+    <text class="pl-tb" x="272" y="100" text-anchor="middle">Piscina</text><text class="pl-t" x="272" y="116" text-anchor="middle">6,5 × 3,5</text><text class="pl-t" x="272" y="130" text-anchor="middle">28 m³</text>
+    <circle cx="324" cy="214" r="3" style="fill:var(--ink-3)"/><text class="pl-t" x="318" y="218" text-anchor="end">ducha</text>`)}
+  <rect class="pl-piedra" x="45" y="141" width="91" height="86"/><text class="pl-t" x="90" y="188" text-anchor="middle">Patio</text>
+  <rect x="45" y="30" width="34" height="20" style="fill:var(--ink-3)"/><text class="pl-tw" x="62" y="44" text-anchor="middle" style="font-size:8.5px">BBQ</text>
+  ${hit("cesped-l", `<polygon class="pl-cesped" points="55,50 216,50 216,222 136,222 136,141 55,141"/><text class="pl-tb" x="120" y="112" text-anchor="middle">68 m²</text>`)}
+  <rect class="pl-parterre" x="45" y="50" width="10" height="91"/><rect class="pl-parterre" x="79" y="30" width="137" height="20"/>
+  <rect class="pl-casa" x="45" y="227" width="200" height="213"/><text class="pl-tb" x="145" y="338" text-anchor="middle" style="fill:var(--ink-2)">Casa</text>
+  <rect class="pl-piedra" x="245" y="227" width="34" height="226"/><rect class="pl-piedra" x="150" y="440" width="116" height="20"/>
+  ${hit("cesped-lateral", `<polygon class="pl-cesped" points="279,234 324,234 324,452 260,452 260,392 279,392"/><text class="pl-tb" x="301" y="336" text-anchor="middle">42 m²</text>`)}
+  <rect class="pl-parterre" x="279" y="227" width="45" height="7"/><rect class="pl-parterre" x="324" y="227" width="10" height="226"/>
+  <rect class="pl-piedra" x="45" y="440" width="105" height="97"/><rect x="72" y="488" width="50" height="24" rx="4" style="fill:var(--ink-2)"/><text class="pl-tw" x="97" y="504" text-anchor="middle" style="fill:var(--card)">Coche</text>
+  ${hit("cesped-entrada", `<rect class="pl-cesped" x="150" y="460" width="91" height="69"/><text class="pl-tb" x="190" y="478" text-anchor="middle">22 m²</text>`)}
+  <rect class="pl-parterre" x="150" y="529" width="91" height="8"/>
+  ${hit("huerto", `<rect class="pl-huerto" x="241" y="460" width="83" height="77"/><text class="pl-t" x="282" y="484" text-anchor="middle" style="font-weight:600">Huerto</text><text class="pl-tb" x="282" y="501" text-anchor="middle">24 m²</text>`)}
+  <rect class="pl-parterre" x="324" y="460" width="10" height="77"/>
+  ${hit("arbusto", `<circle class="pl-ghost" cx="303" cy="262" r="10"/><circle cx="303" cy="262" r="5" style="fill:var(--c-cesped)" class="pl-planta"/>`)}
+  ${trees.map(([n,x,y]) => { const lim = n === 3 ? " lim" : ""; return hit("a"+n, `<circle class="pl-ghost" cx="${x}" cy="${y}" r="13"/><circle class="pl-arbol${lim}" cx="${x}" cy="${y}" r="8.5"/><text class="pl-num${lim}" x="${x}" y="${y+3.8}">${n}</text>`); }).join("")}
+  ${plants.map(([l,x,y]) => hit("p"+l, `<circle class="pl-ghost" cx="${x}" cy="${y}" r="10"/><circle class="pl-planta" cx="${x}" cy="${y}" r="6"/><text class="pl-let" x="${x}" y="${y+3}">${l}</text>`)).join("")}
+  <text class="pl-t" x="190" y="556" text-anchor="middle">Entrada (calle)</text>
+  </svg>`;
+}
+function viewPlano(){
+  const g = t => (D.plano || []).filter(e => e.tipo === t);
+  const mk = e => e.tipo === "arbol" ? `<span class="mk" style="background:${e.area === "limonero" ? "var(--c-limonero);color:#3a3000" : "var(--c-frutales)"}">${e.num}</span>`
+    : e.tipo === "planta" ? `<span class="mk pl">${e.letra || "·"}</span>` : `<span class="mk" style="background:${COLORS[e.area]}"></span>`;
+  const btns = list => `<div class="plgrid">${list.map(e => `<button class="plbtn" data-el="${esc(e.id)}">${mk(e)}<span>${esc(e.nombre)}<small>${esc(e.donde)}</small></span></button>`).join("")}</div>`;
+  return `
+  <section class="intro-card"><h2>Plano del jardín</h2>
+    <p class="lead">Toca cualquier zona, árbol o planta para ver sus datos, cómo cuidarla y qué tareas tiene pendientes. Desde cada ficha puedes mandar una duda al buzón. Medidas tomadas con el móvil (margen del 3-5 %).</p></section>
+  <div class="plano-wrap">${planoSVG()}</div>
+  <h3>Zonas</h3>${btns(g("zona"))}
+  <h3>Árboles</h3>${btns(g("arbol"))}
+  <h3>Plantas</h3>${btns(g("planta"))}`;
+}
+function elDrawer(e){
+  const kind = { zona:"Zona", arbol:"Árbol", planta:"Planta" }[e.tipo];
+  const tasks = (e.tareas || []).map(id => {
+    const ins = INST.filter(i => i.t.id === id);
+    return ins.find(i => !isDone(i.key) && i.date >= WEEK0) || ins.find(i => !isDone(i.key));
+  }).filter(Boolean).sort((a,b) => a.date - b.date);
+  return `<div class="dh"><div style="min-width:0">
+      <div class="meta"><span class="badge garage">${kind}${e.num ? " " + e.num : e.letra ? " " + e.letra : ""}</span>${areaHTML(e.area)}</div>
+      <h2 id="dtitle">${esc(e.nombre)}</h2>
+      <div class="meta"><span>${esc(e.donde)}</span></div>
+    </div><button class="close" data-close aria-label="Cerrar">×</button></div>
+  <div class="db">
+    ${e.datos && e.datos.length ? `<h5>Datos</h5><div class="pldatos">${e.datos.map(([k,v]) => `<div><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join("")}</div>` : ""}
+    ${e.cuidados && e.cuidados.length ? `<h5>Cuidados</h5><ul class="plul">${e.cuidados.map(c => `<li>${esc(c)}</li>`).join("")}</ul>` : ""}
+    ${e.ojo ? `<h5>Ojo</h5><p class="note warn">${esc(e.ojo)}</p>` : ""}
+    ${tasks.length ? `<h5>Tareas pendientes</h5><div class="mats">${tasks.map(i => `<button data-open="${esc(i.key)}"><span>${tipoHTML(i.t.tipo || "hacer")} ${esc(i.t.titulo)}</span><span class="badge ${i.date < WEEK0 ? "late" : "garage"}">${fmtShort(i.date)}</span></button>`).join("")}</div>` : ""}
+    <h5>¿Dudas?</h5><p>Te llevo al buzón con "${esc(e.nombre)}" ya escrito: añade la duda, una foto o un audio y lo reviso.</p>
+    <button class="bigcheck" data-dudar="${esc(e.id)}">Preguntar sobre esto</button>
+  </div>`;
+}
 /* ---------- Render ---------- */
 let current = (location.hash || "#semana").slice(1);
 if (!AREA[current]) current = "semana";
@@ -567,7 +663,7 @@ function render(){
   const typed = document.getElementById("notaTxt")?.value || "";
   renderTabs();
   const m = document.getElementById("main");
-  m.innerHTML = current === "semana" ? viewSemana() : current === "material" ? viewMaterial() : current === "anio" ? viewAnio() : viewArea(current);
+  m.innerHTML = current === "semana" ? viewSemana() : current === "plano" ? viewPlano() : current === "material" ? viewMaterial() : current === "anio" ? viewAnio() : viewArea(current);
   const nt = document.getElementById("notaTxt"); if (nt && typed) nt.value = typed;
   loadThumbs();
 }
@@ -629,6 +725,7 @@ function refreshDrawer(){
   const top = dc.querySelector(".db")?.scrollTop || 0;
   if (openRef.type === "task" && instByKey[openRef.key]) dc.innerHTML = taskDrawer(instByKey[openRef.key]);
   if (openRef.type === "mat" && MAT[openRef.id]) dc.innerHTML = matDrawer(MAT[openRef.id]);
+  if (openRef.type === "el" && PL[openRef.id]) dc.innerHTML = elDrawer(PL[openRef.id]);
   if (openRef.type === "foto") {
     const n = state.notas.find(x => x.id === openRef.nota);
     dc.innerHTML = `<div class="dh"><div style="min-width:0"><div class="meta"><span>Buzón${n ? " · " + fmtShort(parse(n.d)) : ""}</span></div><h2 id="dtitle">${esc(n ? n.t : "Foto")}</h2></div><button class="close" data-close aria-label="Cerrar">×</button></div>
@@ -663,6 +760,16 @@ document.addEventListener("click", e => {
     }).catch(() => { pa.textContent = "Error"; });
     return;
   }
+  const du = e.target.closest("[data-dudar]");
+  if (du) {
+    const pe = PL[du.dataset.dudar]; closeDrawer();
+    current = "semana"; history.replaceState(null, "", "#semana"); render();
+    const i = document.getElementById("notaTxt");
+    if (i) { i.value = (pe ? pe.nombre : "") + ": "; i.scrollIntoView({ block:"center" }); setTimeout(() => { i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 250); }
+    return;
+  }
+  const pe = e.target.closest("[data-el]");
+  if (pe) { plSel = pe.dataset.el; if (current === "plano") render(); openDrawer({ type:"el", id: plSel }); return; }
   const qf = e.target.closest("[data-quitarfoto]");
   if (qf) { pendingFoto = null; fotoErr = ""; render(); return; }
   const fo = e.target.closest("[data-foto]");
@@ -685,7 +792,7 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && openRef) closeDrawer();
-  if ((e.key === "Enter" || e.key === " ") && e.target.matches(".task[role=button]")) { e.preventDefault(); e.target.click(); }
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches(".task[role=button], .pl-hit")) { e.preventDefault(); e.target.click(); }
 });
 document.addEventListener("change", async e => {
   if (e.target.id !== "notaFoto" || !e.target.files || !e.target.files[0]) return;
