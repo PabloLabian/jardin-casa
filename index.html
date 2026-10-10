@@ -260,6 +260,19 @@ footer{color:var(--ink-3);font-size:13px;padding:30px 0 50px;border-top:1px soli
 .pldatos div:last-child{border-bottom:0}
 .pldatos b{font-weight:600;color:var(--ink-2)}
 .plul{margin:0;padding-left:18px}.plul li{margin:0 0 6px}
+.steps{display:grid;gap:8px}
+.stg{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:10px 12px;cursor:pointer}
+.stg.on{background:var(--sage-soft);border-color:transparent}
+.stg.on .stx{opacity:.55}
+.stg b{display:block;font-weight:600;margin:3px 0 2px}
+.stchk{width:28px;height:28px;border-radius:50%;border:2px solid var(--sage);background:var(--card);display:grid;place-items:center;cursor:pointer;padding:0}
+.stchk svg{opacity:0}.stchk.on{background:var(--sage);border-color:var(--sage)}.stchk.on svg{opacity:1}
+.db ol.stl{margin:2px 0 0}
+.db ol.stl li{padding:4px 0 4px 28px;border-bottom:0;font-size:15px}
+.db ol.stl li::before{content:attr(data-n);background:var(--card);width:20px;height:20px;font-size:11.5px;top:5px}
+.stx.solo{padding-top:3px;font-size:15px}
+.stprog{font:600 12px "DM Sans",sans-serif;letter-spacing:0;text-transform:none;color:var(--ink-3);margin-left:6px}
+.stdone{background:var(--sage-soft);color:var(--green);border-radius:12px;padding:10px 12px;font-size:14.5px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -386,7 +399,7 @@ function taskRow(inst, opts = {}){
   return `<div class="task ${done ? "done" : ""}" data-t="${tp}" role="button" tabindex="0" data-open="${esc(inst.key)}">
     <button class="check ${done ? "on" : ""}" data-check="${esc(inst.key)}" aria-label="${done ? "Desmarcar" : "Marcar como hecha"}: ${esc(inst.t.titulo)}">${checkSVG}</button>
     <div><div class="t">${dotHTML(inst.t.area)}${esc(inst.t.titulo)}</div>
-      <div class="m">${tipoHTML(tp)}${priHTML(inst.t.prioridad)}<span>${when}</span>${opts.area !== false ? `<span>${esc(AREA[inst.t.area].nombre)}</span>` : ""}${inst.t.duracion ? `<span>${esc(inst.t.duracion)}</span>` : ""}${late ? '<span class="badge late">Atrasada</span>' : ""}${inst.t.pendiente && !done ? '<span class="badge">Faltan datos</span>' : ""}</div>
+      <div class="m">${tipoHTML(tp)}${priHTML(inst.t.prioridad)}<span>${when}</span>${opts.area !== false ? `<span>${esc(AREA[inst.t.area].nombre)}</span>` : ""}${inst.t.duracion ? `<span>${esc(inst.t.duracion)}</span>` : ""}${late ? '<span class="badge late">Atrasada</span>' : ""}${(() => { const pr = stepProgress(inst); return !done && pr.n ? `<span class="badge garage">${pr.n}/${pr.total} ${inst.t.grupos ? "bloques" : "pasos"}</span>` : ""; })()}${inst.t.pendiente && !done ? '<span class="badge">Faltan datos</span>' : ""}</div>
     </div>
     <span class="arrow" aria-hidden="true">›</span>
   </div>`;
@@ -402,6 +415,26 @@ function matRow(m){
 }
 const listHTML = (items, fn, emptyText) => items.length ? `<div class="list">${items.map(fn).join("")}</div>` : `<p class="empty">${emptyText}</p>`;
 
+/* ---------- Pasos marcables (se guardan en "done" como <clave>#g0 o <clave>#s0) ---------- */
+const stepUnits = t => t.grupos ? t.grupos.map((g, i) => ({ id:"g"+i, title:g[0], idx:g[1] })) : (t.pasos || []).map((p, i) => ({ id:"s"+i, idx:[i] }));
+const stepKey = (inst, u) => `${inst.key}#${u.id}`;
+function stepProgress(inst){ const u = stepUnits(inst.t); return { n: u.filter(x => isDone(stepKey(inst, x))).length, total: u.length }; }
+function stepsHTML(inst){
+  const t = inst.t, units = stepUnits(t), pr = stepProgress(inst), taskDone = isDone(inst.key);
+  const covered = new Set(units.flatMap(u => u.idx));
+  const loose = t.pasos.map((p, i) => i).filter(i => !covered.has(i));
+  const unit = u => {
+    const k = stepKey(inst, u), on = isDone(k);
+    const body = t.grupos
+      ? `<div class="stx"><b>${esc(u.title)}</b><ol class="stl">${u.idx.map(i => `<li data-n="${i+1}">${esc(t.pasos[i])}</li>`).join("")}</ol></div>`
+      : `<div class="stx solo">${esc(t.pasos[u.idx[0]])}</div>`;
+    return `<div class="stg ${on ? "on" : ""}" data-step="${esc(k)}"><button class="stchk ${on ? "on" : ""}" data-step="${esc(k)}" aria-label="${on ? "Desmarcar paso" : "Marcar paso como hecho"}">${checkSVG}</button>${body}</div>`;
+  };
+  return `<h5>Cómo hacerlo <span class="stprog">${pr.n} de ${pr.total} ${t.grupos ? "bloques" : "pasos"} hechos</span></h5>
+    <div class="steps">${units.map(unit).join("")}</div>
+    ${loose.length ? `<ol>${loose.map(i => `<li>${esc(t.pasos[i])}</li>`).join("")}</ol>` : ""}
+    ${pr.total && pr.n === pr.total && !taskDone ? `<p class="stdone">Todos los pasos hechos. Márcala como hecha abajo.</p>` : ""}`;
+}
 /* ---------- Vistas ---------- */
 function viewSemana(){
   const week = INST.filter(i => i.date >= WEEK0 && i.date <= WEEK1);
@@ -685,7 +718,7 @@ function taskDrawer(inst){
     ${t.ventana ? `<h5>Cuándo se recoge</h5><p class="ventana">${esc(t.ventana)}. La fecha es el aviso para empezar a mirar: manda el fruto, no el calendario.</p>` : ""}
     <h5>Qué hacer</h5><p>${esc(t.que)}</p>
     ${mats.length ? `<h5>Necesitas</h5><div class="mats">${mats.map(m => `<div class="matline"><button data-mat="${esc(m.id)}"><span>${esc(m.nombre)}</span>${m.garaje ? '<span class="badge garage">En casa</span>' : isBought(m.id) ? '<span class="badge garage">Comprado</span>' : '<span class="badge">Comprar</span>'}</button>${!m.garaje && m.links && m.links[0] ? `<a class="golink" href="${esc(m.links[0].u)}" target="_blank" rel="noopener" data-ext>Ver ↗</a>` : ""}</div>`).join("")}</div>` : ""}
-    <h5>Cómo hacerlo</h5><ol>${t.pasos.map(p => `<li>${esc(p)}</li>`).join("")}</ol>
+    ${stepsHTML(inst)}
     <h5>Por qué</h5><p>${esc(t.porque)}</p>
     ${t.sinoSe && t.sinoSe !== "-" ? `<h5>Si no se hace</h5><p>${esc(t.sinoSe)}</p>` : ""}
     ${t.importante ? `<h5>Importante</h5><p class="note warn">${esc(t.importante)}</p>` : ""}
@@ -781,6 +814,8 @@ document.addEventListener("click", e => {
     if (n && n.a) for (let i = 0; i < (n.an || 1); i++) fetch(FOTO_BASE + n.a + "-" + i, { method:"DELETE" }).catch(() => {});
     change({ t:"nota-del", id: dn.dataset.delnota }); return;
   }
+  const st = e.target.closest("[data-step]");
+  if (st) { e.stopPropagation(); const k = st.dataset.step; change({ t:"done", k, v: isDone(k) ? null : iso(new Date()) }); return; }
   const el = e.target.closest("[data-check],[data-buy],[data-open],[data-mat],[data-tab],[data-close]");
   if (!el) { if (e.target === scrim) closeDrawer(); return; }
   if (el.dataset.check) { e.stopPropagation(); const k = el.dataset.check; change({ t:"done", k, v: isDone(k) ? null : iso(new Date()) }); return; }
