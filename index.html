@@ -275,7 +275,7 @@ footer{color:var(--ink-3);font-size:13px;padding:30px 0 50px;border-top:1px soli
 .stdone{background:var(--sage-soft);color:var(--green);border-radius:12px;padding:10px 12px;font-size:14.5px;margin-top:10px}
 /* Barra principal: 4 secciones fijas y desplegable de zonas */
 nav.topnav{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--paper) 90%, transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:18px}
-.mainnav{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;max-width:640px;margin:0 auto;padding:8px 10px}
+.mainnav{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-width:640px;margin:0 auto;padding:8px 10px}
 .mn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid transparent;background:transparent;border-radius:14px;padding:6px 2px;cursor:pointer;color:var(--ink-2);font-size:12.5px;font-weight:600;line-height:1.15;min-width:0}
 .mn .em{font-size:21px;line-height:1}
 .mn .lb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
@@ -308,6 +308,33 @@ nav.topnav{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--
 .zcard .zn{font-size:14px;color:var(--ink);background:var(--paper-2);border-radius:10px;padding:7px 10px}
 .zcard .zn small{display:block;color:var(--ink-3);font-size:12px}
 .tab.todas{font-weight:600}
+.key.filtros{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.key.filtros button.tipo{justify-content:center;padding:6px 4px;font-size:11px;white-space:nowrap;min-width:0}
+.archivo{margin-top:10px;font-size:14px;color:var(--ink-3)}
+.archivo summary{cursor:pointer;padding:4px 2px;list-style:revert}
+.notas.arch li{background:var(--paper-2);opacity:.85;font-size:13.5px}
+.notas li .resp{display:block;font-style:normal;color:var(--green);margin-top:2px;font-size:13px}
+.guias{display:grid;gap:8px}
+.guia{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.guia summary{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;list-style:none}
+.guia summary::-webkit-details-marker{display:none}
+.guia .gi{font-size:22px;line-height:1;flex:none}
+.guia .gt{flex:1;min-width:0}.guia .gt b{display:block;font-weight:600}.guia .gt small{display:block;color:var(--ink-3);font-size:13px}
+.guia .gch{color:var(--ink-3);font-size:20px;transition:transform .2s}
+.guia[open] .gch{transform:rotate(90deg)}
+.guia[open]{border-color:var(--sage)}
+.guia .gb{padding:0 16px 14px;border-top:1px dashed var(--line)}
+.guia .gb ol{margin:10px 0 6px;padding-left:0;counter-reset:s;list-style:none}
+.guia .gb ol li{counter-increment:s;position:relative;padding:6px 0 6px 34px;border-bottom:1px dashed var(--line);font-size:15px}
+.guia .gb ol li:last-child{border-bottom:0}
+.guia .gb ol li::before{content:counter(s);position:absolute;left:0;top:6px;width:24px;height:24px;border-radius:50%;background:var(--sage-soft);color:var(--green);font:600 13px "DM Sans",sans-serif;display:grid;place-items:center}
+.guia .gb .pldatos{margin-top:8px}
+.guia .gb .note{margin-top:10px}
+.aviso{display:flex;gap:10px;align-items:flex-start;margin:12px 0 0;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c-piscina);border-radius:12px;padding:10px 12px;font-size:14.5px;color:var(--ink-2)}
+.mn .em{font-size:20px}
+.mn{flex-direction:row;gap:8px;padding:10px 6px;font-size:14.5px}
+.mn .nb{position:absolute;top:-6px;right:-4px;left:auto}
+.mn{overflow:visible}
 </style>
 </head>
 <body>
@@ -407,6 +434,7 @@ function applyOp(s, op){
   if (op.t === "done" || op.t === "bought") { if (op.v) n[op.t][op.k] = op.v; else delete n[op.t][op.k]; }
   if (op.t === "nota-add" && !n.notas.some(x => x.id === op.n.id)) n.notas.push(op.n);
   if (op.t === "nota-del") n.notas = n.notas.filter(x => x.id !== op.id);
+  if (op.t === "nota-arch") n.notas = n.notas.map(x => x.id !== op.id ? x : (op.v ? { ...x, r: op.v } : (({ r, ...rest }) => rest)(x)));
   return n;
 }
 const cacheLocal = () => { try { localStorage.setItem("jardin-noves", JSON.stringify(state)); } catch(e){} };
@@ -495,7 +523,8 @@ function viewSemana(){
     <div><span class="season">${season(TODAY)}</span>
       <h2>Semana del ${fmtShort(WEEK0)} al ${fmtShort(WEEK1)}</h2><p>${msg}</p></div>
   </section>
-  <div class="key ${tipoF ? "filtering" : ""}" aria-label="Filtrar por tipo"><span class="kh">${tipoF ? "Viendo solo:" : "Filtrar:"}</span>${["hacer","revisar","cosecha","comprar"].map(t => `<button class="tipo" data-t="${t}" data-tipof="${t}" aria-pressed="${tipoF === t}">${ICON[t]}${TIPO[t]}</button>`).join("")}${tipoF ? '<button class="kx" data-tipof="">Quitar filtro ×</button>' : ""}</div>
+  <div class="key filtros ${tipoF ? "filtering" : ""}" aria-label="Filtrar por tipo">${["hacer","revisar","cosecha","comprar"].map(t => `<button class="tipo" data-t="${t}" data-tipof="${t}" aria-pressed="${tipoF === t}">${ICON[t]}${TIPO[t]}</button>`).join("")}</div>
+  ${(D.avisos || []).filter(a => parse(a.desde) <= TODAY && parse(a.hasta) >= TODAY).map(a => `<p class="aviso"><span aria-hidden="true">${a.icono}</span>${esc(a.texto)}</p>`).join("")}
   ${buzonHTML()}
   ${showTasks && fT(late).length ? `<h3>Atrasado <small>${fT(late).length}</small></h3>${listHTML(fT(late), i => taskRow(i))}` : ""}
   ${showTasks ? `<h3>Toca esta semana <small>${fT(week).length}</small></h3>
@@ -584,7 +613,11 @@ function buzonHTML(){
     ${pendingFoto ? `<div class="fotoprev"><img src="${pendingFoto.data}" alt="Foto preparada"><span>Foto lista. Escribe qué quieres que mire y pulsa Apuntar.</span><button type="button" data-quitarfoto aria-label="Quitar foto">×</button></div>` : ""}
     ${pendingAudio ? `<div class="audprev"><audio controls src="${pendingAudio.data}"></audio><span>Audio de ${fmtDur(pendingAudio.dur)} listo. Pulsa Apuntar.</span><button type="button" data-quitaraudio aria-label="Quitar audio">×</button></div>` : ""}
     ${fotoErr ? `<p class="fotoerr">${esc(fotoErr)}</p>` : ""}
-    ${notas.length ? `<ul class="notas">${notas.map(n => `<li>${n.f ? `<button class="thumb" data-foto="${esc(n.f)}" data-fnota="${esc(n.id)}" aria-label="Ver foto"><img data-fimg="${esc(n.f)}" src="${FOTOS[n.f] || "data:image/gif;base64,R0lGODlhAQABAAAAACw="}" alt=""></button>` : ""}${n.a ? `<button class="playbtn" data-audio="${esc(n.a)}" data-an="${n.an || 1}">${playing && playing.id === n.a ? "■ Parar" : "▶ Audio"}</button>` : ""}<span>${esc(n.t)}</span><small>${fmtShort(parse(n.d))}</small><button data-delnota="${esc(n.id)}" aria-label="Borrar nota">×</button></li>`).join("")}</ul>` : ""}
+    ${(() => {
+      const row = (n, arch) => `<li>${n.f ? `<button class="thumb" data-foto="${esc(n.f)}" data-fnota="${esc(n.id)}" aria-label="Ver foto"><img data-fimg="${esc(n.f)}" src="${FOTOS[n.f] || "data:image/gif;base64,R0lGODlhAQABAAAAACw="}" alt=""></button>` : ""}${n.a ? `<button class="playbtn" data-audio="${esc(n.a)}" data-an="${n.an || 1}">${playing && playing.id === n.a ? "■ Parar" : "▶ Audio"}</button>` : ""}<span>${esc(n.t)}${arch && n.c ? `<em class="resp">Claude: ${esc(n.c)}</em>` : ""}</span><small>${fmtShort(parse(n.d))}</small>${arch ? `<button data-archnota="${esc(n.id)}" data-v="" aria-label="Volver a pendientes" title="Volver a pendientes">↺</button>` : `<button data-archnota="${esc(n.id)}" data-v="1" aria-label="Archivar nota" title="Archivar">✓</button>`}<button data-delnota="${esc(n.id)}" aria-label="Borrar nota">×</button></li>`;
+      const pend = notas.filter(n => !n.r), arch = notas.filter(n => n.r);
+      return `${pend.length ? `<ul class="notas">${pend.map(n => row(n, false)).join("")}</ul>` : ""}${arch.length ? `<details class="archivo"><summary>Revisadas por Claude <small>${arch.length}</small></summary><ul class="notas arch">${arch.map(n => row(n, true)).join("")}</ul></details>` : ""}`;
+    })()}
   </section>`;
 }
 function viewArea(id){
@@ -725,19 +758,32 @@ function elDrawer(e){
 /* ---------- Navegación ---------- */
 const ZONES = ["cesped","frutales","limonero","huerto","piscina","riego"];
 const nic = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
-const MAIN = [
-  { id:"semana", n:"Semana", e:"📅" },
-  { id:"plano", n:"Plano", e:"🏡" },
-  { id:"zonas", n:"Zonas", e:"🌿", drop:true },
-  { id:"material", n:"Material", e:"🛠️" },
-  { id:"anio", n:"Año", e:"🗓️" }
+const INFO = [
+  { id:"plano", n:"Plano del jardín", e:"🏡" },
+  { id:"guias", n:"Guías rápidas", e:"📋" },
+  { id:"material", n:"Material y compras", e:"🛠️" },
+  { id:"anio", n:"El año de un vistazo", e:"🗓️" }
 ];
-let zmenuOpen = false, tipoF = null;
-const mainOf = c => ZONES.includes(c) || c === "zonas" ? "zonas" : c;
+let zmenuOpen = null, tipoF = null;
+const mainOf = c => ZONES.includes(c) || c === "zonas" ? "zonas" : INFO.some(x => x.id === c) ? "info" : "semana";
 function navBadge(id){
   if (id === "semana") { const n = INST.filter(i => i.date <= WEEK1 && i.date >= addDays(WEEK0, -90) && !isDone(i.key) && !(i.rec && i.date < WEEK0)).length; return n; }
   if (id === "material") return D.material.filter(m => m.aviso && !isBought(m.id) && parse(m.tenerAntes) <= addDays(TODAY, 14)).length;
   return 0;
+}
+/* ---------- Guías ---------- */
+function viewGuias(){
+  const G = D.guias || [];
+  const grupos = [...new Set(G.map(g => g.grupo))];
+  const card = g => `<details class="guia" id="guia-${esc(g.id)}"><summary><span class="gi" aria-hidden="true">${g.icono || "•"}</span><span class="gt"><b>${esc(g.titulo)}</b><small>${esc(g.resumen || "")}</small></span><span class="gch" aria-hidden="true">›</span></summary>
+    <div class="gb">
+      ${g.pasos ? `<ol>${g.pasos.map(p => `<li>${esc(p)}</li>`).join("")}</ol>` : ""}
+      ${g.datos ? `<div class="pldatos">${g.datos.map(([k,v]) => `<div><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join("")}</div>` : ""}
+      ${g.ojo ? `<p class="note warn">${esc(g.ojo)}</p>` : ""}
+    </div></details>`;
+  return `<section class="intro-card"><h2>Guías rápidas</h2>
+    <p class="lead">Lo que se hace una y otra vez, en chuleta: cómo, cuánto y en qué orden. Toca una para abrirla. Iré añadiendo lo que me preguntes a menudo.</p></section>
+  ${grupos.map(gr => `<h3>${esc(gr)}</h3><div class="guias">${G.filter(g => g.grupo === gr).map(card).join("")}</div>`).join("")}`;
 }
 /* ---------- Render ---------- */
 let current = (location.hash || "#semana").slice(1);
@@ -745,18 +791,20 @@ if (!AREA[current] && current !== "zonas") current = "semana";
 function renderTabs(){
   const mc = mainOf(current);
   const zonePend = id => INST.filter(i => i.t.area === id && !i.rec && !isDone(i.key)).length;
-  document.getElementById("mainnav").innerHTML = MAIN.map(m => {
-    const b = navBadge(m.id);
-    if (m.drop) {
-      const zn = ZONES.includes(current) ? AREA[current].nombre.split(" ")[0] : "Zonas";
-      return `<button class="mn zbtn" data-zmenu aria-haspopup="true" aria-expanded="${zmenuOpen}" ${mc === "zonas" ? 'aria-current="page"' : ""}><span class="em" aria-hidden="true">${m.e}</span><span class="lb">${esc(zn)} ▾</span></button>`;
-    }
-    return `<button class="mn" data-tab="${m.id}" ${m.id === mc ? 'aria-current="page"' : ""}><span class="em" aria-hidden="true">${m.e}</span><span class="lb">${m.n}</span>${b ? `<span class="nb" aria-label="${b} pendientes">${b}</span>` : ""}</button>`;
-  }).join("");
+  const bSem = navBadge("semana"), bMat = navBadge("material");
+  const infoCur = INFO.find(x => x.id === current);
+  const btn = (id, e, label, cur, badge, drop) => `<button class="mn ${drop ? "zbtn" : ""}" ${drop ? `data-zmenu="${id}" aria-haspopup="true" aria-expanded="${zmenuOpen === id}"` : `data-tab="${id}"`} ${cur ? 'aria-current="page"' : ""}><span class="em" aria-hidden="true">${e}</span><span class="lb">${esc(label)}${drop ? " ▾" : ""}</span>${badge ? `<span class="nb">${badge}</span>` : ""}</button>`;
+  document.getElementById("mainnav").innerHTML =
+    btn("semana", "📅", "Semana", mc === "semana", bSem, false) +
+    btn("info", infoCur ? infoCur.e : "📚", infoCur ? infoCur.n.split(" ")[0] : "Info", mc === "info", bMat, true) +
+    btn("zonas", "🌿", ZONES.includes(current) ? AREA[current].nombre.split(" ")[0] : "Zonas", mc === "zonas", 0, true);
   const zm = document.getElementById("zmenu");
   zm.hidden = !zmenuOpen;
-  zm.innerHTML = `<button data-tab="zonas" ${current === "zonas" ? 'aria-current="page"' : ""}><span aria-hidden="true">🌿</span>Todas las zonas</button><hr>` +
-    ZONES.map(id => { const n = zonePend(id); return `<button data-tab="${id}" ${id === current ? 'aria-current="page"' : ""}><i style="background:${COLORS[id]}"></i>${esc(AREA[id].nombre)}<small>${n ? n + " pendientes" : ""}</small></button>`; }).join("");
+  zm.className = "zmenu " + (zmenuOpen === "info" ? "left" : "right");
+  zm.innerHTML = zmenuOpen === "info"
+    ? INFO.map(x => `<button data-tab="${x.id}" ${x.id === current ? 'aria-current="page"' : ""}><span aria-hidden="true">${x.e}</span>${esc(x.n)}<small>${x.id === "material" && bMat ? bMat + " por comprar" : ""}</small></button>`).join("")
+    : `<button data-tab="zonas" ${current === "zonas" ? 'aria-current="page"' : ""}><span aria-hidden="true">🌿</span>Todas las zonas</button><hr>` +
+      ZONES.map(id => { const n = zonePend(id); return `<button data-tab="${id}" ${id === current ? 'aria-current="page"' : ""}><i style="background:${COLORS[id]}"></i>${esc(AREA[id].nombre)}<small>${n ? n + " pendientes" : ""}</small></button>`; }).join("");
 }
 function viewZonas(){
   return `<section class="intro-card"><h2>Zonas del jardín</h2>
@@ -780,7 +828,7 @@ function render(){
   const typed = document.getElementById("notaTxt")?.value || "";
   renderTabs();
   const m = document.getElementById("main");
-  m.innerHTML = current === "semana" ? viewSemana() : current === "plano" ? viewPlano() : current === "material" ? viewMaterial() : current === "anio" ? viewAnio() : current === "zonas" ? viewZonas() : viewArea(current);
+  m.innerHTML = current === "semana" ? viewSemana() : current === "plano" ? viewPlano() : current === "guias" ? viewGuias() : current === "material" ? viewMaterial() : current === "anio" ? viewAnio() : current === "zonas" ? viewZonas() : viewArea(current);
   const nt = document.getElementById("notaTxt"); if (nt && typed) nt.value = typed;
   loadThumbs();
 }
@@ -891,6 +939,8 @@ document.addEventListener("click", e => {
   if (qf) { pendingFoto = null; fotoErr = ""; render(); return; }
   const fo = e.target.closest("[data-foto]");
   if (fo) { openDrawer({ type:"foto", id: fo.dataset.foto, nota: fo.dataset.fnota }); return; }
+  const an = e.target.closest("[data-archnota]");
+  if (an) { change({ t:"nota-arch", id: an.dataset.archnota, v: an.dataset.v ? iso(new Date()) : null }); return; }
   const dn = e.target.closest("[data-delnota]");
   if (dn) {
     const n = state.notas.find(x => x.id === dn.dataset.delnota);
@@ -898,8 +948,9 @@ document.addEventListener("click", e => {
     if (n && n.a) for (let i = 0; i < (n.an || 1); i++) fetch(FOTO_BASE + n.a + "-" + i, { method:"DELETE" }).catch(() => {});
     change({ t:"nota-del", id: dn.dataset.delnota }); return;
   }
-  if (e.target.closest("[data-zmenu]")) { zmenuOpen = !zmenuOpen; renderTabs(); return; }
-  if (zmenuOpen && !e.target.closest("#zmenu")) { zmenuOpen = false; renderTabs(); }
+  const zmb = e.target.closest("[data-zmenu]");
+  if (zmb) { zmenuOpen = zmenuOpen === zmb.dataset.zmenu ? null : zmb.dataset.zmenu; renderTabs(); return; }
+  if (zmenuOpen && !e.target.closest("#zmenu")) { zmenuOpen = null; renderTabs(); }
   const tf = e.target.closest("[data-tipof]");
   if (tf) { const v = tf.dataset.tipof || null; tipoF = tipoF === v ? null : v; render(); return; }
   const st = e.target.closest("[data-step]");
@@ -908,14 +959,14 @@ document.addEventListener("click", e => {
   if (!el) { if (e.target === scrim) closeDrawer(); return; }
   if (el.dataset.check) { e.stopPropagation(); const k = el.dataset.check; change({ t:"done", k, v: isDone(k) ? null : iso(new Date()) }); return; }
   if (el.dataset.buy) { e.stopPropagation(); const k = el.dataset.buy; change({ t:"bought", k, v: isBought(k) ? null : iso(new Date()) }); return; }
-  if (el.dataset.tab) { zmenuOpen = false; current = el.dataset.tab; history.replaceState(null, "", "#" + current); render(); window.scrollTo({ top: 0 }); if (el.classList.contains("tab")) document.querySelector(`#tabs [data-tab="${current}"]`)?.scrollIntoView({ inline:"center", block:"nearest" }); return; }
+  if (el.dataset.tab) { zmenuOpen = null; current = el.dataset.tab; history.replaceState(null, "", "#" + current); render(); window.scrollTo({ top: 0 }); if (el.classList.contains("tab")) document.querySelector(`#tabs [data-tab="${current}"]`)?.scrollIntoView({ inline:"center", block:"nearest" }); return; }
   if (el.dataset.close !== undefined) { closeDrawer(); return; }
   if (el.dataset.open) { openDrawer({ type:"task", key: el.dataset.open }); return; }
   if (el.dataset.mat) { openDrawer({ type:"mat", id: el.dataset.mat }); return; }
 });
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && openRef) closeDrawer();
-  if (e.key === "Escape" && zmenuOpen) { zmenuOpen = false; renderTabs(); }
+  if (e.key === "Escape" && zmenuOpen) { zmenuOpen = null; renderTabs(); }
   if ((e.key === "Enter" || e.key === " ") && e.target.matches(".task[role=button], .pl-hit")) { e.preventDefault(); e.target.click(); }
 });
 document.addEventListener("change", async e => {
