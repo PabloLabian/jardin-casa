@@ -7,6 +7,7 @@ window.JARDIN = {
 areas: [
   { id: "semana",   nombre: "Esta semana" },
   { id: "plano",    nombre: "Plano" },
+  { id: "guias",    nombre: "Guías" },
   { id: "cesped",   nombre: "Césped",
     intro: "Unos 132 m² en tres zonas: la L trasera, la franja lateral y la entrada (las verás en la pestaña Plano). Mezcla de ray grass y festuca: hierba de clima frío que crece mucho en primavera y otoño, sufre con el calor de julio y en invierno se queda verde pero parada. Por eso sus dos estaciones importantes son el otoño y la primavera. Cuatro tareas la mantienen: segar, regar, abonar y rellenar calvas.",
     ficha: [
@@ -50,7 +51,9 @@ areas: [
       ["Regla de oro", "Nunca mover la válvula selectora con la bomba en marcha. Siempre: bomba OFF, mover, bomba ON. La rueda de la derecha de la tapa del filtro es el cierre: no tocarla nunca."],
       ["Química", "pH y cloro nunca a la vez: 4-6 h entre uno y otro, cubos distintos y siempre el producto sobre el agua. Guantes y gafas."],
       ["Dosis tuyas", "Reductor de pH líquido: unos 0,5 L baja 0,2 puntos (máximo 1,5 L por tanda). Cloro de choque: 550 g para recuperar agua verde; 300 g de mantenimiento o al invernar."],
-      ["Limpiafondos", "Lo tienes. Falta la manguera flotante de 38 mm (sin placa de skimmer: va a la toma de la pared)."],
+      ["Limpiafondos", "Cabezal, pértiga y manguera de 38 mm en casa. Se conecta a la toma redonda pequeña de la pared, bajo el skimmer (la grande con cristal es el foco)."],
+      ["Contralavado", "Tira agua al desagüe: 3-5 minutos son 2-3 cm de nivel. Lavado solo hasta que el visor salga claro y luego rellenar con la manguera."],
+      ["Llaves", "Filtrar: skimmer y fondo abiertas, limpiafondos cerrada. Aspirar: limpiafondos abierta, fondo cerrada, skimmer casi cerrada. Nivel bajo: fondo abierta y skimmer casi cerrada hasta rellenar."],
       ["Perros", "Fuera del agua desde que se echa producto hasta que el cloro vuelve a 1-3. Hasta ver en la etiqueta de la lona que aguanta peso, que no se suba."]
     ]},
   { id: "riego",    nombre: "Riego",
@@ -188,6 +191,43 @@ plano: [
     datos: [["Estado", "Sin identificar"]],
     cuidados: ["Foto al buzón cuando puedas. Mientras, rodearlo al segar."],
     tareas: [] }
+],
+
+/* Guías rápidas: lo que se consulta una y otra vez. grupo agrupa en la pantalla. */
+guias: [
+  /* ---- Piscina ---- */
+  { id: "g-selector", grupo: "Piscina", icono: "🎛️", titulo: "Posiciones del selector del filtro", resumen: "Qué hace cada posición y la regla de oro",
+    datos: [["FILTRACIÓN", "La normal: el agua pasa por la arena y vuelve limpia a la piscina."], ["LAVADO", "Contralavado: el agua pasa al revés por la arena y se va al desagüe. Tira agua."], ["ENJUAGUE", "Asienta la arena después del lavado. También tira agua (20-30 s)."], ["VACIADO", "Aspira y manda directo al desagüe, sin pasar por el filtro. Baja el nivel 0,5-1 cm por minuto."], ["RECIRCULACIÓN", "Mueve el agua sin filtrar. Casi no se usa."], ["CERRADO", "No pasa agua. Nunca con la bomba en marcha."]],
+    ojo: "Regla de oro: bomba OFF antes de mover el selector, siempre. Aprieta la maneta hacia abajo y gira; manda la punta corta. La rueda de la derecha de la tapa del filtro es el cierre: no tocarla." },
+  { id: "g-llaves", grupo: "Piscina", icono: "🔴", titulo: "Llaves rojas según lo que haces", resumen: "Skimmer, fondo y limpiafondos",
+    datos: [["Filtrar (lo normal)", "Skimmer abierta · fondo abierta · limpiafondos cerrada."], ["Contralavado", "Igual que filtrar."], ["Aspirar el fondo", "Limpiafondos abierta · fondo cerrada · skimmer casi cerrada."], ["Nivel bajo (rellenando)", "Fondo abierta · skimmer casi cerrada · limpiafondos cerrada."]],
+    ojo: "Maneta en línea con el tubo = abierta; atravesada = cerrada. Con el skimmer medio cerrado el manómetro marca distinto: para leerlo, todas abiertas." },
+  { id: "g-lavado", grupo: "Piscina", icono: "🔄", titulo: "Contralavado (lavar el filtro)", resumen: "Cuando el manómetro llega a 0,9 · unos 3 minutos",
+    pasos: ["Bomba OFF (cuadro naranja en PARO).", "Selector en LAVADO.", "Bomba ON hasta que el agua del visor salga clara: 1,5-3 minutos.", "Bomba OFF. Selector en ENJUAGUE. Bomba ON 20-30 segundos.", "Bomba OFF. Selector en FILTRACIÓN. Bomba ON (MANUAL o AUTO).", "Mirar el manómetro: tiene que volver a unos 0,55.", "Rellenar con la manguera de jardín hasta la mitad del skimmer."],
+    datos: [["Cuándo", "Manómetro a 0,9-1,0 (limpio marca 0,55 con todas las llaves abiertas)."], ["Agua que se pierde", "3-5 minutos = 2-3 cm de nivel."], ["Llaves", "Como para filtrar."]],
+    ojo: "Tira agua al desagüe: lavado solo hasta que el visor salga claro, no más." },
+  { id: "g-dosis", grupo: "Piscina", icono: "⚖️", titulo: "Cuánto producto echar", resumen: "Dosis para tus 28 m³",
+    datos: [["pH alto", "Reductor líquido: 0,5 L por cada 0,2 que haya que bajar. Máximo 1,5 L por tanda."], ["Cloro bajo (menos de 1)", "Unos 100 g de cloro rápido granulado, al anochecer."], ["Agua verde (choque)", "550 g de cloro rápido, de noche, con el pH ya en 7,2-7,6."], ["Al invernar", "300 g de cloro rápido y, al día siguiente, el invernador (1-1,5 L)."], ["Sin báscula", "Un vaso de agua lleno a ras de granulado son unos 200 g."]],
+    ojo: "pH primero, cloro después: 4-6 horas entre uno y otro." },
+  { id: "g-quimica", grupo: "Piscina", icono: "🧤", titulo: "Echar productos sin riesgos", resumen: "Cubo, orden y seguridad",
+    pasos: ["Guantes y gafas.", "Cubo lleno de agua de la piscina hasta tres cuartos.", "Producto dentro del agua, nunca agua sobre el producto.", "Remover con un palo hasta disolver.", "Repartir despacio por el borde, sobre todo delante de los chorros, con la bomba en marcha.", "Aclarar bien el cubo antes de usarlo para otro producto."],
+    ojo: "Nunca mezclar productos ni echarlos a la vez. Cloro siempre al anochecer. Perros fuera del agua hasta que el cloro esté en 1-3." },
+  { id: "g-aspirar", grupo: "Piscina", icono: "🧹", titulo: "Aspirar el fondo", resumen: "Limpiafondos, manguera y toma de la pared",
+    pasos: ["Nivel a la mitad del skimmer.", "Bomba OFF. Llaves: limpiafondos abierta, fondo cerrada, skimmer casi cerrada. Selector en FILTRACIÓN. Bomba ON.", "Cabezal al fondo con la pértiga, cerca de la toma (la boca redonda pequeña bajo el skimmer; la grande con cristal es el foco).", "Llenar la manguera de agua: meterla tramo a tramo y acabar con el extremo delante de un chorro hasta que no salgan burbujas por el cabezal.", "Encajarla en la toma sin sacarla del agua.", "Aspirar despacio, de la parte baja a la honda, sin levantar el cabezal.", "Al terminar: bomba OFF, sacar manguera, llaves como para filtrar, bomba ON. Aclarar y guardar a la sombra."],
+    datos: [["Si aspira menos", "Cestillo del prefiltro lleno, filtro cargado (manómetro alto) o entra aire."], ["Polvo fino que vuelve al agua", "Selector en VACIADO (bomba OFF antes): va al desagüe, pero baja el nivel. Máximo 8-10 minutos."]] },
+  { id: "g-partes", grupo: "Piscina", icono: "🗺️", titulo: "Qué es cada cosa de la piscina", resumen: "Skimmer, chorros, toma, foco, sumidero",
+    datos: [["Skimmer", "La boca rectangular a la altura del agua. Cestillo bajo la tapa redonda de la playa."], ["Impulsión", "Los dos chorritos por donde vuelve el agua filtrada. Aquí se echan los productos."], ["Toma limpiafondos", "Boca redonda pequeña bajo el skimmer."], ["Foco", "El círculo grande con cristal: la luz."], ["Sumidero", "Rejilla en lo más hondo (llave del fondo)."], ["Nivel correcto", "A la mitad de la boca del skimmer."], ["Manómetro", "0,55 limpio (todas las llaves abiertas). Contralavado a 0,9."]] },
+  /* ---- Cortacésped ---- */
+  { id: "g-cortacesped", grupo: "Cortacésped", icono: "🚜", titulo: "Arrancar y segar", resumen: "Motor DG400 de 4 tiempos",
+    pasos: ["Aceite: tapón amarillo bajo el motor. Varilla entre las dos marcas (SAE30).", "Gasolina: tapón negro de arriba. Sin plomo 95 sola, sin mezclar.", "Altura: las cuatro palancas de las ruedas en la misma posición (otoño, 5 cm).", "Recoger piedras, fruta y juguetes. Perros dentro.", "En frío: palanca del manillar en START. Apretar la barra de seguridad y tirar del cordón (suave hasta notar resistencia y luego fuerte).", "A los 10-20 segundos, palanca a RUN. En caliente, arrancar directo en RUN.", "Para parar: soltar la barra."],
+    datos: [["Girar", "Bajar un poco el manillar para levantar las ruedas de delante y pivotar sobre las de atrás."], ["Bolsa", "El cesto negro de detrás. Vaciarlo con el motor parado."], ["Hojas", "Las aspira y tritura. Montones grandes o mojados, quitarlos antes."], ["Nunca", "Más de un tercio de la altura de una vez."]],
+    ojo: "Si no arranca: ¿barra apretada? ¿gasolina? Si huele mucho a gasolina, está ahogado: RUN y 4-5 tirones, o esperar 10 minutos. Para tocar la cuchilla, quitar antes el capuchón de la bujía. Repostar con el motor frío; si se derrama, secar y esperar 10-15 minutos antes de arrancar." },
+  ],
+
+/* Avisos fijos que salen arriba en "Semana" mientras dure su periodo. */
+avisos: [
+  { desde: "2026-10-12", hasta: "2026-10-24", icono: "⏱️", texto: "Depuradora en AUTO, 8 h al día (por ejemplo 10-14 y 18-22). Nivel a la mitad del skimmer." },
+  { desde: "2026-10-25", hasta: "2027-03-31", icono: "⏱️", texto: "Depuradora en AUTO, 2-3 h al día de madrugada (piscina invernada)." }
 ],
 
 /* Tipos de repetición:
@@ -707,27 +747,56 @@ tareas: [
   porque: "Si entra aire en el filtro, filtra peor y la presión baila. La purga es la forma de sacarlo.",
   sinoSe: "Nada grave a corto plazo."
 },
-{ id: "p-aclarar", area: "piscina", tipo: "revisar", titulo: "Revisar el agua tras el choque", prioridad: "importante", fecha: "2026-10-14", duracion: "30 min",
-  que: "Ver si el choque ha funcionado y rematar.",
+{ id: "p-aclarar", area: "piscina", tipo: "revisar", titulo: "Revisar el agua tras el choque y aspirar el fondo", prioridad: "importante", fecha: "2026-10-14", duracion: "1-1,5 h",
+  que: "Rematar la recuperación: filtro limpio, fondo aspirado y agua comprobada. (Hecho casi entero el 11 de octubre.)",
+  grupos: [["Filtro", [0,1]], ["Aspirar el fondo", [2,3,4,5,6]], ["Dejarlo todo como estaba", [7,8]]],
   material: ["floculante", "kit-agua", "manguera"],
-  grupos: [["Filtro", [0,1]], ["Mirar el agua y decidir", [2,3,4]], ["Aspirar el fondo", [5]]],
   pasos: [
-    "Mirar el manómetro: si marca 0,9-1,0 bar (o 0,3-0,4 más que los 0,55 de referencia), contralavado. Si no, saltar el paso siguiente.",
-    "Contralavado: bomba OFF, selector en LAVADO, bomba ON 2-3 min (hasta que el agua del visor salga limpia), bomba OFF, ENJUAGUE 30 s, bomba OFF, FILTRACIÓN, bomba ON.",
-    "Si el agua está azul y se ve el fondo: perfecto. Medir cloro (1-3) y pH (7,2-7,6) y listo para invernar.",
-    "Si sigue verde: segundo choque igual que el primero (antes, pH a 7,2-7,6).",
-    "Si está turbia gris o blanquecina (algas muertas en suspensión): floculante según la etiqueta para 28 m³, repartido por el borde con la bomba en marcha 10 min, y luego bomba parada toda la noche.",
-    "Al día siguiente, aspirar el fondo despacio con el limpiafondos y el selector en VACIADO, para tirar la suciedad sin pasar por el filtro. Llaves: solo la de limpiafondos abierta. Baja el nivel: rellenar con la manguera de jardín."
+    "Mirar el manómetro con todas las llaves abiertas: si marca 0,9 o más, contralavado.",
+    "Contralavado: bomba OFF, LAVADO, bomba ON solo hasta que el visor salga claro (1,5-3 min), OFF, ENJUAGUE 20-30 s, OFF, FILTRACIÓN, ON. Ojo: tira agua al desagüe; después, rellenar hasta la mitad del skimmer.",
+    "Nivel a la mitad de la boca del skimmer (si no, la manguera de jardín llenando mientras se aspira).",
+    "Bomba OFF. Llaves: limpiafondos abierta, fondo cerrada, skimmer casi cerrada. Selector en FILTRACIÓN. Bomba ON.",
+    "Llenar de agua la manguera: cabezal al fondo, meter la manguera tramo a tramo y acabar con el extremo delante de un chorro hasta que no salgan burbujas por el cabezal. Encajarla en la toma de la pared sin sacarla del agua.",
+    "Aspirar despacio, como una mopa, de la parte baja a la honda. Si aspira menos: cestillo del prefiltro lleno, filtro cargado (manómetro alto) o aire.",
+    "Solo si se levanta polvo fino que vuelve al agua: bomba OFF, VACIADO, ON. Va directo al desagüe pero baja el nivel 0,5-1 cm por minuto: máximo 8-10 minutos.",
+    "Bomba OFF, sacar manguera y cabezal. Llaves: limpiafondos cerrada, fondo y skimmer abiertas. FILTRACIÓN y ON. Contralavado corto si el manómetro pasa de 0,8.",
+    "Medir pH y cloro. Rellenar el nivel. Aclarar manguera y cabezal y guardarlos a la sombra."
   ],
-  porque: "Las algas muertas son polvo fino que el filtro de arena no atrapa bien. El floculante las junta en el fondo y se tiran directamente al desagüe.",
-  sinoSe: "Invernar con agua turbia: el invernador no hace bien su trabajo."
+  porque: "Las algas muertas caen al fondo como polvo: si se quedan, vuelven a alimentar algas. El filtro se carga rápido al aspirarlas, por eso los contralavados.",
+  sinoSe: "Invernar con suciedad en el fondo: el invernador no hace bien su trabajo.",
+  importante: "El contralavado y el VACIADO tiran agua: después de cada uno, rellenar hasta la mitad del skimmer. Con el nivel bajo, el skimmer chupa aire y la bomba sufre."
+},
+{ id: "p-medir-lun", area: "piscina", tipo: "revisar", titulo: "Piscina: medir pH y cloro y repasar", prioridad: "mantenimiento",
+  semanal: { desde: "2026-10-12", hasta: "2026-10-19" }, duracion: "15 min",
+  que: "Control de los lunes hasta el invernaje.",
+  pasos: [
+    "Medir pH y cloro (folio blanco detrás del kit).",
+    "pH por encima de 7,6: 0,5 L de reductor por cada 0,2 que sobre.",
+    "Cloro por debajo de 1: 100 g de cloro rápido al anochecer (4-6 h después del pH).",
+    "Vaciar cestillos de skimmer y prefiltro y recoger hojas.",
+    "Manómetro: si pasa de 0,9, contralavado (guía en Info). Nivel a la mitad del skimmer."
+  ],
+  porque: "Con el agua dura el pH sube solo y, con pH alto, el cloro no trabaja.",
+  sinoSe: "Vuelta al agua verde antes de invernar."
+},
+{ id: "p-medir-jue", area: "piscina", tipo: "revisar", titulo: "Piscina: medir pH y cloro", prioridad: "mantenimiento",
+  semanal: { desde: "2026-10-15", hasta: "2026-10-22" }, duracion: "10 min",
+  que: "Control de los jueves hasta el invernaje. Si os vais a bañar otro día, medid ese día.",
+  pasos: [
+    "Medir pH y cloro.",
+    "pH por encima de 7,6: 0,5 L de reductor por cada 0,2 que sobre.",
+    "Cloro por debajo de 1: 100 g de cloro rápido al anochecer.",
+    "Para bañarse: cloro 1-3 y pH 7,2-7,6."
+  ],
+  porque: "Dos mediciones por semana bastan con el agua fría de octubre.",
+  sinoSe: "Agua turbia o verde."
 },
 { id: "p-invernaje", area: "piscina", tipo: "hacer", titulo: "Invernar la piscina", prioridad: "urgente", fecha: "2026-10-24", duracion: "1-2 h",
   que: "Dejar el agua protegida para todo el invierno. Solo con el agua ya transparente.",
   material: ["kit-agua", "invernador", "cloro-choque", "minorador-ph"],
   grupos: [["Limpiar", [0]], ["Día 1: pH y cloro", [1,2]], ["Día 2: invernador", [3,4]], ["Depuradora y lona", [5,6]]],
   pasos: [
-    "Limpiar fondo (limpiafondos), paredes y cestillos. Contralavado si el manómetro pasa de 0,9.",
+    "Limpiar fondo (limpiafondos), paredes y cestillos. Contralavado si el manómetro pasa de 0,9 (tira agua: rellenar después).",
     "Ajustar el pH a 7,2-7,6 con el reductor (unos 0,5 L por cada 0,2 puntos).",
     "4-6 h después, de noche: 300 g de cloro de choque disuelto en un cubo.",
     "Al día siguiente, el invernador: la dosis de la etiqueta para 28 m³ (con los habituales, 1-1,5 L), repartido por el borde con la bomba en marcha 4-6 h.",
@@ -926,7 +995,7 @@ material: [
     queEs: "Manguera gruesa y con anillos que flota. Une el limpiafondos con la toma de limpiafondos de la pared (tu piscina la tiene: es la tercera llave roja) para que la depuradora aspire el fondo. Una manguera de jardín no sirve.",
     cantidad: "12-15 m, con sus terminales (los extremos que encajan en el limpiafondos y en la toma).", precio: "25-45 €",
     links: [ { t: "Ejemplo: manguera autoflotante 38 mm (ManoMano, elige el largo)", u: "https://www.manomano.es/p/manguera-autoflotante-eva-38mm-rollo-30m-con-terminales-corrugada-flexible-de-alta-resistencia-filtro-piscina-215776699" } ],
-    nota: "Va directa a la toma de limpiafondos de la pared: no hace falta placa de skimmer. La de 32 mm de la tienda no vale. Hace falta para aspirar el fondo tras el choque y antes de invernar." },
+    nota: "Encontrada en casa. Va a la toma redonda pequeña de la pared, bajo el skimmer: no hace falta placa de skimmer." },
   { id: "tijeras", cat: "herramientas", nombre: "Tijeras de podar de una mano (tipo bypass)", aviso: "2026-10-12", tenerAntes: "2026-12-15",
     gamas: [
       { nivel: "Básica", nombre: "Tijera bypass de gama media", precio: "15-30 €", texto: "Corta bien el primer año. Se mella antes y no tiene recambios.", u: "https://www.leroymerlin.es/productos/tijera-de-poda-a-una-mano-altuna-bypass-82063623.html" },
