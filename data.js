@@ -199,6 +199,10 @@ guias: [
   { id: "g-selector", grupo: "Piscina", icono: "🎛️", titulo: "Posiciones del selector del filtro", resumen: "Qué hace cada posición y la regla de oro",
     datos: [["FILTRACIÓN", "La normal: el agua pasa por la arena y vuelve limpia a la piscina."], ["LAVADO", "Contralavado: el agua pasa al revés por la arena y se va al desagüe. Tira agua."], ["ENJUAGUE", "Asienta la arena después del lavado. También tira agua (20-30 s)."], ["VACIADO", "Aspira y manda directo al desagüe, sin pasar por el filtro. Baja el nivel 0,5-1 cm por minuto."], ["RECIRCULACIÓN", "Mueve el agua sin filtrar. Casi no se usa."], ["CERRADO", "No pasa agua. Nunca con la bomba en marcha."]],
     ojo: "Regla de oro: bomba OFF antes de mover el selector, siempre. Aprieta la maneta hacia abajo y gira; manda la punta corta. La rueda de la derecha de la tapa del filtro es el cierre: no tocarla." },
+  { id: "g-reloj", grupo: "Piscina", icono: "⏱️", titulo: "Programar el reloj de la depuradora", resumen: "Reloj Grässlin del cuadro naranja",
+    pasos: ["Poner en hora: gira la rueda de dientes solo en el sentido de la flecha hasta que la hora actual quede frente al triángulo.", "Cada diente son 15 minutos (4 por hora).", "Dientes de las horas en que quieres que funcione: en posición de encendido. Todos los demás: en la otra posición.", "Interruptor de BOMBA en AUTO."],
+    datos: [["Ahora (hasta el invernaje)", "De 11 a 16 (5 h)."], ["Invierno", "2-3 h, por ejemplo de 12 a 14 o 15."], ["Verano con baños", "8-12 h."], ["MARCHA MANUAL", "Funciona siempre, ignora el reloj."], ["PARO", "Apagada."]],
+    ojo: "Para saber qué posición es encendido: mueve el diente que está frente al triángulo, pon AUTO y mira si arranca la bomba. Si se va la luz, el reloj se atrasa: vuelve a ponerlo en hora." },
   { id: "g-llaves", grupo: "Piscina", icono: "🔴", titulo: "Llaves rojas según lo que haces", resumen: "Skimmer, fondo y limpiafondos",
     datos: [["Filtrar (lo normal)", "Skimmer abierta · fondo abierta · limpiafondos cerrada."], ["Contralavado", "Igual que filtrar."], ["Aspirar el fondo", "Limpiafondos abierta · fondo cerrada · skimmer casi cerrada."], ["Nivel bajo (rellenando)", "Fondo abierta · skimmer casi cerrada · limpiafondos cerrada."]],
     ojo: "Maneta en línea con el tubo = abierta; atravesada = cerrada. Con el skimmer medio cerrado el manómetro marca distinto: para leerlo, todas abiertas." },
@@ -226,8 +230,8 @@ guias: [
 
 /* Avisos fijos que salen arriba en "Semana" mientras dure su periodo. */
 avisos: [
-  { desde: "2026-10-12", hasta: "2026-10-24", icono: "⏱️", texto: "Depuradora en AUTO, 8 h al día (por ejemplo 10-14 y 18-22). Nivel a la mitad del skimmer." },
-  { desde: "2026-10-25", hasta: "2027-03-31", icono: "⏱️", texto: "Depuradora en AUTO, 2-3 h al día de madrugada (piscina invernada)." }
+  { desde: "2026-10-12", hasta: "2026-10-24", icono: "⏱️", texto: "Depuradora en AUTO, 5 h al día (de 11 a 16 en el reloj). Si el cloro baja de 1, sube a 8 h unos días. Nivel a la mitad del skimmer." },
+  { desde: "2026-10-25", hasta: "2027-03-31", icono: "⏱️", texto: "Depuradora en AUTO, 2-3 h al día (piscina invernada): deja solo los dientes de 12 a 14 o 15." }
 ],
 
 /* Tipos de repetición:
