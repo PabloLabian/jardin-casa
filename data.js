@@ -36,7 +36,7 @@ areas: [
       ["Poda", "Ligera, en primavera, cuando ya no hiela. Nunca en invierno."]
     ]},
   { id: "huerto",   nombre: "Huerto",
-    intro: "Este invierno, en modo fácil: ajos y habas, que se plantan en otoño, aguantan las heladas y casi no piden nada hasta la cosecha. El huerto de verano (tomates, pimientos) lo decidiremos en abril.",
+    intro: "Este invierno el huerto descansa: no se planta nada. Se recoge lo que quede, se limpia antes de las heladas y el huerto de verano lo decidiremos en abril.",
     ficha: [
       ["Ajos", "Diente con la punta hacia arriba, a 3-4 cm de profundidad y 10-15 cm entre sí. Cosecha a principios de verano."],
       ["Habas", "2-3 semillas por hoyo, a 4-5 cm de profundidad y 25-30 cm entre hoyos. Cosecha en abril-mayo."],
@@ -91,8 +91,8 @@ plano: [
     tareas: ["p-choque", "p-lona", "p-aclarar", "p-grieta", "p-invernaje", "p-purga", "p-primavera"] },
   { id: "huerto", tipo: "zona", area: "huerto", nombre: "Huerto", donde: "Esquina delantera, junto a la entrada",
     datos: [["Superficie", "≈ 24 m² (5,45 × 4,46)"], ["Ahora", "Acelgas y restos de tomates y pimientos"], ["Plantas", "Solano azul (J) en la esquina y acelgas (M)"]],
-    cuidados: ["Este invierno: ajos y habas, que aguantan las heladas y casi no piden nada.", "Las acelgas aguantan el invierno: se cortan las hojas de fuera y siguen saliendo."],
-    tareas: ["h-limpiar", "h-ajos-habas", "h-escardar", "h-cosecha-habas", "h-cosecha-ajos", "h-verano"] },
+    cuidados: ["Este invierno descansa: no se planta nada.", "Las acelgas aguantan el invierno: se cortan las hojas de fuera y siguen saliendo."],
+    tareas: ["h-recoger", "h-limpiar", "h-escardar", "h-verano"] },
 
   /* ---- Árboles ---- */
   { id: "a1", num: 1, tipo: "arbol", area: "frutales", nombre: "Higuera", donde: "L trasera, lado de la barbacoa",
@@ -211,7 +211,7 @@ guias: [
     datos: [["Cuándo", "Manómetro a 0,9-1,0 (limpio marca 0,55 con todas las llaves abiertas)."], ["Agua que se pierde", "3-5 minutos = 2-3 cm de nivel."], ["Llaves", "Como para filtrar."]],
     ojo: "Tira agua al desagüe: lavado solo hasta que el visor salga claro, no más." },
   { id: "g-dosis", grupo: "Piscina", icono: "⚖️", titulo: "Cuánto producto echar", resumen: "Dosis para tus 28 m³",
-    datos: [["pH alto", "Reductor líquido: 0,5 L por cada 0,2 que haya que bajar. Máximo 1,5 L por tanda."], ["Cloro bajo (menos de 1)", "Unos 100 g de cloro rápido granulado, al anochecer."], ["Agua verde (choque)", "550 g de cloro rápido, de noche, con el pH ya en 7,2-7,6."], ["Al invernar", "300 g de cloro rápido y, al día siguiente, el invernador (1-1,5 L)."], ["Sin báscula", "Un vaso de agua lleno a ras de granulado son unos 200 g."]],
+    datos: [["pH alto", "Reductor líquido: 0,5 L por cada 0,2 que haya que bajar. Máximo 1,5 L por tanda."], ["Cloro bajo (menos de 1)", "Unos 100 g de cloro rápido granulado, al anochecer."], ["Agua verde (choque)", "550 g de cloro rápido, de noche, con el pH ya en 7,2-7,6."], ["Al invernar", "300 g de cloro rápido y, al día siguiente, el invernador (1-1,5 L)."], ["Sin báscula", "Un vaso de agua lleno a ras de granulado son unos 200 g."], ["Mantenimiento", "1 pastilla de cloro de 200 g en la boya, regulación baja. Otoño: 1 cada 10-15 días. Verano: 1 por semana. Al invernar, sacar la boya."]],
     ojo: "pH primero, cloro después: 4-6 horas entre uno y otro." },
   { id: "g-quimica", grupo: "Piscina", icono: "🧤", titulo: "Echar productos sin riesgos", resumen: "Cubo, orden y seguridad",
     pasos: ["Guantes y gafas.", "Cubo lleno de agua de la piscina hasta tres cuartos.", "Producto dentro del agua, nunca agua sobre el producto.", "Remover con un palo hasta disolver.", "Repartir despacio por el borde, sobre todo delante de los chorros, con la bomba en marcha.", "Aclarar bien el cubo antes de usarlo para otro producto."],
@@ -630,54 +630,42 @@ tareas: [
 },
 
 /* ---------- HUERTO ---------- */
-{ id: "h-limpiar", area: "huerto", tipo: "hacer", titulo: "Recoger lo aprovechable y limpiar el huerto de verano", prioridad: "importante", fecha: "2026-10-17", duracion: "1 h",
-  que: "Tomateras y pimientos ya han terminado: se aprovecha lo que quede y se quitan. Las acelgas se quedan.",
-  material: ["guantes", "bolsas"],
-  grupos: [["Cosechar lo aprovechable", [0]], ["Arrancar y limpiar", [1,2,3]], ["Preparar la tierra", [4]]],
+{ id: "h-recoger", area: "huerto", tipo: "cosecha", titulo: "Recoger pimientos y lo que quede en el huerto", prioridad: "importante", fecha: "2026-10-17", duracion: "20 min",
+  que: "Las plantas se quedan de momento: solo se recoge lo que esté listo.",
   pasos: [
-    "Recoger los tomates que tengan algo de color y los pimientos sanos. Los tomates verdes y duros maduran en casa en una caja con una manzana o un plátano en 1-2 semanas.",
-    "Arrancar tomateras y pimientos con su raíz.",
-    "Si tienen manchas negras o marrones en hojas o tallos (hongos), a la bolsa de basura, no al compost ni enterrados.",
-    "Las acelgas se quedan: aguantan el frío y dan hojas todo el invierno. Se cortan las de fuera a ras de la base y se deja el centro, que vuelve a sacar.",
-    "Quitar malas hierbas y soltar la tierra con la azada. Queda listo para ajos y habas."
+    "Pimientos: los que estén grandes y firmes, verdes o con color. Cortarlos con tijera, sin tirar de la planta.",
+    "Tomates con algo de color: dentro de casa maduran en una caja con una manzana o un plátano en 1-2 semanas.",
+    "Repasar cada semana mientras sigan dando algo."
   ],
-  porque: "Tomate y pimiento son de verano: en octubre ya no cuajan fruta nueva y la primera helada los mata. Esperar a ver qué sale no da nada más. Dejarlos pudrirse deja hongos y plagas pasando el invierno justo donde van ajos y habas.",
-  sinoSe: "No hay sitio para plantar y los hongos pasan al año siguiente.",
+  porque: "Con el frío ya casi no cuajan frutos nuevos: lo que hay es lo que se va a recoger.",
+  sinoSe: "Se pudren en la planta.",
+  importante: "Perros: hojas y tomates verdes son tóxicos para ellos. Que no queden restos por el suelo."
+},
+{ id: "h-limpiar", area: "huerto", tipo: "hacer", titulo: "Arrancar las matas de verano antes de las heladas", prioridad: "importante", fecha: "2026-11-14", duracion: "1 h",
+  que: "Tomateras y pimientos se quitan antes de que la primera helada los mate. Las acelgas se quedan.",
+  material: ["guantes", "bolsas"],
+  grupos: [["Arrancar y limpiar", [0,1,2]], ["Dejar la tierra descansando", [3]]],
+  pasos: [
+    "Recoger lo último aprovechable y arrancar tomateras y pimientos con su raíz.",
+    "Si tienen manchas negras o marrones en hojas o tallos (hongos), a la bolsa de basura, no al compost ni enterrados.",
+    "Las acelgas se quedan: aguantan el frío y dan hojas todo el invierno. Se cortan las de fuera a ras de la base y se deja el centro.",
+    "Quitar malas hierbas y dejar la tierra descansando hasta primavera."
+  ],
+  porque: "La primera helada (en Novés, normalmente a mediados o finales de noviembre) los mata. Dejarlos pudrirse deja hongos y plagas pasando el invierno en la tierra.",
+  sinoSe: "Los hongos pasan al año siguiente.",
   importante: "Perros: las hojas y los tomates verdes son tóxicos para ellos. Que no queden restos por el suelo."
 },
-{ id: "h-ajos-habas", area: "huerto", tipo: "hacer", titulo: "Plantar ajos y habas", prioridad: "opcional", fecha: "2026-10-17", duracion: "1-2 h",
-  que: "Huerto de invierno que se cuida casi solo.",
-  material: ["ajo", "habas", "estiercol", "guantes"],
-  pasos: [
-    "Con el huerto ya limpio (tarea anterior), echar una capa de estiércol o compost de 3-5 cm donde vayan ajos y habas y mezclar con la azada.",
-    "Ajos: dientes sueltos, punta hacia arriba, a 3-4 cm de profundidad y 10-15 cm entre sí.",
-    "Habas: 2-3 semillas por hoyo, a 4-5 cm de profundidad, hoyos a 25-30 cm.",
-    "Un riego tras plantar. Después, la lluvia suele bastar."
-  ],
-  porque: "Aguantan las heladas y el ajo necesita frío para formar cabeza. Las habas, además, enriquecen la tierra para el huerto de verano.",
-  sinoSe: "Nada: el huerto descansa. Cualquier fin de semana hasta mediados de noviembre vale."
-},
 { id: "h-escardar", area: "huerto", tipo: "hacer", titulo: "Quitar hierbas del huerto", prioridad: "opcional", fecha: "2027-01-09", duracion: "30 min",
-  que: "Arrancar las hierbas que compiten con ajos y habas.",
+  que: "Arrancar las hierbas para que no se adueñen del huerto en invierno.",
   pasos: ["A mano o con azadilla, con la tierra húmeda (sale la raíz entera)."],
-  porque: "Las malas hierbas roban agua y luz a los cultivos pequeños.",
-  sinoSe: "Ajos más pequeños."
+  porque: "Si se dejan, echan semilla y en primavera el huerto está invadido.",
+  sinoSe: "Más trabajo en primavera."
 },
 { id: "h-verano", area: "huerto", tipo: "hacer", titulo: "Decidir el huerto de verano", prioridad: "opcional", fecha: "2027-04-03", duracion: "Charla con Claude",
   que: "Elegir qué plantar en mayo (tomate, pimiento, calabacín...) o dejarlo en barbecho.",
   pasos: ["Decidir cuánto tiempo apetece dedicarle en verano.", "Pedir a Claude el plan de plantación y riego."],
   porque: "El huerto de verano es lo que más trabajo da de todo el jardín: mejor decidirlo con calma.",
   sinoSe: "-"
-},
-{ id: "h-cosecha-habas", area: "huerto", tipo: "cosecha", titulo: "Cosechar habas", prioridad: "opcional", fecha: "2027-04-24", duracion: "Ratos",
-  que: "Recoger las vainas cuando estén llenas pero tiernas.",
-  pasos: ["Ir recogiendo cada pocos días durante 3-4 semanas."],
-  porque: "Pasadas, se ponen duras y harinosas.", sinoSe: "Habas duras."
-},
-{ id: "h-cosecha-ajos", area: "huerto", tipo: "cosecha", titulo: "Cosechar ajos", prioridad: "opcional", fecha: "2027-06-12", duracion: "30 min",
-  que: "Arrancar los ajos cuando la mitad de las hojas estén secas.",
-  pasos: ["Dejar de regar 2 semanas antes.", "Arrancar, dejarlos secar a la sombra unos días y guardarlos en sitio seco."],
-  porque: "Si se arrancan tarde, las cabezas se abren y se conservan peor.", sinoSe: "Ajos que se pudren o se abren."
 },
 
 /* ---------- PISCINA ---------- */
@@ -942,7 +930,7 @@ material: [
     cantidad: "1 (solo si no hay en el garaje).", precio: "10-15 €",
     links: [ { t: "Ejemplo: Rastrillo 14 púas Jardinor (Leroy Merlin)", u: "https://www.leroymerlin.es/productos/rastrillo-con-mango-14-puas-de-acero-34-cm-jardinor-12110966.html" } ] },
   { id: "manguera-jardin", cat: "herramientas", nombre: "Manguera de jardín con pistola (o regadera)", aviso: "2026-10-09", tenerAntes: "2026-10-10",
-    queEs: "Para regar a mano lo que el riego automático no puede tratar aparte: las calvas recién sembradas (a diario 2-3 semanas), los ajos y habas al plantar y el limonero en un apuro. No es la manguera gruesa de la piscina.",
+    queEs: "Para regar a mano lo que el riego automático no puede tratar aparte: las calvas recién sembradas (a diario 2-3 semanas), el limonero en un apuro. No es la manguera gruesa de la piscina.",
     uso: "Desde la resiembra y todo el año.", precio: "8-40 €",
     gamas: [
       { nivel: "Básica", nombre: "Regadera de 10 L con alcachofa (la boca de ducha)", precio: "8-12 €", texto: "Basta para las calvas: dos o tres viajes al día. Lenta para cualquier otra cosa.", u: "https://www.leroymerlin.es/search?q=regadera%2010%20litros" },
@@ -958,14 +946,6 @@ material: [
         queEs: "Rastrillo en abanico de púas flexibles para recoger hojas del césped sin dañarlo.",
     cantidad: "1 (solo si no hay en el garaje).", precio: "8-18 €",
     links: [ { t: "Ejemplo: Escoba para hojas Geolia de acero (Leroy Merlin)", u: "https://www.leroymerlin.es/productos/escoba-con-mango-para-recoger-hojas-geolia-de-acero-de-44-5-cm-14052752.html" } ] },
-  { id: "ajo", cat: "huerto", nombre: "Ajo de siembra", aviso: "2026-10-12", tenerAntes: "2026-10-17",
-    queEs: "Cabezas de ajo para plantar. El del supermercado suele estar tratado para no brotar.",
-    cantidad: "0,5 kg (unos 40-50 dientes).", precio: "3-5 €",
-    links: [], nota: "Mejor en vivero o cooperativa de la zona: Castilla-La Mancha es tierra de ajo morado." },
-  { id: "habas", cat: "huerto", nombre: "Semilla de habas", aviso: "2026-10-12", tenerAntes: "2026-10-17",
-    queEs: "Semillas para sembrar. La variedad más común es Aguadulce.",
-    cantidad: "1 sobre de unos 250 g.", precio: "2-4 €",
-    links: [ { t: "Ver semillas de habas en Leroy Merlin", u: "https://www.leroymerlin.es/search?q=semillas%20habas" } ] },
   { id: "estiercol", cat: "frutales", nombre: "Estiércol o compost en saco", aviso: "2026-10-12", tenerAntes: "2026-10-17",
     queEs: "Abono orgánico de acción lenta. Para el huerto ahora y para los frutales en diciembre.",
     cantidad: "6-8 sacos de 50 L en total: 1-2 para el huerto ahora y 4-6 para los frutales en diciembre. Aguanta meses en el saco cerrado.", precio: "5-8 €/saco",
